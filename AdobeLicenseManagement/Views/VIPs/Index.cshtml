@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AdobeLicenseManagement.Models.VIP>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VIPName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VIPNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VIPRenewalDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VIPName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VIPNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VIPRenewalDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.VIPID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.VIPID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.VIPID })
+        </td>
+    </tr>
+}
+
+</table>

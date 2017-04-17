@@ -1,0 +1,81 @@
+﻿@model IEnumerable<AdobeLicenseManagement.Models.Request>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PurchaseOrder.PONo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VIP.VIPName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicenseType.LicenseTypeDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product.ProductDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PointOfContact.POCName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceDeskRequests)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndUsers)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseOrder.PurchaseOrderID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VIP.VIPName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LicenseType.LicenseTypeDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.ProductDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PointOfContact.POCName)
+        </td>
+        <td>
+            @foreach (var sdreq in item.ServiceDeskRequests)
+            {
+                @sdreq.ServiceDeskRequestID
+            }
+        </td>
+        <td>
+            @foreach (var endU in item.EndUsers)
+            {
+                @endU.Username
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RequestID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RequestID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RequestID })
+        </td>
+    </tr>
+}
+
+</table>

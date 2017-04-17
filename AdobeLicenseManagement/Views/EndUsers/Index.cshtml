@@ -1,0 +1,81 @@
+﻿@model IEnumerable<AdobeLicenseManagement.Models.EndUser>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Building)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RmNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ComputerSerial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ComputerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Counter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdobeID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Building)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RmNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tag)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ComputerSerial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ComputerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Counter)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdobeID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EndUserID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EndUserID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EndUserID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -29,5 +29,22 @@ namespace AdobeLicenseManagement.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.VIP> VIPs { get; set; }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.LicenseType> LicenseTypes { get; set; }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.PointOfContact> PointOfContacts { get; set; }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.PurchaseOrder> PurchaseOrders { get; set; }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.Request> Requests { get; set; }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.ServiceDeskRequest> ServiceDeskRequests { get; set; }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.EndUser> EndUsers { get; set; }
+
     }
 }

@@ -1,0 +1,90 @@
+﻿@model AdobeLicenseManagement.Models.EndUser
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EndUser</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Building)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Building)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RmNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RmNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tag)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerSerial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComputerSerial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComputerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Counter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Counter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdobeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdobeID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EndUserID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

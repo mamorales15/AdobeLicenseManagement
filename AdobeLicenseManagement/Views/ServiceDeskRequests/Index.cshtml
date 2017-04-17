@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AdobeLicenseManagement.Models.ServiceDeskRequest>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Request.RequestID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceDeskRequestID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Request.RequestID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceDeskRequestID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ServiceDeskRequestID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ServiceDeskRequestID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ServiceDeskRequestID })
+        </td>
+    </tr>
+}
+
+</table>
