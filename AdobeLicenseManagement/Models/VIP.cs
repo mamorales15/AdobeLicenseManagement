@@ -8,6 +8,11 @@ namespace AdobeLicenseManagement.Models
 {
     public class VIP
     {
+        public VIP()
+        {
+            this.Requests = new List<Request>();    // Need to initialize Requests on creation otherwise get null reference exceptions
+        }
+
         [Display(Name = "VIP ID")]
         [Key]
         public int VIPID { get; set; }

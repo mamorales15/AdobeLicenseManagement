@@ -13,8 +13,8 @@ namespace AdobeLicenseManagement.Models
         public int SDReqID { get; set; }
 
         [Required]
-        [Display(Name = "VIP Type")]
-        public int VIPTypeID { get; set; }
+        [Display(Name = "VIP")]
+        public int VIPID { get; set; }
 
         [Required]
         [Display(Name = "License Type")]

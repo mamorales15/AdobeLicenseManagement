@@ -19,6 +19,7 @@ namespace AdobeLicenseManagement.Models
         public virtual Product Product { get; set; }
         public virtual PointOfContact PointOfContact { get; set; }
 
+        [Display(Name = "Service Desk Request ID")]
         public virtual ICollection<ServiceDeskRequest> ServiceDeskRequests { get; set; }
         public virtual ICollection<EndUser> EndUsers { get; set; }
     }

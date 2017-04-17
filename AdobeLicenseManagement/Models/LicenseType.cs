@@ -8,6 +8,11 @@ namespace AdobeLicenseManagement.Models
 {
     public class LicenseType
     {
+        public LicenseType()
+        {
+            this.Requests = new List<Request>();    // Need to initialize Requests on creation otherwise get null reference exceptions
+        }
+
         [Display(Name = "License Type ID")]
         [Key]
         public int LicenseTypeID { get; set; }

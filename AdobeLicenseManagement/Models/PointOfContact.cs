@@ -8,6 +8,11 @@ namespace AdobeLicenseManagement.Models
 {
     public class PointOfContact
     {
+        public PointOfContact()
+        {
+            this.Requests = new List<Request>();    // Need to initialize Requests on creation otherwise get null reference exceptions
+        }
+
         [Display(Name = "Point of Contact Name")]
         [Required(ErrorMessage = "The Point of Contact Name is required")]
         [StringLength(50, MinimumLength = 3)]

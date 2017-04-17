@@ -8,6 +8,11 @@ namespace AdobeLicenseManagement.Models
 {
     public class Product
     {
+        public Product()
+        {
+            this.Requests = new List<Request>();    // Need to initialize Requests on creation otherwise get null reference exceptions
+        }
+
         [Display(Name = "Product ID")]
         [Key]
         public int ProductID { get; set; }

@@ -28,8 +28,12 @@ namespace AdobeLicenseManagement.Controllers
         // POST: /Forms/HelpDeskForm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult HelpDeskForm([Bind(Include = "SDReqID,VIPTypeID,LicenseTypeID,ProductID,POC,Qty")] HelpDeskFormViewModel helpDeskForm)
+        public ActionResult HelpDeskForm([Bind(Include = "SDReqID,VIPID,LicenseTypeID,ProductID,POC,Qty")] HelpDeskFormViewModel helpDeskForm)
         {
+            ViewBag.VIPList = new SelectList(db.VIPs.OrderBy(x => x.VIPID), "VIPID", "VIPName");
+            ViewBag.LicenseTypeList = new SelectList(db.LicenseTypes.OrderBy(x => x.LicenseTypeID), "LicenseTypeID", "LicenseTypeDesc");
+            ViewBag.ProductList = new SelectList(db.Products.OrderBy(x => x.ProductID), "ProductID", "ProductDesc");
+
             if (ModelState.IsValid)
             {
                 // Service Desk Request ID should not exist already
@@ -54,7 +58,7 @@ namespace AdobeLicenseManagement.Controllers
                 }
 
                 // Get objects from tables
-                VIP vip = db.VIPs.Find(helpDeskForm.VIPTypeID);
+                VIP vip = db.VIPs.Find(helpDeskForm.VIPID);
                 LicenseType licenseType = db.LicenseTypes.Find(helpDeskForm.LicenseTypeID);
                 Product product = db.Products.Find(helpDeskForm.ProductID);
 
@@ -65,8 +69,7 @@ namespace AdobeLicenseManagement.Controllers
                 // Create new Purchase Order
                 PurchaseOrder po = new PurchaseOrder();
                 po.Qty = helpDeskForm.Qty;
-                //po.PODate = null;
-                po.PODate = new DateTime(1753, 1, 1);
+                po.PODate = new DateTime(1753, 1, 1);       // Minimum date for SQL
 
                 // Create new Request
                 Request req = new Request();
@@ -85,16 +88,11 @@ namespace AdobeLicenseManagement.Controllers
                 product.Requests.Add(req);
 
                 // Add new records to database tables
-                db.Requests.Add(req);
+                db.Requests.Add(req);   // Also adds Purchase Orders to table because of 1 to 1 relationship
                 db.SaveChanges();
                 db.ServiceDeskRequests.Add(sdReq);
                 db.SaveChanges();
-                db.PurchaseOrders.Add(po);
-                db.SaveChanges();
-
-                //req.ServiceDeskRequests.Add(sdReq);
                 
-
                 return RedirectToAction("HelpDeskForm");
             }
 
