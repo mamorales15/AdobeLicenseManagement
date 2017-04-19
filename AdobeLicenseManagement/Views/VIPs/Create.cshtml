@@ -18,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.VIPName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.VIPName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.VIPName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter VIP Name" } })
                 @Html.ValidationMessageFor(model => model.VIPName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.VIPNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.VIPNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.VIPNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter VIP Number" } })
                 @Html.ValidationMessageFor(model => model.VIPNumber, "", new { @class = "text-danger" })
             </div>
         </div>

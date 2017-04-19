@@ -33,10 +33,10 @@
             @Html.DisplayNameFor(model => model.ComputerName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Counter)
+            @Html.DisplayNameFor(model => model.AdobeID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AdobeID)
+            @Html.DisplayNameFor(model => model.Request.RequestID)
         </th>
         <th></th>
     </tr>
@@ -65,10 +65,10 @@
             @Html.DisplayFor(modelItem => item.ComputerName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Counter)
+            @Html.DisplayFor(modelItem => item.AdobeID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AdobeID)
+            @Html.DisplayFor(modelItem => item.Request.RequestID)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EndUserID }) |

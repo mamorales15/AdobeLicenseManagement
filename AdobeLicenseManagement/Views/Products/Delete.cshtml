@@ -19,6 +19,18 @@
             @Html.DisplayFor(model => model.ProductDesc)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Requests)
+        </dt>
+
+        <dd>
+            <!--Html.DisplayFor(model => model.LicenseTypeDesc) Not sure where this came from. Just commented it out in case it is needed later-->
+            @foreach (var item in Model.Requests)
+            {
+                @Html.DisplayFor(modelItem => item.RequestID)
+            }
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {

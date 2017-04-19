@@ -18,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LicenseTypeDesc, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LicenseTypeDesc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.LicenseTypeDesc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter License Type" } })
                 @Html.ValidationMessageFor(model => model.LicenseTypeDesc, "", new { @class = "text-danger" })
             </div>
         </div>

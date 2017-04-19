@@ -18,6 +18,16 @@
             @Html.DisplayFor(model => model.LicenseTypeDesc)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Requests)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.Requests)
+            {
+                @Html.DisplayFor(modelItem => item.RequestID)
+            }
+        </dd>
     </dl>
 </div>
 <p>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Adobe License Management</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -17,31 +17,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Adobe License Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tables <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("End User", "Index", "EndUsers")</li>
-                            <li>@Html.ActionLink("License Type", "Index", "LicenseTypes")</li>
-                            <li>@Html.ActionLink("Point of Contact", "Index", "PointOfContacts")</li>
-                            <li>@Html.ActionLink("Product", "Index", "Products")</li>
-                            <li>@Html.ActionLink("Purchase Order", "Index", "PurchaseOrders")</li>
-                            <li>@Html.ActionLink("Request", "Index", "Requests")</li>
-                            <li>@Html.ActionLink("Service Desk Request", "Index", "ServiceDeskRequests")</li>
-                            <li>@Html.ActionLink("VIP", "Index", "VIPs")</li>
+                            <li>@Html.ActionLink("End Users", "Index", "EndUsers")</li>
+                            <li>@Html.ActionLink("License Types", "Index", "LicenseTypes")</li>
+                            <li>@Html.ActionLink("Point of Contacts", "Index", "PointOfContacts")</li>
+                            <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                            <li>@Html.ActionLink("Purchase Orders", "Index", "PurchaseOrders")</li>
+                            <li>@Html.ActionLink("Requests", "Index", "Requests")</li>
+                            <li>@Html.ActionLink("Service Desk Requests", "Index", "ServiceDeskRequests")</li>
+                            <li>@Html.ActionLink("VIPs", "Index", "VIPs")</li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Forms <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Help Desk Form", "HelpDeskForm", "Forms")</li>
-                            <li>@Html.ActionLink("End User Form", "EndUserForm", "Forms")</li>
                             <li>@Html.ActionLink("PO Form", "POForm", "Forms")</li>
                             <li>@Html.ActionLink("Adobe ID Form", "AdobeIDForm", "Forms")</li>
-                            <li>@Html.ActionLink("Additional Service Desk Requests Form", "ServiceDeskForm", "Forms")</li>
                         </ul>
                     </li>
                     <li>@Html.ActionLink("Change Log", "Index", "Home")</li>

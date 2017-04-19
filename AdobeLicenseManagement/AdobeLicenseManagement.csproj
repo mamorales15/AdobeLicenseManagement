@@ -294,7 +294,6 @@
     <Content Include="Views\UsersAdmin\Details.cshtml" />
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
-    <Content Include="Views\EndUsers\Create.cshtml" />
     <Content Include="Views\EndUsers\Delete.cshtml" />
     <Content Include="Views\EndUsers\Details.cshtml" />
     <Content Include="Views\EndUsers\Edit.cshtml" />
@@ -325,7 +324,6 @@
     <Content Include="Views\VIPs\Details.cshtml" />
     <Content Include="Views\VIPs\Edit.cshtml" />
     <Content Include="Views\VIPs\Index.cshtml" />
-    <Content Include="Views\ServiceDeskRequests\Create.cshtml" />
     <Content Include="Views\ServiceDeskRequests\Delete.cshtml" />
     <Content Include="Views\ServiceDeskRequests\Details.cshtml" />
     <Content Include="Views\ServiceDeskRequests\Edit.cshtml" />

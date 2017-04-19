@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>LicenseType</h4>
+        <h4>License Type</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.LicenseTypeID)
@@ -20,9 +20,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LicenseTypeDesc, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LicenseTypeDesc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.LicenseTypeDesc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter License Description" } })
                 @Html.ValidationMessageFor(model => model.LicenseTypeDesc, "", new { @class = "text-danger" })
             </div>
+        </div>
+
+        <div>
+            <h4>
+                @Html.DisplayNameFor(model => model.Requests)
+            </h4>
+
+            <p>
+                @foreach (var item in Model.Requests)
+                {
+                    @Html.DisplayFor(modelItem => item.RequestID)
+                }
+            </p>
         </div>
 
         <div class="form-group">

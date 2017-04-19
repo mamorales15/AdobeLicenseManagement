@@ -35,29 +35,6 @@ namespace AdobeLicenseManagement.Controllers
             return View(endUser);
         }
 
-        // GET: EndUsers/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: EndUsers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EndUserID,Username,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,Counter,AdobeID")] EndUser endUser)
-        {
-            if (ModelState.IsValid)
-            {
-                db.EndUsers.Add(endUser);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(endUser);
-        }
-
         // GET: EndUsers/Edit/5
         public ActionResult Edit(int? id)
         {
