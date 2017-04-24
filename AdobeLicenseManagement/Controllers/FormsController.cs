@@ -192,7 +192,7 @@ namespace AdobeLicenseManagement.Controllers
         // GET: /Forms/AdobeIDForm
         public ActionResult AdobeIDForm()
         {
-            ViewBag.EndUserList = new SelectList(db.EndUsers.OrderBy(x => x.EndUserID), "EndUserID", "Username");
+            ViewBag.EndUserList = new SelectList(db.EndUsers.OrderBy(x => x.Username), "EndUserID", "Username");
 
             return View();
         }
@@ -203,7 +203,7 @@ namespace AdobeLicenseManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AdobeIDForm([Bind(Include = "EndUserID,AdobeID")] AdobeIDFormViewModel adobeIDForm)
         {
-            ViewBag.EndUserList = new SelectList(db.EndUsers.OrderBy(x => x.EndUserID), "EndUserID", "Username");
+            ViewBag.EndUserList = new SelectList(db.EndUsers.OrderBy(x => x.Username), "EndUserID", "Username");
 
             if (ModelState.IsValid)
             {
