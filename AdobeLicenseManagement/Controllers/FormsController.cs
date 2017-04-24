@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -102,11 +103,18 @@ namespace AdobeLicenseManagement.Controllers
 
         //
         // GET: /Forms/EndUserForm
-        public ActionResult EndUserForm()
+        public ActionResult EndUserForm(int? id)
         {
-            // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
-            ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
-
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Request request = db.Requests.Find(id);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            ViewData["request"] = id;
             return View();
         }
 
@@ -213,11 +221,18 @@ namespace AdobeLicenseManagement.Controllers
 
         //
         // GET: /Forms/ServiceDeskForm
-        public ActionResult ServiceDeskForm()
+        public ActionResult ServiceDeskForm(int? id)
         {
-            // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
-            ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
-
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Request request = db.Requests.Find(id);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            ViewData["request"] = id;
             return View();
         }
 
@@ -227,9 +242,6 @@ namespace AdobeLicenseManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ServiceDeskForm([Bind(Include = "ServiceDeskRequestID,RequestID")] ServiceDeskFormViewModel serviceDeskForm)
         {
-            // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
-            ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
-
             if (ModelState.IsValid)
             {
                 Request req = db.Requests.Find(serviceDeskForm.RequestID);  // Get object from table

@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("New Help Desk Form", "HelpDeskForm", "Forms")
 </p>
 <table class="table">
     <tr>
@@ -71,6 +71,8 @@
             }
         </td>
         <td>
+            @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = item.RequestID }, null) |
+            @Html.ActionLink("Create Service Desk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null) |
             @Html.ActionLink("Edit", "Edit", new { id=item.RequestID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RequestID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.RequestID })

@@ -21,6 +21,8 @@
     </dl>
 </div>
 <p>
+    @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = Model.RequestID }, null) |
+    @Html.ActionLink("Create Service Desk Requests", "ServiceDeskForm", "Forms", new { id = Model.RequestID }, null) |
     @Html.ActionLink("Edit", "Edit", new { id = Model.RequestID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

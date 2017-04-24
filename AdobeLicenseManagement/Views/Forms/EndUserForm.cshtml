@@ -13,13 +13,8 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequestID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.RequestID, (SelectList)ViewBag.RequestList, "-- Select Request --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RequestID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <!-- Carries Request ID over from GET action to POST action -->
+        <input type="hidden" value=@ViewData["request"] name="RequestID" />
 
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })

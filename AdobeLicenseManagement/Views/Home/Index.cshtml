@@ -6,3 +6,41 @@
     <h1>Adobe License Management</h1>
     <p class="lead">This website is used to facilitate requests for Adobe Licenses at The University of Texas at El Paso.</p>
 </div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Help Desk Form</h2>
+        <p>
+            Fill out this form to create a new request for an Adobe License. This form is intended to be filled out by Help Desk staff.
+            This form requires that a Service Desk Request ID exists in <a href="https://servicedesk.utep.edu/">Service Desk</a>, a @Html.ActionLink("Point of Contact", "Index", "PointOfContacts", null, null),
+            a @Html.ActionLink("License Type", "Index", "LicenseTypes", null, null),
+            a @Html.ActionLink("Product", "Index", "Products", null, null),
+            and a @Html.ActionLink("VIP", "Index", "VIPs", null, null) has already been created on the Adobe License Management website.
+        </p>
+        <p>@Html.ActionLink("Start a new request", "Index", "Requests", null, null)</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Requests</h2>
+        <p>
+            Each request is a new request for an Adobe License. The request contains information regarding the Purchase Order, VIP, License Type, Product, and Point of Contacts.
+            New End Users and Service Desk requests related to existing Adobe License requests may be added to requests listed here.
+        </p>
+        <p>@Html.ActionLink("See list of requests", "Index", "Requests", null, null)</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Purchase Order Form</h2>
+        <p>
+            Fill out this form to add Purchase Order details to an existing Request. This form is intended to be filled out by the Adobe License Management
+            facilitator after the facilitator recieves the Purchase Order information from Adobe and the point of contact for this request.
+        </p>
+        <p>@Html.ActionLink("Add the PONo and PODate to an existing Request", "Index", "Requests", null, null)</p>
+    </div>
+    <div class="col-md-3">
+        <h2>Adobe ID Form</h2>
+        <p>
+            Fill out this form to add an Adobe ID to an End User. This form is intended to be filled out by the Adobe License Management facilitator after
+            the facilitator recieves the new Adobe ID from the Adobe Console.
+        </p>
+        <p>@Html.ActionLink("Add an Adobe ID to an existing End User", "Index", "Requests", null, null)</p>
+    </div>
+</div>
