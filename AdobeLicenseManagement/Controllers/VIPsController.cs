@@ -52,6 +52,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.VIPs.Add(vIP);
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "VIP " + vIP.VIPName + " created";
                 return RedirectToAction("Index");
             }
 
@@ -84,6 +85,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.Entry(vIP).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "VIP " + vIP.VIPName + " edited";
                 return RedirectToAction("Index");
             }
             return View(vIP);
@@ -112,6 +114,7 @@ namespace AdobeLicenseManagement.Controllers
             VIP vIP = db.VIPs.Find(id);
             db.VIPs.Remove(vIP);
             db.SaveChanges();
+            TempData["SuccessOHMsg"] = "VIP " + vIP.VIPName + " deleted";
             return RedirectToAction("Index");
         }
 

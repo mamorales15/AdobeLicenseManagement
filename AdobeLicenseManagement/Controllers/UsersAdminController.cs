@@ -116,6 +116,7 @@ namespace IdentitySample.Controllers
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
+                TempData["SuccessOHMsg"] = user.UserName + " role changed to " + selectedRole[0];
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Something failed.");
@@ -162,6 +163,7 @@ namespace IdentitySample.Controllers
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
+                TempData["SuccessOHMsg"] = "User " + user.UserName + " deleted";
                 return RedirectToAction("Index");
             }
             return View();

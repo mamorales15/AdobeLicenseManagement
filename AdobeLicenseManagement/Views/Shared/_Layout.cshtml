@@ -50,6 +50,30 @@
         </div>
     </div>
     <div class="container body-content">
+        <!-- Custom over head messages -->
+        <!-- Example from controller: "TempData["SuccessOHMsg"] = "License Type created";" -->
+        @if (TempData["SuccessOHMsg"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success!</strong> @TempData["SuccessOHMsg"]
+            </div>
+        }
+        @if (TempData["InfoOHMsg"] != null)
+        {
+            <div class="alert alert-info alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Info!</strong> @TempData["InfoOHMsg"]
+            </div>
+        }
+        @if (TempData["WarnOHMsg"] != null)
+        {
+            <div class="alert alert-warning alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Warning!</strong> @TempData["WarnOHMsg"]
+            </div>
+        }
+
         @RenderBody()
         <hr />
         <footer>

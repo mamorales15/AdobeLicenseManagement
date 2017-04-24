@@ -52,6 +52,7 @@ namespace AdobeLicenseManagement.Controllers
                     poc.POCName = helpDeskForm.POC;
                     db.PointOfContacts.Add(poc);
                     db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Point of Contact " + poc.POCName + " created";
                 }
                 else
                 {
@@ -93,7 +94,7 @@ namespace AdobeLicenseManagement.Controllers
                 db.SaveChanges();
                 db.ServiceDeskRequests.Add(sdReq);
                 db.SaveChanges();
-
+                TempData["SuccessOHMsg"] = "Service Desk Request " + sdReq.ServiceDeskRequestID + ", Purchase Order " + po.PurchaseOrderID + ", and Request " + req.RequestID + " created";
                 return RedirectToAction("HelpDeskForm");
             }
 
@@ -146,6 +147,7 @@ namespace AdobeLicenseManagement.Controllers
                 db.EndUsers.Add(endUser);
                 db.SaveChanges();
 
+                TempData["SuccessOHMsg"] = "End User " + endUser.Username + " created";
                 return RedirectToAction("EndUserForm");
             }
             ViewData["request"] = endUserForm.RequestID;
@@ -181,6 +183,7 @@ namespace AdobeLicenseManagement.Controllers
                 po.PODate = POForm.PODate;
                 db.SaveChanges();
 
+                TempData["SuccessOHMsg"] = "Purchase Order details added to the request " + req.RequestID;
                 return RedirectToAction("POForm");
             }
 
@@ -211,6 +214,7 @@ namespace AdobeLicenseManagement.Controllers
                 endUser.AdobeID = adobeIDForm.AdobeID;
                 db.SaveChanges();
 
+                TempData["SuccessOHMsg"] = "Adobe ID added to the end user " + endUser.Username;
                 return RedirectToAction("AdobeIDForm");
             }
 
@@ -252,6 +256,7 @@ namespace AdobeLicenseManagement.Controllers
                 req.ServiceDeskRequests.Add(sdreq);
                 db.SaveChanges();
 
+                TempData["SuccessOHMsg"] = "Additional Service Desk Request added to request " + req.RequestID;
                 return RedirectToAction("ServiceDeskForm");
             }
 

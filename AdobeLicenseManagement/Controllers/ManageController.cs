@@ -187,6 +187,7 @@ namespace AdobeLicenseManagement.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
+                TempData["SuccessOHMsg"] = "Phone number verified";
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
             // If we got this far, something failed, redisplay form
@@ -238,6 +239,7 @@ namespace AdobeLicenseManagement.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
+                TempData["SuccessOHMsg"] = "Password changed";
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);

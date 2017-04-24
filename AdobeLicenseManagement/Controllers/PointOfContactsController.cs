@@ -52,6 +52,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.PointOfContacts.Add(pointOfContact);
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " created";
                 return RedirectToAction("Index");
             }
 
@@ -84,6 +85,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.Entry(pointOfContact).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " edited";
                 return RedirectToAction("Index");
             }
             return View(pointOfContact);
@@ -112,6 +114,7 @@ namespace AdobeLicenseManagement.Controllers
             PointOfContact pointOfContact = db.PointOfContacts.Find(id);
             db.PointOfContacts.Remove(pointOfContact);
             db.SaveChanges();
+            TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " deleted";
             return RedirectToAction("Index");
         }
 

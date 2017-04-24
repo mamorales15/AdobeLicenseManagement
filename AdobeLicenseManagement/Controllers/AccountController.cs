@@ -110,6 +110,7 @@ namespace AdobeLicenseManagement.Controllers
         {
             if (!ModelState.IsValid)
             {
+                TempData["SuccessOHMsg"] = "Code verified";
                 return View(model);
             }
 
@@ -167,6 +168,7 @@ namespace AdobeLicenseManagement.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                        TempData["SuccessOHMsg"] = "You are now registered";
                         return RedirectToAction("Index", "Home");
                     }
                     AddErrors(result);
@@ -262,6 +264,7 @@ namespace AdobeLicenseManagement.Controllers
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
+                TempData["SuccessOHMsg"] = "Password Reset";
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
@@ -397,6 +400,7 @@ namespace AdobeLicenseManagement.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            TempData["SuccessOHMsg"] = "Logged off";
             return RedirectToAction("Index", "Home");
         }
 

@@ -54,6 +54,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.ServiceDeskRequests.Add(ServiceDeskRequest);
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " created";
                 return RedirectToAction("Index");
             }
 
@@ -88,6 +89,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.Entry(ServiceDeskRequest).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " edited";
                 return RedirectToAction("Index");
             }
             ViewBag.RequestID = new SelectList(db.Requests, "RequestID", "RequestID", ServiceDeskRequest.ServiceDeskRequestID);
@@ -117,6 +119,7 @@ namespace AdobeLicenseManagement.Controllers
             ServiceDeskRequest ServiceDeskRequest = db.ServiceDeskRequests.Find(id);
             db.ServiceDeskRequests.Remove(ServiceDeskRequest);
             db.SaveChanges();
+            TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " deleted";
             return RedirectToAction("Index");
         }
 

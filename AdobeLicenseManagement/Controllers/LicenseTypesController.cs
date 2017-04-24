@@ -52,6 +52,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.LicenseTypes.Add(licenseType);
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " created";
                 return RedirectToAction("Index");
             }
 
@@ -84,6 +85,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.Entry(licenseType).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " edited";
                 return RedirectToAction("Index");
             }
             return View(licenseType);
@@ -112,6 +114,7 @@ namespace AdobeLicenseManagement.Controllers
             LicenseType licenseType = db.LicenseTypes.Find(id);
             db.LicenseTypes.Remove(licenseType);
             db.SaveChanges();
+            TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " deleted";
             return RedirectToAction("Index");
         }
 

@@ -54,6 +54,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.PurchaseOrders.Add(purchaseOrder);
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " created";
                 return RedirectToAction("Index");
             }
 
@@ -88,6 +89,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.Entry(purchaseOrder).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " edited";
                 return RedirectToAction("Index");
             }
             ViewBag.PurchaseOrderID = new SelectList(db.Requests, "RequestID", "RequestID", purchaseOrder.PurchaseOrderID);
@@ -117,6 +119,7 @@ namespace AdobeLicenseManagement.Controllers
             PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(id);
             db.PurchaseOrders.Remove(purchaseOrder);
             db.SaveChanges();
+            TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " deleted";
             return RedirectToAction("Index");
         }
 

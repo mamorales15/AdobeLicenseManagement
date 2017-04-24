@@ -93,6 +93,7 @@ namespace AdobeLicenseManagement.Controllers
                 endUser.Request = req;
                 db.Entry(endUser).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "End User " + endUser.Username + " edited";
                 return RedirectToAction("Index");
             }
 
@@ -125,6 +126,7 @@ namespace AdobeLicenseManagement.Controllers
             EndUser endUser = db.EndUsers.Find(id);
             db.EndUsers.Remove(endUser);
             db.SaveChanges();
+            TempData["SuccessOHMsg"] = "End User " + endUser.Username + " deleted";
             return RedirectToAction("Index");
         }
 

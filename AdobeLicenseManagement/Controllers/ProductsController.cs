@@ -52,6 +52,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.Products.Add(product);
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " created";
                 return RedirectToAction("Index");
             }
 
@@ -84,6 +85,7 @@ namespace AdobeLicenseManagement.Controllers
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " edited";
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -112,6 +114,7 @@ namespace AdobeLicenseManagement.Controllers
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
             db.SaveChanges();
+            TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " deleted";
             return RedirectToAction("Index");
         }
 
