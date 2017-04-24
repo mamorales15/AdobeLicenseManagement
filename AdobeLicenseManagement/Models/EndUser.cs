@@ -29,6 +29,8 @@ namespace AdobeLicenseManagement.Models
 
         [Display(Name = "Tag Number")]
         [Required(ErrorMessage = "Tag number is required")]
+        [RegularExpression("^[0-9]{6,6}$", ErrorMessage = "Tag number must be length 6")]
+        //[Range(000000, 999999, ErrorMessage = "Tag number must of length 6")]
         public int Tag { get; set; }
 
         [Display(Name = "Computer Serial")]
@@ -38,9 +40,6 @@ namespace AdobeLicenseManagement.Models
         [Display(Name = "Computer Name")]
         [StringLength(50, MinimumLength = 3)]
         public string ComputerName { get; set; }
-
-        [Display(Name = "Counter 'TESTING'")]
-        public int? Counter { get; set; }
 
         [Display(Name = "Adobe ID")]
         [StringLength(50, MinimumLength = 3)]

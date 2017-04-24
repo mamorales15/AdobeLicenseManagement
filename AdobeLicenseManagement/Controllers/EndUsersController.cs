@@ -58,7 +58,6 @@ namespace AdobeLicenseManagement.Controllers
             endUserVM.Building = endUser.Building;
             endUserVM.ComputerName = endUser.ComputerName;
             endUserVM.ComputerSerial = endUser.ComputerSerial;
-            endUserVM.Counter = endUser.Counter;
             endUserVM.Email = endUser.Email;
             endUserVM.EndUserID = endUser.EndUserID;
             endUserVM.RequestID = endUser.Request.RequestID;
@@ -77,7 +76,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EndUserID,Username,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,Counter,AdobeID,RequestID")] EndUserViewModel endUserVM)
+        public ActionResult Edit([Bind(Include = "EndUserID,Username,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,AdobeID,RequestID")] EndUserViewModel endUserVM)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +88,6 @@ namespace AdobeLicenseManagement.Controllers
                 endUser.Tag = endUserVM.Tag;
                 endUser.ComputerSerial = endUserVM.ComputerSerial;
                 endUser.ComputerName = endUserVM.ComputerName;
-                endUser.Counter = endUserVM.Counter;
                 endUser.AdobeID = endUserVM.AdobeID;
                 Request req = db.Requests.Find(endUserVM.RequestID);
                 endUser.Request = req;

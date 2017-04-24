@@ -34,12 +34,28 @@
         <td>
             @Html.DisplayFor(modelItem => item.Qty)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PONo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PODate)
-        </td>
+        <!-- Hide PONo if it hasn't been entered yet -->
+        @if (item.PONo != "")
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.PONo)
+            </td>
+        }
+        else
+        {
+            <td></td>
+        }
+        <!-- Hide PODate if it hasn't been entered yet -->
+        @if (item.PODate != new DateTime(1753, 1, 1))
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.PODate)
+            </td>
+        }
+        else
+        {
+            <td></td>
+        }
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PurchaseOrderID }) |
             @Html.ActionLink("Details", "Details", new { id=item.PurchaseOrderID }) |

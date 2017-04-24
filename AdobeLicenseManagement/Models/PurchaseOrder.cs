@@ -18,7 +18,7 @@ namespace AdobeLicenseManagement.Models
         public int Qty { get; set; }
 
         [Display(Name = "Purchase Order Number")]
-        public int PONo { get; set; }
+        public string PONo { get; set; }
 
         [Display(Name = "Purchase Order Date")]
         [DataType(DataType.Date)]

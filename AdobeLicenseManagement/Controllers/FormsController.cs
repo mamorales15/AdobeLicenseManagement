@@ -122,7 +122,7 @@ namespace AdobeLicenseManagement.Controllers
         // POST: /Forms/EndUserForm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EndUserForm([Bind(Include = "RequestID,Username,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,Counter,AdobeID")] EndUserFormViewModel endUserForm)
+        public ActionResult EndUserForm([Bind(Include = "RequestID,Username,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,AdobeID")] EndUserFormViewModel endUserForm)
         {
             // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
             ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
@@ -141,7 +141,6 @@ namespace AdobeLicenseManagement.Controllers
                 endUser.Tag = endUserForm.Tag;
                 endUser.ComputerSerial = endUserForm.ComputerSerial;
                 endUser.ComputerName = endUserForm.ComputerName;
-                endUser.Counter = endUserForm.Counter;
                 endUser.AdobeID = endUserForm.AdobeID;      // Optional to include AdobeID right when the EndUser is created, but should be rare
                 endUser.Request = req;
                 db.EndUsers.Add(endUser);
@@ -149,7 +148,7 @@ namespace AdobeLicenseManagement.Controllers
 
                 return RedirectToAction("EndUserForm");
             }
-
+            ViewData["request"] = endUserForm.RequestID;
             ModelState.AddModelError("", "Problem Submitting the form. Model state is not valid.");
             return View();
         }

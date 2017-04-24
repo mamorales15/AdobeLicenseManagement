@@ -61,18 +61,18 @@
         <td>
             @foreach (var sdreq in item.ServiceDeskRequests)
             {
-                @sdreq.ServiceDeskRequestID
+                @sdreq.ServiceDeskRequestID<br/>
             }
         </td>
         <td>
             @foreach (var endU in item.EndUsers)
             {
-                @endU.Username
+                @endU.Username<br/>
             }
         </td>
         <td>
             @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = item.RequestID }, null) |
-            @Html.ActionLink("Create Service Desk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null) |
+            @Html.ActionLink("Create Service Desk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null)<br/>
             @Html.ActionLink("Edit", "Edit", new { id=item.RequestID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RequestID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.RequestID })

@@ -79,9 +79,6 @@ namespace AdobeLicenseManagement.Models
         [StringLength(50, MinimumLength = 3)]
         public string ComputerName { get; set; }
 
-        [Display(Name = "Counter 'TESTING'")]
-        public int? Counter { get; set; }
-
         [Display(Name = "Adobe ID")]
         [StringLength(50, MinimumLength = 3)]
         public string AdobeID { get; set; }
@@ -93,7 +90,7 @@ namespace AdobeLicenseManagement.Models
         public int RequestID { get; set; }
 
         [Display(Name = "Purchase Order Number")]
-        public int PONo { get; set; }
+        public string PONo { get; set; }
 
         [Display(Name = "Purchase Order Date")]
         [DataType(DataType.Date)]
