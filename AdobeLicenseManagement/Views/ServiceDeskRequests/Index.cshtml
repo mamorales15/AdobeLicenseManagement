@@ -9,9 +9,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Request.RequestID)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.ServiceDeskRequestID)
         </th>
         <th></th>
@@ -19,9 +16,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Request.RequestID)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.ServiceDeskRequestID)
         </td>

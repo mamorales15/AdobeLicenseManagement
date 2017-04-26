@@ -11,14 +11,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Request.RequestID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Request.RequestID)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Qty)
         </dt>
 
@@ -40,6 +32,72 @@
 
         <dd>
             @Html.DisplayFor(model => model.PODate)
+        </dd>
+
+        <dt>
+            Request
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>
+                        Request ID
+                    </th>
+                    <th>
+                        Purchase Order Number
+                    </th>
+                    <th>
+                        VIP Name
+                    </th>
+                    <th>
+                        License Type Description
+                    </th>
+                    <th>
+                        Product Description
+                    </th>
+                    <th>
+                        Point of Contact Name
+                    </th>
+                    <th>
+                        Service Desk Request ID
+                    </th>
+                    <th>
+                        End User ID
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Request.RequestID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Request.PurchaseOrder.PurchaseOrderID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Request.VIP.VIPName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Request.LicenseType.LicenseTypeDesc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Request.Product.ProductDesc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Request.PointOfContact.POCName)
+                    </td>
+                    <td>
+                        @foreach (var sdreq in Model.Request.ServiceDeskRequests)
+                        {
+                            @sdreq.ServiceDeskRequestID<br />
+                        }
+                    </td>
+                    <td>
+                        @foreach (var endU in Model.Request.EndUsers)
+                        {
+                            @endU.Username<br />
+                        }
+                    </td>
+                </tr>
+            </table>
         </dd>
 
     </dl>

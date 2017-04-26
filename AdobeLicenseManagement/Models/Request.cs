@@ -21,6 +21,7 @@ namespace AdobeLicenseManagement.Models
 
         [Display(Name = "Service Desk Request ID")]
         public virtual ICollection<ServiceDeskRequest> ServiceDeskRequests { get; set; }
+        [Display(Name = "End User ID")]
         public virtual ICollection<EndUser> EndUsers { get; set; }
     }
 }
