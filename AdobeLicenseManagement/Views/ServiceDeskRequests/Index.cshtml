@@ -11,6 +11,9 @@
         <th>
             @Html.DisplayNameFor(model => model.ServiceDeskRequestID)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Request.RequestID)
+        </th>
         <th></th>
     </tr>
 
@@ -18,6 +21,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.ServiceDeskRequestID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Request.RequestID)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ServiceDeskRequestID }) |

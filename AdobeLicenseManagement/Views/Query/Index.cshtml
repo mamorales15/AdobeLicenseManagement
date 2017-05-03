@@ -1,0 +1,545 @@
+﻿@model AdobeLicenseManagement.Models.QueryViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div id="QueryArea" class="col-xs-12" style="padding: 0px 0px 10px 0px">
+    <form action="" method="post">
+        <div id="QueryHeader" class="col-xs-12" style="padding: 3px 0px 3px 0px">
+            <button type="submit" value="Run" name="action:Run" class="btn btn-primary btn-md">
+                <span class="glyphicon glyphicon-play-circle"></span>
+            </button>
+            <button type="submit" value="Save" name="action:Save" class="btn btn-primary btn-md">
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+        </div>
+        <div id="QueryBox" class="col-xs-12" style="padding: 3px 0px 3px 0px">
+            <!--Html.TextArea("queryBox", ViewBag.Query as string, new { class = "form-control", style = "max-width: 100%; width: 100%; height: 100px", placeholder = "SELECT *\nFROM Requests\nWHERE PointOfContact_POCName = 'mamorales15';" })-->
+            @Html.TextAreaFor(m => m.Query, new { @class = "form-control", @style = "max-width: 100%; width: 100%; height: 100px", @placeholder = "SELECT *\nFROM Requests\nWHERE PointOfContact_POCName = 'mamorales15';" })
+        </div>
+    </form>
+</div>
+
+<div class="col-xs-12">
+    <div id="ShortcutsArea" class="col-xs-6" style="padding-left: 0px">
+        <div id="SyntaxArea" class="col-xs-12" style="padding: 10px 0px 10px 0px">
+            <div id="Commands" style="padding: 0px 0px 3px 0px;">
+                <div class="btn-group" role="group" aria-label="Commands">
+                    <button type="button" class="btn btn-default" onclick="addText('SELECT ')">SELECT</button>
+                    <button type="button" class="btn btn-default" onclick="addText('FROM ')">FROM</button>
+                    <button type="button" class="btn btn-default" onclick="addText('INNER JOIN ')">INNER JOIN</button>
+                    <button type="button" class="btn btn-default" onclick="addText('WHERE ')">WHERE</button>
+                </div>
+            </div>
+            <div id="Logical" style="padding: 3px 0px 3px 0px;">
+                <div class="btn-group" role="group" aria-label="Logical">
+                    <button type="button" class="btn btn-default" onclick="addText('AND ')">AND</button>
+                    <button type="button" class="btn btn-default" onclick="addText('OR ')">OR</button>
+                    <button type="button" class="btn btn-default" onclick="addText('NOT ')">NOT</button>
+                </div>
+            </div>
+            <div id="Comparison" style="padding: 3px 0px 0px 0px;">
+                <div class="btn-group" role="group" aria-label="Comparison">
+                    <button type="button" class="btn btn-default" onclick="addText('= ')">=</button>
+                    <button type="button" class="btn btn-default" onclick="addText('<> ')"><></button>
+                    <button type="button" class="btn btn-default" onclick="addText('> ')">></button>
+                    <button type="button" class="btn btn-default" onclick="addText('< ')"><</button>
+                    <button type="button" class="btn btn-default" onclick="addText('>= ')">>=</button>
+                    <button type="button" class="btn btn-default" onclick="addText('<= ')"><=</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="TablesArea" class="col-xs-12" style="padding: 10px 0px 0px 0px">
+            <div class="btn-group col-xs-12" id="EndUsers" style="padding: 0px 0px 3px 0px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <button type="button" class="btn btn-default" onclick="addText('EndUsers ')">End Users</button>
+                <ul class="dropdown-menu">
+                    <li onclick="addText('EndUserID ')"><a href="#">End User ID</a></li>
+                    <li onclick="addText('Username ')"><a href="#">Username</a></li>
+                    <li onclick="addText('Email ')"><a href="#">Email</a></li>
+                    <li onclick="addText('Building ')"><a href="#">Building</a></li>
+                    <li onclick="addText('RmNo ')"><a href="#">Room Number</a></li>
+                    <li onclick="addText('Tag ')"><a href="#">Tag Number</a></li>
+                    <li onclick="addText('ComputerSerial ')"><a href="#">Computer Serial</a></li>
+                    <li onclick="addText('ComputerName ')"><a href="#">Computer Name</a></li>
+                    <li onclick="addText('AdobeID ')"><a href="#">Adobe ID</a></li>
+                </ul>
+            </div>
+            <div class="btn-group col-xs-12" id="LicenseTypes" style="padding: 3px 0px 3px 0px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <button type="button" class="btn btn-default" onclick="addText('LicenseTypes ')">License Types</button>
+                <ul class="dropdown-menu">
+                    <li onclick="addText('LicenseTypeID ')"><a href="#">License Type ID</a></li>
+                    <li onclick="addText('LicenseTypeDesc ')"><a href="#">License Type Description</a></li>
+
+                </ul>
+            </div>
+            <div class="btn-group col-xs-12" id="PointOfContacts" style="padding: 3px 0px 3px 0px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <button type="button" class="btn btn-default" onclick="addText('PointOfContacts ')">Point of Contacts</button>
+                <ul class="dropdown-menu">
+                    <li onclick="addText('POCName ')"><a href="#">Point of Contact Name</a></li>
+                </ul>
+            </div>
+            <div class="btn-group col-xs-12" id="Products" style="padding: 3px 0px 3px 0px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <button type="button" class="btn btn-default" onclick="addText('Products ')">Products</button>
+                <ul class="dropdown-menu">
+                    <li onclick="addText('ProductID ')"><a href="#">Product ID</a></li>
+                    <li onclick="addText('ProductDesc ')"><a href="#">Product Description</a></li>
+                </ul>
+            </div>
+            <div class="btn-group col-xs-12" id="PurchaseOrders" style="padding: 3px 0px 3px 0px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <button type="button" class="btn btn-default" onclick="addText('PurchaseOrders ')">Purchase Orders</button>
+                <ul class="dropdown-menu">
+                    <li onclick="addText('PurchaseOrderID ')"><a href="#">Purchase Order ID</a></li>
+                    <li onclick="addText('Qty ')"><a href="#">Qty</a></li>
+                    <li onclick="addText('PONo ')"><a href="#">PO Number</a></li>
+                    <li onclick="addText('PODate ')"><a href="#">PO Date</a></li>
+                </ul>
+            </div>
+            <div class="btn-group col-xs-12" id="Requests" style="padding: 3px 0px 3px 0px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <button type="button" class="btn btn-default" onclick="addText('Requests ')">Requests</button>
+                <ul class="dropdown-menu">
+                    <li onclick="addText('RequestID ')"><a href="#">Request ID</a></li>
+                </ul>
+            </div>
+            <div class="btn-group col-xs-12" id="ServiceDeskRequests" style="padding: 3px 0px 3px 0px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <button type="button" class="btn btn-default" onclick="addText('ServiceDeskRequests ')">Service Desk Requests</button>
+                <ul class="dropdown-menu">
+                    <li onclick="addText('ServiceDeskRequestID ')"><a href="#">Service Desk Request ID</a></li>
+                </ul>
+            </div>
+            <div class="btn-group col-xs-12" id="VIPs" style="padding: 3px 0px 0px 0px;">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <button type="button" class="btn btn-default" onclick="addText('VIPs ')">VIPs</button>
+                <ul class="dropdown-menu">
+                    <li onclick="addText('VIPID ')"><a href="#">VIP ID</a></li>
+                    <li onclick="addText('VIPName ')"><a href="#">VIP Name</a></li>
+                    <li onclick="addText('VIPNumber ')"><a href="#">VIP Number</a></li>
+                    <li onclick="addText('VIPRenewalDate ')"><a href="#">VIP Renewal Date</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Only show Saved Queries section if a query has already been saved-->
+    <div id="SavedQueriesArea" class="col-xs-6">
+        @if (Model.SavedQueries.Any())
+        {
+            <div class="col-xs-12">
+                @Html.Label("Saved Queries")
+            </div>
+                <div class="col-xs-12">
+                    <table class="table-striped table-bordered table-hover table-responsive panel-default">
+                        <tr>
+                            <th>
+                                Query ID
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.SavedQueries)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SavedQueryID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Run", "Run", "SavedQueries", new { id = item.SavedQueryID }, new { @class = "glyphicon glyphicon-play-circle" }) |
+                                    @Html.ActionLink("Edit", "Edit", "SavedQueries", new { id = item.SavedQueryID }, new { @class = "glyphicon glyphicon-cog" }) |
+                                    @Html.ActionLink("Delete", "Delete", "SavedQueries", new { id = item.SavedQueryID }, new { @class = "glyphicon glyphicon-trash" })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+        }
+    </div>
+</div>
+
+<!-- Only show Results section if a query has been submitted -->
+@if (Model.Queries != null)
+{
+    <div id="ResultsArea" class="col-xs-12">
+        <div class="col-xs-12">
+            @Html.Label("Results")
+        </div>
+        <div class="col-xs-12">
+            <table class="table-striped table-bordered table-hover table-responsive panel-default col-xs-12" style="empty-cells: hide">
+                <tr>
+                    <!-- End Users -->
+                    @if (Model.Queries.Any(row => row.EndUserID != 0))
+                {
+                        <th style="padding: 5px">
+                            End User ID
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.Username != null))
+                {
+                        <th style="padding: 5px">
+                            Username
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.Email != null))
+                {
+                        <th style="padding: 5px">
+                            Email
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.Building != null))
+                {
+                        <th style="padding: 5px">
+                            Building
+                        </th>
+                    }
+
+                    <!-- Consumables Ordered -->
+                    @if (Model.Queries.Any(row => row.RmNo != null))
+                {
+                        <th style="padding: 5px">
+                            Room Number
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.Tag != 0))
+                {
+                        <th style="padding: 5px">
+                            Tag Number
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.ComputerSerial != null))
+                {
+                        <th style="padding: 5px">
+                            Computer Serial
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.ComputerName != null))
+                {
+                        <th style="padding: 5px">
+                            Computer Name
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.AdobeID != null))
+                {
+                        <th style="padding: 5px">
+                            Adobe ID
+                        </th>
+                    }
+
+                    <!-- License Type -->
+                    @if (Model.Queries.Any(row => row.LicenseTypeID != 0))
+                {
+                        <th style="padding: 5px">
+                            License Type ID
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.LicenseTypeDesc != null))
+                {
+                        <th style="padding: 5px">
+                            License Type Description
+                        </th>
+                    }
+
+                    <!-- Point of Contact -->
+                    @if (Model.Queries.Any(row => row.POCName != null))
+                {
+                        <th style="padding: 5px">
+                            Point of Contact Name
+                        </th>
+                    }
+
+                    <!-- Product -->
+                    @if (Model.Queries.Any(row => row.ProductID != 0))
+                {
+                        <th style="padding: 5px">
+                            Product ID
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.ProductDesc != null))
+                {
+                        <th style="padding: 5px">
+                            Product Description
+                        </th>
+                    }
+
+                    <!-- Purchase Order -->
+                    @if (Model.Queries.Any(row => row.PurchaseOrderID != 0))
+                {
+                        <th style="padding: 5px">
+                            Purchase Order ID
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.Qty != 0))
+                {
+                        <th style="padding: 5px">
+                            Quantity
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.PONo != null))
+                {
+                        <th style="padding: 5px">
+                            Purchase Order Number
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.PODate != default(DateTime)))
+                {
+                        <th style="padding: 5px">
+                            Purchase Order Date
+                        </th>
+                    }
+
+                    <!-- Request -->
+                    @if (Model.Queries.Any(row => row.RequestID != 0))
+                {
+                        <th style="padding: 5px">
+                            Request ID
+                        </th>
+                    }
+
+                    <!-- Service Desk Request -->
+                    @if (Model.Queries.Any(row => row.ServiceDeskRequestID != 0))
+                {
+                        <th style="padding: 5px">
+                            Service Desk Request ID
+                        </th>
+                    }
+
+                    <!-- VIP -->
+                    @if (Model.Queries.Any(row => row.VIPID != 0))
+                {
+                        <th style="padding: 5px">
+                            VIP ID
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.VIPName != null))
+                {
+                        <th style="padding: 5px">
+                            VIP Name
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.VIPNumber != null))
+                {
+                        <th style="padding: 5px">
+                            VIP Number
+                        </th>
+                    }
+                    @if (Model.Queries.Any(row => row.VIPRenewalDate != default(DateTime)))
+                {
+                        <th style="padding: 5px">
+                            VIP Renewal Date
+                        </th>
+                    }
+                </tr>
+
+                @foreach (var item in Model.Queries)
+                {
+                    <tr>
+                        <!-- End User -->
+                        @if (Model.Queries.Any(row => row.EndUserID != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.EndUserID)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.Username != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.Username)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.Email != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.Building != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.Building)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.RmNo != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.RmNo)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.Tag != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.Tag)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.ComputerSerial != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.ComputerSerial)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.ComputerName != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.ComputerName)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.AdobeID != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.AdobeID)
+                            </td>
+                        }
+
+                        <!-- License Type -->
+                        @if (Model.Queries.Any(row => row.LicenseTypeID != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.LicenseTypeID)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.LicenseTypeDesc != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.LicenseTypeDesc)
+                            </td>
+                        }
+
+                        <!-- Point of Contact -->
+                        @if (Model.Queries.Any(row => row.POCName != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.POCName)
+                            </td>
+                        }
+
+                        <!-- Product -->
+                        @if (Model.Queries.Any(row => row.ProductID != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.ProductID)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.ProductDesc != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.ProductDesc)
+                            </td>
+                        }
+
+                        <!-- Purchase Order -->
+                        @if (Model.Queries.Any(row => row.PurchaseOrderID != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.PurchaseOrderID)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.Qty != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.Qty)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.PONo != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.PONo)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.PODate != default(DateTime)))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.PODate)
+                            </td>
+                        }
+
+                        <!-- Request -->
+                        @if (Model.Queries.Any(row => row.RequestID != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.RequestID)
+                            </td>
+                        }
+
+                        <!-- Service Desk Request -->
+                        @if (Model.Queries.Any(row => row.ServiceDeskRequestID != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.ServiceDeskRequestID)
+                            </td>
+                        }
+
+                        <!-- VIP -->
+                        @if (Model.Queries.Any(row => row.VIPID != 0))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.VIPID)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.VIPName != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.VIPName)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.VIPNumber != null))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.VIPNumber)
+                            </td>
+                        }
+                        @if (Model.Queries.Any(row => row.VIPRenewalDate != default(DateTime)))
+                    {
+                            <td style="padding: 5px">
+                                @Html.DisplayFor(modelItem => item.VIPRenewalDate)
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+
+<script language="javascript" type="text/javascript">
+    function addText(text) {
+        document.getElementById('Query').value += text
+    }
+</script>

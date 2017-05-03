@@ -42,6 +42,7 @@
                             <li>@Html.ActionLink("Adobe ID Form", "AdobeIDForm", "Forms")</li>
                         </ul>
                     </li>
+                    <li>@Html.ActionLink("Queries", "Index", "Query")</li>
                     <li>@Html.ActionLink("Change Log", "Index", "Home")</li>
                     <li>@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</li>
                 </ul>
@@ -73,10 +74,17 @@
                 <strong>Warning!</strong> @TempData["WarnOHMsg"]
             </div>
         }
+        @if (TempData["DangerOHMsg"] != null)
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Danger!</strong> @TempData["DangerOHMsg"]
+            </div>
+        }
 
         @RenderBody()
         <hr />
-        <footer>
+        <footer class="col-md-12">
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>

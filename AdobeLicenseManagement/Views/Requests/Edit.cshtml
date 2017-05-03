@@ -1,4 +1,4 @@
-﻿@model AdobeLicenseManagement.Models.Request
+﻿@model AdobeLicenseManagement.Models.RequestEditViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -16,6 +16,38 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.RequestID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VIPID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.VIPID, (SelectList)ViewBag.VIPList, "-- Select VIP --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.VIPID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LicenseTypeID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.LicenseTypeID, (SelectList)ViewBag.LicenseTypeList, "-- Select License Type --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LicenseTypeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ProductID, (SelectList)ViewBag.ProductList, "-- Select Product --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.POCName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.POCName, new { htmlAttributes = new { @class = "form-control", @placeholder = "0" } })
+                @Html.ValidationMessageFor(model => model.POCName, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

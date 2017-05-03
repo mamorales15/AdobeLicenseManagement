@@ -74,8 +74,14 @@ namespace AdobeLicenseManagement.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RequestID = new SelectList(db.Requests, "RequestID", "RequestID", ServiceDeskRequest.ServiceDeskRequestID);
-            return View(ServiceDeskRequest);
+            ServiceDeskRequestEditViewModel sdrEdit = new ServiceDeskRequestEditViewModel();
+            sdrEdit.ServiceDeskRequestID = ServiceDeskRequest.ServiceDeskRequestID;
+            if(ServiceDeskRequest.Request != null)
+            {
+                sdrEdit.RequestID = ServiceDeskRequest.Request.RequestID;
+            }
+            ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
+            return View(sdrEdit);
         }
 
         // POST: ServiceDeskRequests/Edit/5
@@ -83,17 +89,28 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ServiceDeskRequestID")] ServiceDeskRequest ServiceDeskRequest)
+        public ActionResult Edit([Bind(Include = "ServiceDeskRequestID,RequestID")] ServiceDeskRequestEditViewModel sdrEdit)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ServiceDeskRequest).State = EntityState.Modified;
+                ServiceDeskRequest sdr = db.ServiceDeskRequests.Find(sdrEdit.ServiceDeskRequestID);
+                sdr.ServiceDeskRequestID = sdrEdit.ServiceDeskRequestID;
+                if(sdr.Request != null)
+                {
+                    // Remove Service Desk Request from it's old Request's list
+                    sdr.Request.ServiceDeskRequests.Remove(sdr);
+                }
+                // Get the new request
+                sdr.Request = db.Requests.Find(sdrEdit.RequestID);
+                // Add Service Desk Request to new Request's list
+                sdr.Request.ServiceDeskRequests.Add(sdr);
+                db.Entry(sdr).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " edited";
+                TempData["SuccessOHMsg"] = "Service Desk Request " + sdrEdit.ServiceDeskRequestID + " edited";
                 return RedirectToAction("Index");
             }
-            ViewBag.RequestID = new SelectList(db.Requests, "RequestID", "RequestID", ServiceDeskRequest.ServiceDeskRequestID);
-            return View(ServiceDeskRequest);
+            ViewBag.RequestID = new SelectList(db.Requests, "RequestID", "RequestID", sdrEdit.ServiceDeskRequestID);
+            return View(sdrEdit);
         }
 
         // GET: ServiceDeskRequests/Delete/5

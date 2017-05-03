@@ -197,7 +197,9 @@
     <Compile Include="Controllers\PointOfContactsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
+    <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
+    <Compile Include="Controllers\SavedQueriesController.cs" />
     <Compile Include="Controllers\ServiceDeskRequestsController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VIPsController.cs" />
@@ -248,6 +250,26 @@
     <Compile Include="Migrations\201704242136106_Changeded Tag numbers back to ints to test range dataannotation.Designer.cs">
       <DependentUpon>201704242136106_Changeded Tag numbers back to ints to test range dataannotation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704262008506_Trying to reset.cs" />
+    <Compile Include="Migrations\201704262008506_Trying to reset.Designer.cs">
+      <DependentUpon>201704262008506_Trying to reset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704262019412_Trying to reset try 2.cs" />
+    <Compile Include="Migrations\201704262019412_Trying to reset try 2.Designer.cs">
+      <DependentUpon>201704262019412_Trying to reset try 2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705012048006_Added Query models.cs" />
+    <Compile Include="Migrations\201705012048006_Added Query models.Designer.cs">
+      <DependentUpon>201705012048006_Added Query models.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705012050536_Added Query models Try 2.cs" />
+    <Compile Include="Migrations\201705012050536_Added Query models Try 2.Designer.cs">
+      <DependentUpon>201705012050536_Added Query models Try 2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705012053191_Added Query models Try 3.cs" />
+    <Compile Include="Migrations\201705012053191_Added Query models Try 3.Designer.cs">
+      <DependentUpon>201705012053191_Added Query models Try 3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -260,7 +282,9 @@
     <Compile Include="Models\PointOfContact.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\PurchaseOrder.cs" />
+    <Compile Include="Models\QueryViewModel.cs" />
     <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\SavedQuery.cs" />
     <Compile Include="Models\ServiceDeskRequest.cs" />
     <Compile Include="Models\VIP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -357,7 +381,6 @@
     <Content Include="Views\ServiceDeskRequests\Details.cshtml" />
     <Content Include="Views\ServiceDeskRequests\Edit.cshtml" />
     <Content Include="Views\ServiceDeskRequests\Index.cshtml" />
-    <Content Include="Views\Requests\Create.cshtml" />
     <Content Include="Views\Requests\Delete.cshtml" />
     <Content Include="Views\Requests\Details.cshtml" />
     <Content Include="Views\Requests\Edit.cshtml" />
@@ -366,6 +389,12 @@
     <Content Include="Views\Forms\POForm.cshtml" />
     <Content Include="Views\Forms\ServiceDeskForm.cshtml" />
     <Content Include="Views\Forms\EndUserForm.cshtml" />
+    <Content Include="Views\Query\Index.cshtml" />
+    <Content Include="Views\SavedQueries\Create.cshtml" />
+    <Content Include="Views\SavedQueries\Delete.cshtml" />
+    <Content Include="Views\SavedQueries\Details.cshtml" />
+    <Content Include="Views\SavedQueries\Edit.cshtml" />
+    <Content Include="Views\SavedQueries\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -418,6 +447,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704242136106_Changeded Tag numbers back to ints to test range dataannotation.resx">
       <DependentUpon>201704242136106_Changeded Tag numbers back to ints to test range dataannotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704262008506_Trying to reset.resx">
+      <DependentUpon>201704262008506_Trying to reset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704262019412_Trying to reset try 2.resx">
+      <DependentUpon>201704262019412_Trying to reset try 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705012048006_Added Query models.resx">
+      <DependentUpon>201705012048006_Added Query models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705012050536_Added Query models Try 2.resx">
+      <DependentUpon>201705012050536_Added Query models Try 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705012053191_Added Query models Try 3.resx">
+      <DependentUpon>201705012053191_Added Query models Try 3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

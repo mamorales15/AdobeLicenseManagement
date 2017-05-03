@@ -36,32 +36,6 @@ namespace AdobeLicenseManagement.Controllers
             return View(request);
         }
 
-        // GET: Requests/Create
-        public ActionResult Create()
-        {
-            ViewBag.RequestID = new SelectList(db.PurchaseOrders, "PurchaseOrderID", "PurchaseOrderID");
-            return View();
-        }
-
-        // POST: Requests/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RequestID")] Request request)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Requests.Add(request);
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Request " + request.RequestID + " created";
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.RequestID = new SelectList(db.PurchaseOrders, "PurchaseOrderID", "PurchaseOrderID", request.RequestID);
-            return View(request);
-        }
-
         // GET: Requests/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -74,8 +48,20 @@ namespace AdobeLicenseManagement.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RequestID = new SelectList(db.PurchaseOrders, "PurchaseOrderID", "PurchaseOrderID", request.RequestID);
-            return View(request);
+
+            RequestEditViewModel reqEdit = new RequestEditViewModel();
+            reqEdit.RequestID = request.RequestID;
+            reqEdit.PurchaseOrderID = request.PurchaseOrder.PurchaseOrderID;
+            reqEdit.VIPID = request.VIP.VIPID;
+            reqEdit.LicenseTypeID = request.LicenseType.LicenseTypeID;
+            reqEdit.ProductID = request.Product.ProductID;
+            reqEdit.POCName = request.PointOfContact.POCName;
+            
+            ViewBag.VIPList = new SelectList(db.VIPs.OrderBy(x => x.VIPID), "VIPID", "VIPName");
+            ViewBag.LicenseTypeList = new SelectList(db.LicenseTypes.OrderBy(x => x.LicenseTypeID), "LicenseTypeID", "LicenseTypeDesc");
+            ViewBag.ProductList = new SelectList(db.Products.OrderBy(x => x.ProductID), "ProductID", "ProductDesc");
+               
+            return View(reqEdit);
         }
 
         // POST: Requests/Edit/5
@@ -83,17 +69,101 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RequestID")] Request request)
+        public ActionResult Edit([Bind(Include = "RequestID,PurchaseOrderID,VIPID,LicenseTypeID,ProductID,POCName")] RequestEditViewModel reqEdit)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(request).State = EntityState.Modified;
+                Request req = db.Requests.Find(reqEdit.RequestID);
+
+                // If there is a difference in the VIPs
+                if (req.VIP.VIPID != reqEdit.VIPID)
+                {
+                    // Assumes that the VIP already exists because it came from a drop down list
+                    VIP vip = db.VIPs.Find(reqEdit.VIPID);
+
+                    // Remove request from old VIP
+                    req.VIP.Requests.Remove(req);
+
+                    // Add request to new VIP
+                    vip.Requests.Add(req);
+
+                    // Point the request to the new VIP
+                    req.VIP = vip;
+                }
+
+                // If there is a difference in the LicenseTypes
+                if (req.LicenseType.LicenseTypeID != reqEdit.LicenseTypeID)
+                {
+                    // Assumes that the LicenseType already exists because it came from a drop down list
+                    LicenseType licenseType = db.LicenseTypes.Find(reqEdit.LicenseTypeID);
+
+                    // Remove request from old VIP
+                    req.LicenseType.Requests.Remove(req);
+
+                    // Add request to new VIP
+                    licenseType.Requests.Add(req);
+
+                    // Point the request to the new VIP
+                    req.LicenseType = licenseType;
+                }
+
+                // If there is a difference in the Products
+                if (req.Product.ProductID != reqEdit.ProductID)
+                {
+                    // Assumes that the VIP already exists because it came from a drop down list
+                    Product product = db.Products.Find(reqEdit.ProductID);
+
+                    // Remove request from old VIP
+                    req.Product.Requests.Remove(req);
+
+                    // Add request to new VIP
+                    product.Requests.Add(req);
+
+                    // Point the request to the new VIP
+                    req.Product = product;
+                }
+
+                // If there is a difference in the Point of Contacts
+                if (req.PointOfContact.POCName != reqEdit.POCName)
+                {
+                    // Assumes that the VIP already exists because it came from a drop down list
+                    //VIP vip = db.VIPs.Find(reqEdit.VIPID);
+
+                    PointOfContact poc;
+
+                    // If the Point of Contact already exists
+                    if (db.PointOfContacts.Any(o => o.POCName == reqEdit.POCName))
+                    {
+                        poc = db.PointOfContacts.Find(reqEdit.POCName);
+                    }
+                    else
+                    {
+                        // Create new Point of Contact
+                        poc = new PointOfContact();
+                        poc.POCName = reqEdit.POCName;
+                    }
+
+                    // Remove request from old Point of Contact
+                    req.PointOfContact.Requests.Remove(req);
+
+                    // Add request to new Point of Contact
+                    poc.Requests.Add(req);
+
+                    // Point the request to the new Point of Contact
+                    req.PointOfContact = poc;
+                }
+
+                db.Entry(req).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Request " + request.RequestID + " edited";
+                TempData["SuccessOHMsg"] = "Request " + req.RequestID + " edited";
                 return RedirectToAction("Index");
             }
-            ViewBag.RequestID = new SelectList(db.PurchaseOrders, "PurchaseOrderID", "PurchaseOrderID", request.RequestID);
-            return View(request);
+            
+            ViewBag.VIPList = new SelectList(db.VIPs.OrderBy(x => x.VIPID), "VIPID", "VIPName");
+            ViewBag.LicenseTypeList = new SelectList(db.LicenseTypes.OrderBy(x => x.LicenseTypeID), "LicenseTypeID", "LicenseTypeDesc");
+            ViewBag.ProductList = new SelectList(db.Products.OrderBy(x => x.ProductID), "ProductID", "ProductDesc");
+
+            return View(reqEdit);
         }
 
         // GET: Requests/Delete/5

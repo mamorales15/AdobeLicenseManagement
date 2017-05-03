@@ -12,11 +12,143 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.RequestID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestID)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.PurchaseOrder.PurchaseOrderID)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.PurchaseOrder.PurchaseOrderID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VIP.VIPName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VIP.VIPName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LicenseType.LicenseTypeDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LicenseType.LicenseTypeDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.ProductDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.ProductDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PointOfContact.POCName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PointOfContact.POCName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceDeskRequests)
+        </dt>
+
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>
+                        Service Desk Request ID
+                    </th>
+                </tr>
+                @foreach (var sdreq in Model.ServiceDeskRequests)
+                {
+                    <tr>
+                        <td>
+                            @sdreq.ServiceDeskRequestID<br />
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndUsers)
+        </dt>
+
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>
+                        End User ID
+                    </th>
+                    <th>
+                        Username
+                    </th>
+                    <th>
+                        Email address
+                    </th>
+                    <th>
+                        Building
+                    </th>
+                    <th>
+                        Room Number
+                    </th>
+                    <th>
+                        Tag Number
+                    </th>
+                    <th>
+                        Computer Serial
+                    </th>
+                    <th>
+                        Computer Name
+                    </th>
+                    <th>
+                        Adobe ID
+                    </th>
+                </tr>
+                @foreach (var endU in Model.EndUsers)
+                {
+                    <tr>
+                        <td>
+                            @endU.EndUserID<br />
+                        </td>
+                        <td>
+                            @endU.Username<br />
+                        </td>
+                        <td>
+                            @endU.Email<br />
+                        </td>
+                        <td>
+                            @endU.Building<br />
+                        </td>
+                        <td>
+                            @endU.RmNo<br />
+                        </td>
+                        <td>
+                            @endU.Tag<br />
+                        </td>
+                        <td>
+                            @endU.ComputerSerial<br />
+                        </td>
+                        <td>
+                            @endU.ComputerName<br />
+                        </td>
+                        <td>
+                            @endU.AdobeID<br />
+                        </td>
+                    </tr>
+                }
+            </table>
         </dd>
 
     </dl>

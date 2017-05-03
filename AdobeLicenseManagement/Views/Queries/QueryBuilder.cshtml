@@ -1,0 +1,258 @@
+﻿<script src="~/Scripts/myJavaScript.js"></script>
+
+<div class="panel" id="QueryBuilder">
+    <div class="panel-heading">
+        <h4>Query Builder</h4>
+    </div>
+
+    <p id="demo"></p>
+
+    <div class="col-md-9 panel-body">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Consumable Deliveries")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("ConsumableDeliveriesCheckBox", ViewBag.ConsumableDeliveriesCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("ConsumableDeliveryIDCheckBox", ViewBag.ConsumableDeliveryIDCheckBox as string)
+                    @Html.Label("ConsumableDelivery ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("DateDeliveredCheckBox", ViewBag.DateDeliveredCheckBox as string)
+                    @Html.Label("Date Delivered")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("DateChangedCheckBox", ViewBag.DateChangedCheckBox as string)
+                    @Html.Label("Date Changed")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("EmployeeNameCheckBox", ViewBag.EmployeeNameCheckBox as string)
+                    @Html.Label("Employee Name")
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Consumables Ordered")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("ConsumablesOrderedCheckBox", ViewBag.ConsumablesOrderedCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("ConsumableOrderIDCheckBox", ViewBag.ConsumableOrderIDCheckBox as string)
+                    @Html.Label("Consumable Order ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("QtyOrderedCheckBox", ViewBag.QtyOrderedCheckBox as string)
+                    @Html.Label("Qty Ordered")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("DateOrderedCheckBox", ViewBag.DateOrderedCheckBox as string)
+                    @Html.Label("Date Ordered")
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Consumables Recieved")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("ConsumablesRecievedCheckBox", ViewBag.ConsumablesRecievedCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("ConsumableRecievedIDCheckBox", ViewBag.ConsumableRecievedIDCheckBox as string)
+                    @Html.Label("Consumable Recieved ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("QtyRecievedCheckBox", ViewBag.QtyRecievedCheckBox as string)
+                    @Html.Label("Qty Recieved")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("DateRecievedCheckBox", ViewBag.DateRecievedCheckBox as string)
+                    @Html.Label("Date Recieved")
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Devices")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("DevicesCheckBox", ViewBag.DevicesCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("DeviceIDCheckBox", ViewBag.DeviceIDCheckBox as string)
+                    @Html.Label("Device ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("PrinterMakeCheckBox", ViewBag.PrinterMakeCheckBox as string)
+                    @Html.Label("Printer Make")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("PrinterTypeCheckBox", ViewBag.PrinterTypeCheckBox as string)
+                    @Html.Label("Printer Type")
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Device Consumables")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("DeviceConsumablesCheckBox", ViewBag.DeviceConsumablesCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("DeviceConsumableIDCheckBox", ViewBag.DeviceConsumableIDCheckBox as string)
+                    @Html.Label("Device Consumable ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("PartDescriptionCheckBox", ViewBag.PartDescriptionCheckBox as string)
+                    @Html.Label("Part Description")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("PartTypeCheckBox", ViewBag.PartTypeCheckBox as string)
+                    @Html.Label("Part Type")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("PartNoCheckBox", ViewBag.PartNoCheckBox as string)
+                    @Html.Label("Part No")
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Inventory Stock")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("InventoryStockCheckBox", ViewBag.InventoryStockCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("InventoryStockItemIDCheckBox", ViewBag.InventoryStockItemIDCheckBox as string)
+                    @Html.Label("Inventory Stock Item ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("SerialNoCheckBox", ViewBag.SerialNoCheckBox as string)
+                    @Html.Label("Serial No")
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Labs")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("LabsCheckBox", ViewBag.LabsCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("LabIDCheckBox", ViewBag.LabIDCheckBox as string)
+                    @Html.Label("Lab ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("LabNameCheckBox", ViewBag.LabNameCheckBox as string)
+                    @Html.Label("Lab Name")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("BuildingCheckBox", ViewBag.BuildingCheckBox as string)
+                    @Html.Label("Building")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("RoomNoCheckBox", ViewBag.RoomNoCheckBox as string)
+                    @Html.Label("Room No")
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Purchase Orders")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("PurchaseOrdersCheckBox", ViewBag.PurchaseOrdersCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("UTEP_PurchaseOrderNumberCheckBox", ViewBag.UTEP_PurchaseOrderNumberCheckBox as string)
+                    @Html.Label("Purchase Order ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("POAmountCheckBox", ViewBag.POAmountCheckBox as string)
+                    @Html.Label("PO Amount")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("PODateCheckBox", ViewBag.PODateCheckBox as string)
+                    @Html.Label("PO Date")
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Html.Label("Student Printers")
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="well-sm">
+                    @Html.CheckBox("StudentPrintersCheckBox", ViewBag.StudentPrintersCheckBox as string)
+                    @Html.Label("*")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("StudentPrinterIDCheckBox", ViewBag.StudentPrinterIDCheckBox as string)
+                    @Html.Label("Student Printer ID")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("PrinterNameCheckBox", ViewBag.PrinterNameCheckBox as string)
+                    @Html.Label("Printer Name")
+                </li>
+                <li class="well-sm">
+                    @Html.CheckBox("PrinterModelCheckBox", ViewBag.PrinterModelCheckBox as string)
+                    @Html.Label("Printer Model")
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-3 panel-body">
+        <input type="submit" value="Submit the Query" class="btn btn-primary btn-large"/>
+    </div>
+
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="button-group">
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">For Testing JS<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox" />&nbsp;Option 1</a></li>
+                        <li><a href="#" class="small" data-value="option2" tabIndex="-1"><input type="checkbox" />&nbsp;Option 2</a></li>
+                        <li><a href="#" class="small" data-value="option3" tabIndex="-1"><input type="checkbox" />&nbsp;Option 3</a></li>
+                        <li><a href="#" class="small" data-value="option4" tabIndex="-1"><input type="checkbox" />&nbsp;Option 4</a></li>
+                        <li><a href="#" class="small" data-value="option5" tabIndex="-1"><input type="checkbox" />&nbsp;Option 5</a></li>
+                        <li><a href="#" class="small" data-value="option6" tabIndex="-1"><input type="checkbox" />&nbsp;Option 6</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

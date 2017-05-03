@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace AdobeLicenseManagement.Models
 {
@@ -43,6 +44,34 @@ namespace AdobeLicenseManagement.Models
         [Display(Name = "Adobe ID")]
         [StringLength(50, MinimumLength = 3)]
         public string AdobeID { get; set; }
+
+        [Display(Name = "Request ID")]
+        public int RequestID { get; set; }
+    }
+
+    public class RequestEditViewModel
+    {
+        [Display(Name = "Request ID")]
+        [Key]
+        public int RequestID { get; set; }
+
+        [Display(Name = "Purchase Order ID")]
+        public int PurchaseOrderID { get; set; }
+        [Display(Name = "VIP ID")]
+        public int VIPID { get; set; }
+        [Display(Name = "License Type ID")]
+        public int LicenseTypeID { get; set; }
+        [Display(Name = "Product ID")]
+        public int ProductID { get; set; }
+        [Display(Name = "Point of Contact Name")]
+        public string POCName { get; set; }
+    }
+
+    public class ServiceDeskRequestEditViewModel
+    {
+        [Display(Name = "Service Desk Request ID")]
+        [Key]
+        public int ServiceDeskRequestID { get; set; }
 
         [Display(Name = "Request ID")]
         public int RequestID { get; set; }

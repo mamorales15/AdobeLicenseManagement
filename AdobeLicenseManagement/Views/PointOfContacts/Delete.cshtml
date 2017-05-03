@@ -19,6 +19,76 @@
             @Html.DisplayFor(model => model.POCName)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Requests)
+        </dt>
+
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>
+                        Request ID
+                    </th>
+                    <th>
+                        Purchase Order Number
+                    </th>
+                    <th>
+                        VIP Name
+                    </th>
+                    <th>
+                        License Type Description
+                    </th>
+                    <th>
+                        Product Description
+                    </th>
+                    <th>
+                        Point of Contact Name
+                    </th>
+                    <th>
+                        Service Desk Request ID
+                    </th>
+                    <th>
+                        End User ID
+                    </th>
+                </tr>
+                @foreach (var item in Model.Requests)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RequestID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PurchaseOrder.PurchaseOrderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VIP.VIPName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LicenseType.LicenseTypeDesc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.ProductDesc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PointOfContact.POCName)
+                        </td>
+                        <td>
+                            @foreach (var sdreq in item.ServiceDeskRequests)
+                            {
+                                @sdreq.ServiceDeskRequestID<br />
+                            }
+                        </td>
+                        <td>
+                            @foreach (var endU in item.EndUsers)
+                            {
+                                @endU.Username<br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
