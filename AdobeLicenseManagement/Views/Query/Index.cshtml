@@ -5,7 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+<!--
+    TODO: Saving a query should have a dialog pop up to ask for a description for the saved query
+    TODO: Maybe ask Mike if he wants a dialog pop up for the CRUD methods on all of the other pages (instead of a seperate page)
+-->
+
 <h2>Index</h2>
+
+<button id="testBtn">Press to enter Descripton</button>
+<div id="dialog-enterDesc" style="display: none">
+</div>
 
 <div id="QueryArea" class="col-xs-12" style="padding: 0px 0px 10px 0px">
     <form action="" method="post">
@@ -55,9 +69,9 @@
         </div>
 
         <div id="TablesArea" class="col-xs-12" style="padding: 10px 0px 0px 0px">
-            <div class="btn-group col-xs-12" id="EndUsers" style="padding: 0px 0px 3px 0px;">
+            <div class="btn-group col-xs-12 dropdown" id="EndUsers" style="padding: 0px 0px 3px 0px;">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
+                    <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('EndUsers ')">End Users</button>
@@ -73,9 +87,9 @@
                     <li onclick="addText('AdobeID ')"><a href="#">Adobe ID</a></li>
                 </ul>
             </div>
-            <div class="btn-group col-xs-12" id="LicenseTypes" style="padding: 3px 0px 3px 0px;">
+            <div class="btn-group col-xs-12 dropdown" id="LicenseTypes" style="padding: 3px 0px 3px 0px;">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
+                    <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('LicenseTypes ')">License Types</button>
@@ -85,9 +99,9 @@
 
                 </ul>
             </div>
-            <div class="btn-group col-xs-12" id="PointOfContacts" style="padding: 3px 0px 3px 0px;">
+            <div class="btn-group col-xs-12 dropdown" id="PointOfContacts" style="padding: 3px 0px 3px 0px;">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
+                    <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('PointOfContacts ')">Point of Contacts</button>
@@ -95,9 +109,9 @@
                     <li onclick="addText('POCName ')"><a href="#">Point of Contact Name</a></li>
                 </ul>
             </div>
-            <div class="btn-group col-xs-12" id="Products" style="padding: 3px 0px 3px 0px;">
+            <div class="btn-group col-xs-12 dropdown" id="Products" style="padding: 3px 0px 3px 0px;">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
+                    <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('Products ')">Products</button>
@@ -106,9 +120,9 @@
                     <li onclick="addText('ProductDesc ')"><a href="#">Product Description</a></li>
                 </ul>
             </div>
-            <div class="btn-group col-xs-12" id="PurchaseOrders" style="padding: 3px 0px 3px 0px;">
+            <div class="btn-group col-xs-12 dropdown" id="PurchaseOrders" style="padding: 3px 0px 3px 0px;">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
+                    <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('PurchaseOrders ')">Purchase Orders</button>
@@ -119,9 +133,9 @@
                     <li onclick="addText('PODate ')"><a href="#">PO Date</a></li>
                 </ul>
             </div>
-            <div class="btn-group col-xs-12" id="Requests" style="padding: 3px 0px 3px 0px;">
+            <div class="btn-group col-xs-12 dropdown" id="Requests" style="padding: 3px 0px 3px 0px;">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
+                    <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('Requests ')">Requests</button>
@@ -129,9 +143,9 @@
                     <li onclick="addText('RequestID ')"><a href="#">Request ID</a></li>
                 </ul>
             </div>
-            <div class="btn-group col-xs-12" id="ServiceDeskRequests" style="padding: 3px 0px 3px 0px;">
+            <div class="btn-group col-xs-12 dropdown" id="ServiceDeskRequests" style="padding: 3px 0px 3px 0px;">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
+                    <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('ServiceDeskRequests ')">Service Desk Requests</button>
@@ -139,9 +153,9 @@
                     <li onclick="addText('ServiceDeskRequestID ')"><a href="#">Service Desk Request ID</a></li>
                 </ul>
             </div>
-            <div class="btn-group col-xs-12" id="VIPs" style="padding: 3px 0px 0px 0px;">
+            <div class="btn-group col-xs-12 dropdown" id="VIPs" style="padding: 3px 0px 0px 0px;">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
+                    <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('VIPs ')">VIPs</button>
@@ -540,6 +554,49 @@
 
 <script language="javascript" type="text/javascript">
     function addText(text) {
-        document.getElementById('Query').value += text
+        document.getElementById('Query').value += text;
+        document.getElementById('Query').focus();
     }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () { // Start of JQuery Code
+
+        $("#testBtn").click(function () {
+            $("#dialog-enterDesc").html("<p>Hello, World!</p>").show();
+        });
+
+        $(".dropdown").on("show.bs.dropdown", function (e) {
+            $(this).find(".glyphicon-chevron-down").addClass("glyphicon-chevron-right").removeClass("glyphicon-chevron-down");
+        });
+        $(".dropdown").on("hide.bs.dropdown", function (e) {
+            $(this).find(".glyphicon-chevron-right").addClass("glyphicon-chevron-down").removeClass("glyphicon-chevron-right");
+        });
+
+        /*
+        var url = "";
+
+        $("#dialog-enterDesc").dialog({
+            title: 'Create User',
+            autoOpen: false,
+            resizable: false,
+            width: 400,
+            show: { effect: 'drop', direction: "up" },
+            modal: true,
+            draggable: true,
+            open: function (event, ui) {
+                $(".ui-dialog-titlebar-close").hide();
+                $(this).load(url);
+            }
+        });
+
+        $("#btn").live("click", function (e) {
+            url = $(this).attr('href');
+            $(".ui-dialog-title").html("Update User");
+            $("#dialog-enterDesc").dialog('open');
+            //$("#dialog-enterDesc").toggle();
+            return false;
+        })
+        */
+
+    }); // End of JQuery Code
 </script>
