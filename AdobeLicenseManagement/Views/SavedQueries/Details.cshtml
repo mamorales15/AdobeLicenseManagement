@@ -1,4 +1,4 @@
-﻿@model UTEP_Printing_Management.Models.SavedQuery
+﻿@model AdobeLicenseManagement.Models.SavedQuery
 
 @{
     ViewBag.Title = "Details";
@@ -11,6 +11,15 @@
     <h4>SavedQuery</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -31,5 +40,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.SavedQueryID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Queries", "Index", "Query")
 </p>

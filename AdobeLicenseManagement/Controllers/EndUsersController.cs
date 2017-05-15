@@ -10,11 +10,13 @@ using AdobeLicenseManagement.Models;
 
 namespace AdobeLicenseManagement.Controllers
 {
+    [Authorize]
     public class EndUsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: EndUsers
+        [Authorize(Roles = "Owner, Administrator, SuperUser")]
         public ActionResult Index()
         {
             return View(db.EndUsers.ToList());

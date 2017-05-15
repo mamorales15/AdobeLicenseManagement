@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - Adobe License Management</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
 
 </head>
 <body>
@@ -84,10 +86,17 @@
 
         @RenderBody()
         <hr />
-        <footer class="col-md-12">
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
+
+    <script>
+        $(document).ready(function () { // Start of JQuery Code
+
+            $(".alert").fadeTo(10000, 1000).fadeOut(1000, function () {
+                $(".alert").fadeOut(1000);
+            });
+
+        }); // End of JQuery Code
+    </script>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

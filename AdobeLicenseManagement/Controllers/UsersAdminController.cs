@@ -85,7 +85,7 @@ namespace IdentitySample.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include = "Email,UserName,Id")] EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -94,9 +94,9 @@ namespace IdentitySample.Controllers
                 {
                     return HttpNotFound();
                 }
-
-                user.UserName = editUser.Email;
+                
                 user.Email = editUser.Email;
+                user.UserName = editUser.Email.Split('@')[0];
 
                 var userRoles = await userManager.GetRolesAsync(user.Id);
 

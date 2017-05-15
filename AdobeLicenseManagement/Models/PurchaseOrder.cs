@@ -25,6 +25,7 @@ namespace AdobeLicenseManagement.Models
         [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime PODate { get; set; }
 
+        public int RequestID { get; set; }
         public virtual Request Request { get; set; }
     }
 }

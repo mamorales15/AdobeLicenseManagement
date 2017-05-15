@@ -14,12 +14,6 @@ namespace AdobeLicenseManagement.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: SavedQueries
-        public ActionResult Index()
-        {
-            return View(db.SavedQueries.ToList());
-        }
-
         // GET: SavedQueries/Details/5
         public ActionResult Details(int? id)
         {
@@ -32,29 +26,6 @@ namespace AdobeLicenseManagement.Controllers
             {
                 return HttpNotFound();
             }
-            return View(savedQuery);
-        }
-
-        // GET: SavedQueries/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: SavedQueries/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SavedQueryID,Description,Query")] SavedQuery savedQuery)
-        {
-            if (ModelState.IsValid)
-            {
-                db.SavedQueries.Add(savedQuery);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
             return View(savedQuery);
         }
 
@@ -86,7 +57,7 @@ namespace AdobeLicenseManagement.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(savedQuery);
+            return RedirectToAction("Index", "Query", null);
         }
 
         // GET: SavedQueries/Delete/5
@@ -112,7 +83,7 @@ namespace AdobeLicenseManagement.Controllers
             SavedQuery savedQuery = db.SavedQueries.Find(id);
             db.SavedQueries.Remove(savedQuery);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Query", null);
         }
 
         protected override void Dispose(bool disposing)

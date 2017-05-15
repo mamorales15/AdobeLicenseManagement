@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Reflection;
+using System.Net;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -38,18 +41,49 @@ namespace AdobeLicenseManagement.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Query
-        public ActionResult Index()
+        public ActionResult Test()
         {
+            return View();
+        }
+
+        // GET: Query
+        public ActionResult Index([Bind(Include = "Queries,SavedQueries,Query,Description")] QueryViewModel qvm)
+        {
+            if(qvm.SavedQueries == null)
+            {
+
+                qvm = new QueryViewModel();
+                qvm.SavedQueries = db.SavedQueries.ToList();
+            }
+            return View(qvm);
+        }
+
+        // GET: SavedQueryRan/5
+        // This function is used to translate an ID into a QVM that can be passed to the Run action
+        public ActionResult SavedQueryRan(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SavedQuery savedQuery = db.SavedQueries.Find(id);
+            if (savedQuery == null)
+            {
+                return HttpNotFound();
+            }
             QueryViewModel qvm = new QueryViewModel();
             qvm.SavedQueries = db.SavedQueries.ToList();
-            return View(qvm);
+            qvm.Query = savedQuery.Query;
+            return Run(qvm);
         }
 
         [HttpPost]
         [MultipleButton(Name = "action", Argument = "Run")]
-        public ActionResult Run([Bind(Include = "Queries,SavedQueries,Query")] QueryViewModel qvm)
+        [ValidateAntiForgeryToken]
+        public ActionResult Run([Bind(Include = "Queries,SavedQueries,Query,Description")] QueryViewModel qvm)
         {
+            
+
             if(qvm.Query == null)
             {
                 TempData["DangerOHMsg"] = "There was a problem running the query";
@@ -68,33 +102,51 @@ namespace AdobeLicenseManagement.Controllers
                 }
                 catch (Exception e)
                 {
-                    TempData["DangerOHMsg"] = "There was a problem running the query";
-                    return RedirectToAction("Index");
+                    TempData["DangerOHMsg"] = e.ToString();
+                    //TempData["DangerOHMsg"] = "There was a problem running the query";
+                    return RedirectToAction("Index", qvm);
                 }
             }
 
-            TempData["DangerOHMsg"] = "There was a problem running the query";
-            return RedirectToAction("Index");
+            TempData["DangerOHMsg"] = "There was a problem with the format of the query";
+            return RedirectToAction("Index", qvm);
         }
 
         [HttpPost]
         [MultipleButton(Name = "action", Argument = "Save")]
-        public ActionResult Save(string Query, string Description)
+        [ValidateAntiForgeryToken]
+        public ActionResult Save([Bind(Include = "Queries,SavedQueries,Query,Description")] QueryViewModel qvm)
         {
             SavedQuery savQuery = new SavedQuery();
             // Check for valid Query. Must be SELECT Command, and only has a one semicolon at the end of the query
+            string Query = qvm.Query;
             if(Query.Length >= 6 && Query.Substring(0, 6) == "SELECT"
-                && Query.Substring(0, Query.Length - 1) != ";" && Query.Substring(Query.Length, 1) == ";")
+                && Query.Substring(0, Query.Length - 1) != ";" && Query.Substring(Query.Length - 1, 1) == ";")
             {
-                savQuery.Description = Description;
-                db.SavedQueries.Add(savQuery);
-                TempData["SuccessOHMsg"] = "Saved Query " + savQuery.SavedQueryID + " added";
+                
+                try
+                {
+                
+
+                    savQuery.Query = Query;
+                    savQuery.Description = qvm.Description;
+                    savQuery.CreationDate = DateTime.Today;
+                    db.SavedQueries.Add(savQuery);
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Saved Query " + savQuery.SavedQueryID + " added";
+                }
+                catch (Exception e)
+                {
+                    TempData["DangerOHMsg"] = "Problem saving query in the database. Please remember to enter a description before saving.";
+                    return RedirectToAction("Index", qvm);
+                }
             }
             else
             {
-                TempData["DangerOHMsg"] = "Problem saving query in the database";
+                TempData["DangerOHMsg"] = "There was a problem with the format of the query";
+                return RedirectToAction("Index", qvm);
             }
-            return RedirectToAction("Index");
+            return Run(qvm);
         }
     }
 }

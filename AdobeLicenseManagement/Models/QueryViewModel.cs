@@ -11,10 +11,23 @@ namespace AdobeLicenseManagement.Models
         public IEnumerable<QueryDTOViewModel> Queries { get; set; }
         public IEnumerable<SavedQuery> SavedQueries { get; set; }
         public string Query { get; set; }
+        public string Description { get; set; }
     }
 
     public class QueryDTOViewModel
     {
+        // Common
+        [Display(Name = "Request ID")]
+        public int Request_RequestID { get; set; }
+        [Display(Name = "License Type ID")]
+        public int LicenseType_LicenseTypeID { get; set; }
+        [Display(Name = "Point of Contact Name")]
+        public string PointOfContact_POCName { get; set; }
+        [Display(Name = "Product ID")]
+        public int Product_ProductID { get; set; }
+        [Display(Name = "VIP ID")]
+        public int VIP_VIPID { get; set; }
+
         // End User
         [Display(Name = "End User ID")]
         public int EndUserID { get; set; }

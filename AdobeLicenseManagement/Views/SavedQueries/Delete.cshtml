@@ -1,4 +1,4 @@
-﻿@model UTEP_Printing_Management.Models.SavedQuery
+﻿@model AdobeLicenseManagement.Models.SavedQuery
 
 @{
     ViewBag.Title = "Delete";
@@ -12,6 +12,15 @@
     <h4>SavedQuery</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -35,7 +44,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to Queries", "Index", "Query")
         </div>
     }
 </div>

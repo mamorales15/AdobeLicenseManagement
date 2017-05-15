@@ -45,8 +45,7 @@ namespace AdobeLicenseManagement.Models
         public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.ServiceDeskRequest> ServiceDeskRequests { get; set; }
 
         public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.EndUser> EndUsers { get; set; }
-
-        object placeHolderVariable;
+        
         public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.SavedQuery> SavedQueries { get; set; }
     }
 }

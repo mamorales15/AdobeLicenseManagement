@@ -84,6 +84,7 @@ namespace AdobeLicenseManagement.Controllers
                 // Add Request to other models' virtual or ICollection
                 sdReq.Request = req;
                 po.Request = req;
+                po.RequestID = req.RequestID;
                 poc.Requests.Add(req);
                 vip.Requests.Add(req);
                 licenseType.Requests.Add(req);

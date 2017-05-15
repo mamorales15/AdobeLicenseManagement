@@ -12,10 +12,14 @@ namespace AdobeLicenseManagement.Models
         public int SavedQueryID { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
         public string Description { get; set; }
 
         [Required]
         public string Query { get; set; }
+
+        [Display(Name = "Creation Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime CreationDate { get; set; }
     }
 }

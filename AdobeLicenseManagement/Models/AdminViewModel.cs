@@ -21,6 +21,10 @@ namespace AdobeLicenseManagement.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }
 }
