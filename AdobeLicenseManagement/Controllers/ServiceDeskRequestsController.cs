@@ -55,9 +55,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.ServiceDeskRequests.Add(ServiceDeskRequest);
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " created";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " created";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID;
+                    return RedirectToAction("Index");
+                }
             }
 
             ViewBag.RequestID = new SelectList(db.Requests, "RequestID", "RequestID", ServiceDeskRequest.ServiceDeskRequestID);
@@ -109,9 +117,17 @@ namespace AdobeLicenseManagement.Controllers
                 // Add Service Desk Request to new Request's list
                 sdr.Request.ServiceDeskRequests.Add(sdr);
                 db.Entry(sdr).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Service Desk Request " + sdrEdit.ServiceDeskRequestID + " edited";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Service Desk Request " + sdrEdit.ServiceDeskRequestID + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the Service Desk Request " + sdrEdit.ServiceDeskRequestID;
+                    return RedirectToAction("Index");
+                }
             }
             ViewBag.RequestID = new SelectList(db.Requests, "RequestID", "RequestID", sdrEdit.ServiceDeskRequestID);
             return View(sdrEdit);
@@ -141,9 +157,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             ServiceDeskRequest ServiceDeskRequest = db.ServiceDeskRequests.Find(id);
             db.ServiceDeskRequests.Remove(ServiceDeskRequest);
-            db.SaveChanges();
-            TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " deleted";
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

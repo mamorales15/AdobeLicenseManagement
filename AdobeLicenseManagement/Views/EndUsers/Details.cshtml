@@ -86,33 +86,39 @@
             Request
         </dt>
         <dd>
-            <table class="table">
-                <tr>
-                    <th>
-                        Request ID
-                    </th>
-                    <th>
-                        Purchase Order Number
-                    </th>
-                    <th>
-                        VIP Name
-                    </th>
-                    <th>
-                        License Type Description
-                    </th>
-                    <th>
-                        Product Description
-                    </th>
-                    <th>
-                        Point of Contact Name
-                    </th>
-                    <th>
-                        Service Desk Request ID
-                    </th>
-                    <th>
-                        End User ID
-                    </th>
-                </tr>
+            @if(Model.Request == null)
+            {
+                <p>No Requests associated with this End User.</p>
+            }
+            else
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            Request ID
+                        </th>
+                        <th>
+                            Purchase Order Number
+                        </th>
+                        <th>
+                            VIP Name
+                        </th>
+                        <th>
+                            License Type Description
+                        </th>
+                        <th>
+                            Product Description
+                        </th>
+                        <th>
+                            Point of Contact Name
+                        </th>
+                        <th>
+                            Service Desk Request ID
+                        </th>
+                        <th>
+                            End User ID
+                        </th>
+                    </tr>
                     <tr>
                         <td>
                             @Html.DisplayFor(model => model.Request.RequestID)
@@ -145,7 +151,8 @@
                             }
                         </td>
                     </tr>
-            </table>
+                </table>
+            }
         </dd>
 
     </dl>

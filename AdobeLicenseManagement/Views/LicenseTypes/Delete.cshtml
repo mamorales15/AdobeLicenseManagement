@@ -3,6 +3,12 @@
 @{
     ViewBag.Title = "Delete";
 }
+@if (Model.Requests.Any())
+{
+    <div class="alert alert-warning" role="alert">
+        <strong>Warning!</strong> Deleting a License Type requires deleting associated requests first.
+    </div>
+}
 
 <h2>Delete</h2>
 
@@ -24,69 +30,76 @@
         </dt>
 
         <dd>
-            <table class="table">
-                <tr>
-                    <th>
-                        Request ID
-                    </th>
-                    <th>
-                        Purchase Order Number
-                    </th>
-                    <th>
-                        VIP Name
-                    </th>
-                    <th>
-                        License Type Description
-                    </th>
-                    <th>
-                        Product Description
-                    </th>
-                    <th>
-                        Point of Contact Name
-                    </th>
-                    <th>
-                        Service Desk Request ID
-                    </th>
-                    <th>
-                        End User ID
-                    </th>
-                </tr>
-                @foreach (var item in Model.Requests)
-                {
+            @if (!Model.Requests.Any())
+            {
+                <p>No Requests associated with this License Type.</p>
+            }
+            else
+            {
+                <table class="table">
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RequestID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PurchaseOrder.PurchaseOrderID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.VIP.VIPName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LicenseType.LicenseTypeDesc)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Product.ProductDesc)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PointOfContact.POCName)
-                        </td>
-                        <td>
-                            @foreach (var sdreq in item.ServiceDeskRequests)
-                            {
-                                @sdreq.ServiceDeskRequestID<br />
-                            }
-                        </td>
-                        <td>
-                            @foreach (var endU in item.EndUsers)
-                            {
-                                @endU.UserName<br />
-                            }
-                        </td>
+                        <th>
+                            Request ID
+                        </th>
+                        <th>
+                            Purchase Order Number
+                        </th>
+                        <th>
+                            VIP Name
+                        </th>
+                        <th>
+                            License Type Description
+                        </th>
+                        <th>
+                            Product Description
+                        </th>
+                        <th>
+                            Point of Contact Name
+                        </th>
+                        <th>
+                            Service Desk Request ID
+                        </th>
+                        <th>
+                            End User ID
+                        </th>
                     </tr>
-                }
-            </table>
+                    @foreach (var item in Model.Requests)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PurchaseOrder.PurchaseOrderID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VIP.VIPName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LicenseType.LicenseTypeDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.ProductDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PointOfContact.POCName)
+                            </td>
+                            <td>
+                                @foreach (var sdreq in item.ServiceDeskRequests)
+                                {
+                                    @sdreq.ServiceDeskRequestID<br />
+                                }
+                            </td>
+                            <td>
+                                @foreach (var endU in item.EndUsers)
+                                {
+                                    @endU.UserName<br />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
         </dd>
 
     </dl>
@@ -95,7 +108,13 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Delete" class="btn btn-default" id="Button" /> |
+            @if (Model.Requests.Any())
+            {
+                <script type="text/javascript">
+                    document.getElementById('Button').disabled = true;
+                </script>
+            }
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

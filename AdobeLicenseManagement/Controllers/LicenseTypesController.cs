@@ -56,9 +56,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.LicenseTypes.Add(licenseType);
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " created";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " created";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the License Type" + licenseType.LicenseTypeDesc;
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(licenseType);
@@ -91,9 +99,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(licenseType).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " edited";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the License Type" + licenseType.LicenseTypeDesc;
+                    return RedirectToAction("Index");
+                }
             }
             return View(licenseType);
         }
@@ -122,9 +138,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             LicenseType licenseType = db.LicenseTypes.Find(id);
             db.LicenseTypes.Remove(licenseType);
-            db.SaveChanges();
-            TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " deleted";
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "License Type " + licenseType.LicenseTypeDesc + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the License Type" + licenseType.LicenseTypeDesc;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

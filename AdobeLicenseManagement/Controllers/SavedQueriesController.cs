@@ -58,8 +58,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(savedQuery).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Saved Query " + savedQuery.Description + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the Saved Query " + savedQuery.Description;
+                    return RedirectToAction("Index");
+                }
             }
             return RedirectToAction("Index", "Query", null);
         }
@@ -88,8 +97,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             SavedQuery savedQuery = db.SavedQueries.Find(id);
             db.SavedQueries.Remove(savedQuery);
-            db.SaveChanges();
-            return RedirectToAction("Index", "Query", null);
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Saved Query " + savedQuery.Description + " deleted";
+                return RedirectToAction("Index", "Query", null);
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the Saved Query " + savedQuery.Description;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

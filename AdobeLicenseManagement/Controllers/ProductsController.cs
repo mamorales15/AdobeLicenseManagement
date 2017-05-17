@@ -56,9 +56,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " created";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " created";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the Product " + product.ProductDesc;
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(product);
@@ -91,9 +99,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " edited";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the Product " + product.ProductDesc;
+                    return RedirectToAction("Index");
+                }
             }
             return View(product);
         }
@@ -122,9 +138,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
-            db.SaveChanges();
-            TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " deleted";
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Product " + product.ProductDesc + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the Product " + product.ProductDesc;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

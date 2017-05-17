@@ -56,9 +56,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.PointOfContacts.Add(pointOfContact);
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " created";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " created";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the Point of Contact " + pointOfContact.POCName;
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(pointOfContact);
@@ -91,9 +99,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(pointOfContact).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " edited";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the Point of Contact " + pointOfContact.POCName;
+                    return RedirectToAction("Index");
+                }
             }
             return View(pointOfContact);
         }
@@ -122,9 +138,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             PointOfContact pointOfContact = db.PointOfContacts.Find(id);
             db.PointOfContacts.Remove(pointOfContact);
-            db.SaveChanges();
-            TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " deleted";
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Point of Contact " + pointOfContact.POCName + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the Point of Contact " + pointOfContact.POCName;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

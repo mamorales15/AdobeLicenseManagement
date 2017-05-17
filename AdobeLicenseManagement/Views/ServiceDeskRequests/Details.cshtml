@@ -22,6 +22,12 @@
             Request
         </dt>
         <dd>
+@if (Model.Request == null)
+{
+    <p>No Requests associated with Service Desk Request.</p>
+}
+else
+{
             <table class="table">
                 <tr>
                     <th>
@@ -82,6 +88,7 @@
                     </td>
                 </tr>
             </table>
+}
         </dd>
 
     </dl>

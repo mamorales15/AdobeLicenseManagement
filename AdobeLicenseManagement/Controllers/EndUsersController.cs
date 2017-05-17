@@ -97,9 +97,17 @@ namespace AdobeLicenseManagement.Controllers
                 Request req = db.Requests.Find(endUserVM.RequestID);
                 endUser.Request = req;
                 db.Entry(endUser).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "End User " + endUser.UserName + " edited";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "End User " + endUser.UserName + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the End User" + endUser.UserName;
+                    return RedirectToAction("Index");
+                }
             }
 
             // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
@@ -132,9 +140,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             EndUser endUser = db.EndUsers.Find(id);
             db.EndUsers.Remove(endUser);
-            db.SaveChanges();
-            TempData["SuccessOHMsg"] = "End User " + endUser.UserName + " deleted";
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "End User " + endUser.UserName + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the End User" + endUser.UserName;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

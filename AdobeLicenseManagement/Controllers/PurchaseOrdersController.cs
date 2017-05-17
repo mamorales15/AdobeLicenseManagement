@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using AdobeLicenseManagement.Models;
 
@@ -43,7 +40,11 @@ namespace AdobeLicenseManagement.Controllers
         [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create()
         {
-            ViewBag.PurchaseOrderID = new SelectList(db.Requests, "RequestID", "RequestID");
+            var query = from c in db.Requests
+                        where c.PurchaseOrder == null
+                        select c;
+            ViewBag.PurchaseOrderID = new SelectList(query, "RequestID", "RequestID");
+            //ViewBag.PurchaseOrderID = new SelectList(db.Requests, "RequestID", "RequestID");
             return View();
         }
 
@@ -58,12 +59,22 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.PurchaseOrders.Add(purchaseOrder);
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " created";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " created";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the Purchase Order" + purchaseOrder.PurchaseOrderID;
+                    return RedirectToAction("Index");
+                }
             }
-
-            ViewBag.PurchaseOrderID = new SelectList(db.Requests, "RequestID", "RequestID", purchaseOrder.PurchaseOrderID);
+            var query = from c in db.Requests
+                        where c.PurchaseOrder == null
+                        select c;
+            ViewBag.PurchaseOrderID = new SelectList(query, "RequestID", "RequestID", purchaseOrder.PurchaseOrderID);
             return View(purchaseOrder);
         }
 
@@ -94,10 +105,19 @@ namespace AdobeLicenseManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.Entry(purchaseOrder).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " edited";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the Purchase Order" + purchaseOrder.PurchaseOrderID;
+                    return RedirectToAction("Index");
+                }
             }
             ViewBag.PurchaseOrderID = new SelectList(db.Requests, "RequestID", "RequestID", purchaseOrder.PurchaseOrderID);
             return View(purchaseOrder);
@@ -127,9 +147,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(id);
             db.PurchaseOrders.Remove(purchaseOrder);
-            db.SaveChanges();
-            TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " deleted";
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Purchase Order " + purchaseOrder.PurchaseOrderID + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the Purchase Order" + purchaseOrder.PurchaseOrderID;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

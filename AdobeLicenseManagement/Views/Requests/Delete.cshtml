@@ -4,6 +4,13 @@
     ViewBag.Title = "Delete";
 }
 
+@if (Model.ServiceDeskRequests.Any() || Model.PurchaseOrder != null || Model.EndUsers.Any())
+{
+    <div class="alert alert-warning" role="alert">
+        <strong>Warning!</strong> Deleting a Request requires deleting associated ServiceDesk requests, Purchase Orders, and End Users first.
+    </div>
+}
+
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
@@ -64,21 +71,28 @@
         </dt>
 
         <dd>
-            <table class="table">
-                <tr>
-                    <th>
-                        Service Desk Request ID
-                    </th>
-                </tr>
-                @foreach (var sdreq in Model.ServiceDeskRequests)
-                {
+            @if (!Model.ServiceDeskRequests.Any())
+            {
+                <p>No Service Desk Requests associated with this Request.</p>
+            }
+            else
+            {
+                <table class="table">
                     <tr>
-                        <td>
-                            @sdreq.ServiceDeskRequestID<br />
-                        </td>
+                        <th>
+                            Service Desk Request ID
+                        </th>
                     </tr>
-                }
-            </table>
+                    @foreach (var sdreq in Model.ServiceDeskRequests)
+                    {
+                        <tr>
+                            <td>
+                                @sdreq.ServiceDeskRequestID<br />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
         </dd>
 
         <dt>
@@ -86,69 +100,76 @@
         </dt>
 
         <dd>
-            <table class="table">
-                <tr>
-                    <th>
-                        End User ID
-                    </th>
-                    <th>
-                        UserName
-                    </th>
-                    <th>
-                        Email address
-                    </th>
-                    <th>
-                        Building
-                    </th>
-                    <th>
-                        Room Number
-                    </th>
-                    <th>
-                        Tag Number
-                    </th>
-                    <th>
-                        Computer Serial
-                    </th>
-                    <th>
-                        Computer Name
-                    </th>
-                    <th>
-                        Adobe ID
-                    </th>
-                </tr>
-                @foreach (var endU in Model.EndUsers)
-                {
+            @if (!Model.EndUsers.Any())
+            {
+                <p>No End Users associated with this Request.</p>
+            }
+            else
+            {
+                <table class="table">
                     <tr>
-                        <td>
-                            @endU.EndUserID<br />
-                        </td>
-                        <td>
-                            @endU.UserName<br />
-                        </td>
-                        <td>
-                            @endU.Email<br />
-                        </td>
-                        <td>
-                            @endU.Building<br />
-                        </td>
-                        <td>
-                            @endU.RmNo<br />
-                        </td>
-                        <td>
-                            @endU.Tag<br />
-                        </td>
-                        <td>
-                            @endU.ComputerSerial<br />
-                        </td>
-                        <td>
-                            @endU.ComputerName<br />
-                        </td>
-                        <td>
-                            @endU.AdobeID<br />
-                        </td>
+                        <th>
+                            End User ID
+                        </th>
+                        <th>
+                            UserName
+                        </th>
+                        <th>
+                            Email address
+                        </th>
+                        <th>
+                            Building
+                        </th>
+                        <th>
+                            Room Number
+                        </th>
+                        <th>
+                            Tag Number
+                        </th>
+                        <th>
+                            Computer Serial
+                        </th>
+                        <th>
+                            Computer Name
+                        </th>
+                        <th>
+                            Adobe ID
+                        </th>
                     </tr>
-                }
-            </table>
+                    @foreach (var endU in Model.EndUsers)
+                    {
+                        <tr>
+                            <td>
+                                @endU.EndUserID<br />
+                            </td>
+                            <td>
+                                @endU.UserName<br />
+                            </td>
+                            <td>
+                                @endU.Email<br />
+                            </td>
+                            <td>
+                                @endU.Building<br />
+                            </td>
+                            <td>
+                                @endU.RmNo<br />
+                            </td>
+                            <td>
+                                @endU.Tag<br />
+                            </td>
+                            <td>
+                                @endU.ComputerSerial<br />
+                            </td>
+                            <td>
+                                @endU.ComputerName<br />
+                            </td>
+                            <td>
+                                @endU.AdobeID<br />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
         </dd>
 
     </dl>
@@ -157,7 +178,13 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Delete" class="btn btn-default" id="Button" /> |
+            @if (Model.ServiceDeskRequests.Any() || Model.PurchaseOrder != null || Model.EndUsers.Any())
+            {
+                <script type="text/javascript">
+                    document.getElementById('Button').disabled = true;
+                </script>
+            }
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

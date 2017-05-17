@@ -159,9 +159,18 @@ namespace AdobeLicenseManagement.Controllers
                 }
 
                 db.Entry(req).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Request " + req.RequestID + " edited";
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Request " + req.RequestID + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+
+                    TempData["DangerOHMsg"] = "Problem editing the Request " + req.RequestID;
+                    return RedirectToAction("Index");
+                }
             }
             
             ViewBag.VIPList = new SelectList(db.VIPs.OrderBy(x => x.VIPID), "VIPID", "VIPName");
@@ -195,9 +204,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             Request request = db.Requests.Find(id);
             db.Requests.Remove(request);
-            db.SaveChanges();
-            TempData["SuccessOHMsg"] = "Request " + request.RequestID + " deleted";
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Request " + request.RequestID + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the Request " + request.RequestID;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

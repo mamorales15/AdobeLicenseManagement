@@ -63,6 +63,12 @@
         </dt>
 
         <dd>
+@if (!Model.ServiceDeskRequests.Any())
+{
+    <p>No Requests associated with this end user.</p>
+}
+else
+{
             <table class="table">
                 <tr>
                     <th>
@@ -78,6 +84,7 @@
                     </tr>
                 }
             </table>
+}
         </dd>
 
         <dt>
@@ -85,6 +92,12 @@
         </dt>
 
         <dd>
+@if (!Model.EndUsers.Any())
+{
+    <p>No Requests associated with this end user.</p>
+}
+else
+{
             <table class="table">
                 <tr>
                     <th>
@@ -148,6 +161,7 @@
                     </tr>
                 }
             </table>
+}
         </dd>
 
     </dl>

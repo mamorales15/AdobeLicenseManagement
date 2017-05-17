@@ -40,66 +40,73 @@
         </dt>
 
         <dd>
-            <table class="table">
-                <tr>
-                    <th>
-                        Request ID
-                    </th>
-                    <th>
-                        Purchase Order Number
-                    </th>
-                    <th>
-                        VIP Name
-                    </th>
-                    <th>
-                        License Type Description
-                    </th>
-                    <th>
-                        Product Description
-                    </th>
-                    <th>
-                        Point of Contact Name
-                    </th>
-                    <th>
-                        Service Desk Request ID
-                    </th>
-                    <th>
-                        End User ID
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Request.RequestID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Request.PurchaseOrder.PurchaseOrderID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Request.VIP.VIPName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Request.LicenseType.LicenseTypeDesc)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Request.Product.ProductDesc)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Request.PointOfContact.POCName)
-                    </td>
-                    <td>
-                        @foreach (var sdreq in Model.Request.ServiceDeskRequests)
-                        {
-                            @sdreq.ServiceDeskRequestID<br />
-                        }
-                    </td>
-                    <td>
-                        @foreach (var endU in Model.Request.EndUsers)
-                        {
-                            @endU.UserName<br />
-                        }
-                    </td>
-                </tr>
-            </table>
+            @if (Model.Request == null)
+            {
+                <p>No Request associated with this Purchase Order.</p>
+            }
+            else
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            Request ID
+                        </th>
+                        <th>
+                            Purchase Order Number
+                        </th>
+                        <th>
+                            VIP Name
+                        </th>
+                        <th>
+                            License Type Description
+                        </th>
+                        <th>
+                            Product Description
+                        </th>
+                        <th>
+                            Point of Contact Name
+                        </th>
+                        <th>
+                            Service Desk Request ID
+                        </th>
+                        <th>
+                            End User ID
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Request.RequestID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Request.PurchaseOrder.PurchaseOrderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Request.VIP.VIPName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Request.LicenseType.LicenseTypeDesc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Request.Product.ProductDesc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Request.PointOfContact.POCName)
+                        </td>
+                        <td>
+                            @foreach (var sdreq in Model.Request.ServiceDeskRequests)
+                            {
+                                @sdreq.ServiceDeskRequestID<br />
+                            }
+                        </td>
+                        <td>
+                            @foreach (var endU in Model.Request.EndUsers)
+                            {
+                                @endU.UserName<br />
+                            }
+                        </td>
+                    </tr>
+                </table>
+            }
         </dd>
 
     </dl>

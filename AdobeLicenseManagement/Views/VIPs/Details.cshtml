@@ -39,6 +39,12 @@
         </dt>
 
         <dd>
+@if (!Model.Requests.Any())
+{
+    <p>No Requests associated with this VIP.</p>
+}
+else
+{
             <table class="table">
                 <tr>
                     <th>
@@ -102,6 +108,7 @@
                     </tr>
                 }
             </table>
+}
         </dd>
     </dl>
 </div>

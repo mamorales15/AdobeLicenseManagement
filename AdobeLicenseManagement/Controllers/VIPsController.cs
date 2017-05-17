@@ -51,17 +51,25 @@ namespace AdobeLicenseManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner, Administrator")]
-        public ActionResult Create([Bind(Include = "VIPID,VIPName,VIPNumber,VIPRenewalDate")] VIP vIP)
+        public ActionResult Create([Bind(Include = "VIPID,VIPName,VIPNumber,VIPRenewalDate")] VIP vip)
         {
             if (ModelState.IsValid)
             {
-                db.VIPs.Add(vIP);
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "VIP " + vIP.VIPName + " created";
-                return RedirectToAction("Index");
+                db.VIPs.Add(vip);
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "VIP " + vip.VIPName + " created";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the VIP " + vip.VIPName;
+                    return RedirectToAction("Index");
+                }
             }
 
-            return View(vIP);
+            return View(vip);
         }
 
         // GET: VIPs/Edit/5
@@ -86,16 +94,24 @@ namespace AdobeLicenseManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner, Administrator")]
-        public ActionResult Edit([Bind(Include = "VIPID,VIPName,VIPNumber,VIPRenewalDate")] VIP vIP)
+        public ActionResult Edit([Bind(Include = "VIPID,VIPName,VIPNumber,VIPRenewalDate")] VIP vip)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vIP).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["SuccessOHMsg"] = "VIP " + vIP.VIPName + " edited";
-                return RedirectToAction("Index");
+                db.Entry(vip).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "VIP " + vip.VIPName + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the VIP " + vip.VIPName;
+                    return RedirectToAction("Index");
+                }
             }
-            return View(vIP);
+            return View(vip);
         }
 
         // GET: VIPs/Delete/5
@@ -120,11 +136,19 @@ namespace AdobeLicenseManagement.Controllers
         [Authorize(Roles = "Owner, Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
-            VIP vIP = db.VIPs.Find(id);
-            db.VIPs.Remove(vIP);
-            db.SaveChanges();
-            TempData["SuccessOHMsg"] = "VIP " + vIP.VIPName + " deleted";
-            return RedirectToAction("Index");
+            VIP vip = db.VIPs.Find(id);
+            db.VIPs.Remove(vip);
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "VIP " + vip.VIPName + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the VIP " + vip.VIPName;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

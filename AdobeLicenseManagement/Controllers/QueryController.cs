@@ -121,19 +121,16 @@ namespace AdobeLicenseManagement.Controllers
             if(Query.Length >= 6 && Query.Substring(0, 6) == "SELECT"
                 && Query.Substring(0, Query.Length - 1) != ";" && Query.Substring(Query.Length - 1, 1) == ";")
             {
-                
+                savQuery.Query = Query;
+                savQuery.Description = qvm.Description;
+                savQuery.CreationDate = DateTime.Today;
+                db.SavedQueries.Add(savQuery);
                 try
                 {
-                
-
-                    savQuery.Query = Query;
-                    savQuery.Description = qvm.Description;
-                    savQuery.CreationDate = DateTime.Today;
-                    db.SavedQueries.Add(savQuery);
                     db.SaveChanges();
                     TempData["SuccessOHMsg"] = "Saved Query " + savQuery.SavedQueryID + " added";
                 }
-                catch (Exception e)
+                catch
                 {
                     TempData["DangerOHMsg"] = "Problem saving query in the database. Please remember to enter a description before saving.";
                     return RedirectToAction("Index", qvm);

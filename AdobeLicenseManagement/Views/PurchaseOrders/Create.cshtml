@@ -1,7 +1,21 @@
-﻿@model AdobeLicenseManagement.Models.PurchaseOrder
+﻿@using System.Data;
+@using System.Data.Entity;
+@using System.Linq;
+@using System.Net;
+@using System.Web.Mvc;
+@using AdobeLicenseManagement.Models;
+
+@model AdobeLicenseManagement.Models.PurchaseOrder
 
 @{
     ViewBag.Title = "Create";
+}
+
+@if (!((SelectList)ViewBag.PurchaseOrderID).Any())
+{
+    <div class="alert alert-warning" role="alert">
+        <strong>Warning!</strong> You cannot create a new Purchase Order because there are no requests with an empty Purchase Order.
+    </div>
 }
 
 <h2>Create</h2>
@@ -49,7 +63,13 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" id="Button"/>
+                @if (!((SelectList)ViewBag.PurchaseOrderID).Any())
+                {
+                    <script type="text/javascript">
+                    document.getElementById('Button').disabled = true;
+                    </script>
+                }
             </div>
         </div>
     </div>
