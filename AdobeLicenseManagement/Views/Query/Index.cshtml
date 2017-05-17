@@ -71,9 +71,9 @@
                 </button>
                 <button type="button" class="btn btn-default" onclick="addText('EndUsers ')">End Users</button>
                 <ul class="dropdown-menu">
-                    <li onclick="addText('EndUsers.EndUserID, EndUsers.Username, EndUsers.Email, EndUsers.Building, EndUsers.RmNo, EndUsers.Tag, EndUsers.ComputerSerial, EndUsers.ComputerName, EndUsers.AdobeID ')"><a href="#">All</a></li>
+                    <li onclick="addText('EndUsers.EndUserID, EndUsers.UserName, EndUsers.Email, EndUsers.Building, EndUsers.RmNo, EndUsers.Tag, EndUsers.ComputerSerial, EndUsers.ComputerName, EndUsers.AdobeID ')"><a href="#">All</a></li>
                     <li onclick="addText('EndUsers.EndUserID ')"><a href="#">End User ID</a></li>
-                    <li onclick="addText('EndUsers.Username ')"><a href="#">Username</a></li>
+                    <li onclick="addText('EndUsers.UserName ')"><a href="#">UserName</a></li>
                     <li onclick="addText('EndUsers.Email ')"><a href="#">Email</a></li>
                     <li onclick="addText('EndUsers.Building ')"><a href="#">Building</a></li>
                     <li onclick="addText('EndUsers.RmNo ')"><a href="#">Room Number</a></li>
@@ -256,10 +256,10 @@
                             End User ID
                         </th>
                     }
-                    @if (Model.Queries.Any(row => row.Username != null))
+                    @if (Model.Queries.Any(row => row.UserName != null))
                 {
                         <th style="padding: 5px">
-                            Username
+                            UserName
                         </th>
                     }
                     @if (Model.Queries.Any(row => row.Email != null))
@@ -460,10 +460,10 @@
                                 @Html.DisplayFor(modelItem => item.EndUserID)
                             </td>
                         }
-                        @if (Model.Queries.Any(row => row.Username != null))
+                        @if (Model.Queries.Any(row => row.UserName != null))
                     {
                             <td style="padding: 5px">
-                                @Html.DisplayFor(modelItem => item.Username)
+                                @Html.DisplayFor(modelItem => item.UserName)
                             </td>
                         }
                         @if (Model.Queries.Any(row => row.Email != null))

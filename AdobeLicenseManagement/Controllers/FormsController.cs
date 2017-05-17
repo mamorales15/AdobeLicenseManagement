@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace AdobeLicenseManagement.Controllers
 {
+    [Authorize]
     public class FormsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -124,7 +125,7 @@ namespace AdobeLicenseManagement.Controllers
         // POST: /Forms/EndUserForm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EndUserForm([Bind(Include = "RequestID,Username,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,AdobeID")] EndUserFormViewModel endUserForm)
+        public ActionResult EndUserForm([Bind(Include = "RequestID,UserName,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,AdobeID")] EndUserFormViewModel endUserForm)
         {
             // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
             ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
@@ -136,7 +137,7 @@ namespace AdobeLicenseManagement.Controllers
 
                 // Create new End User
                 EndUser endUser = new EndUser();
-                endUser.Username = endUserForm.Username;
+                endUser.UserName = endUserForm.UserName;
                 endUser.Email = endUserForm.Email;
                 endUser.Building = endUserForm.Building;
                 endUser.RmNo = endUserForm.RmNo;
@@ -148,7 +149,7 @@ namespace AdobeLicenseManagement.Controllers
                 db.EndUsers.Add(endUser);
                 db.SaveChanges();
 
-                TempData["SuccessOHMsg"] = "End User " + endUser.Username + " created";
+                TempData["SuccessOHMsg"] = "End User " + endUser.UserName + " created";
                 return RedirectToAction("EndUserForm");
             }
             ViewData["request"] = endUserForm.RequestID;
@@ -196,7 +197,7 @@ namespace AdobeLicenseManagement.Controllers
         // GET: /Forms/AdobeIDForm
         public ActionResult AdobeIDForm()
         {
-            ViewBag.EndUserList = new SelectList(db.EndUsers.OrderBy(x => x.Username), "EndUserID", "Username");
+            ViewBag.EndUserList = new SelectList(db.EndUsers.OrderBy(x => x.UserName), "EndUserID", "UserName");
 
             return View();
         }
@@ -207,7 +208,7 @@ namespace AdobeLicenseManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AdobeIDForm([Bind(Include = "EndUserID,AdobeID")] AdobeIDFormViewModel adobeIDForm)
         {
-            ViewBag.EndUserList = new SelectList(db.EndUsers.OrderBy(x => x.Username), "EndUserID", "Username");
+            ViewBag.EndUserList = new SelectList(db.EndUsers.OrderBy(x => x.UserName), "EndUserID", "UserName");
 
             if (ModelState.IsValid)
             {
@@ -215,7 +216,7 @@ namespace AdobeLicenseManagement.Controllers
                 endUser.AdobeID = adobeIDForm.AdobeID;
                 db.SaveChanges();
 
-                TempData["SuccessOHMsg"] = "Adobe ID added to the end user " + endUser.Username;
+                TempData["SuccessOHMsg"] = "Adobe ID added to the end user " + endUser.UserName;
                 return RedirectToAction("AdobeIDForm");
             }
 

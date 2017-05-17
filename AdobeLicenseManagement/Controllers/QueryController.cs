@@ -2,12 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Reflection;
 using System.Net;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -37,6 +34,7 @@ namespace AdobeLicenseManagement.Controllers
         }
     }
 
+    [Authorize(Roles = "Owner, Administrator, Super User")]
     public class QueryController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

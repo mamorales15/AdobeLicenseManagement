@@ -12,7 +12,7 @@ namespace AdobeLicenseManagement.Migrations
                 c => new
                     {
                         EndUserID = c.Int(nullable: false, identity: true),
-                        Username = c.String(nullable: false, maxLength: 50),
+                        UserName = c.String(nullable: false, maxLength: 50),
                         Email = c.String(),
                         Building = c.String(maxLength: 50),
                         RmNo = c.String(maxLength: 50),

@@ -10,17 +10,20 @@ using AdobeLicenseManagement.Models;
 
 namespace AdobeLicenseManagement.Controllers
 {
+    [Authorize]
     public class PointOfContactsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: PointOfContacts
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Index()
         {
             return View(db.PointOfContacts.ToList());
         }
 
         // GET: PointOfContacts/Details/5
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Details(string id)
         {
             if (id == "")
@@ -36,6 +39,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: PointOfContacts/Create
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +50,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create([Bind(Include = "POCName")] PointOfContact pointOfContact)
         {
             if (ModelState.IsValid)
@@ -60,6 +65,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: PointOfContacts/Edit/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit(string id)
         {
             if (id == "")
@@ -79,6 +85,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit([Bind(Include = "POCName")] PointOfContact pointOfContact)
         {
             if (ModelState.IsValid)
@@ -92,6 +99,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: PointOfContacts/Delete/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Delete(string id)
         {
             if (id == "")
@@ -109,6 +117,7 @@ namespace AdobeLicenseManagement.Controllers
         // POST: PointOfContacts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult DeleteConfirmed(string id)
         {
             PointOfContact pointOfContact = db.PointOfContacts.Find(id);

@@ -72,7 +72,10 @@ namespace AdobeLicenseManagement.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            
+            if (model.UserName.Contains('@'))
+            {
+                model.UserName = model.UserName.Split('@')[0];
+            }
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
@@ -94,7 +97,7 @@ namespace AdobeLicenseManagement.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
-            // Require that the user has already logged in via username/password or external login
+            // Require that the user has already logged in via UserName/password or external login
             if (!await SignInManager.HasBeenVerifiedAsync())
             {
                 return View("Error");
@@ -152,8 +155,8 @@ namespace AdobeLicenseManagement.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userName = model.Email.Split('@')[0];
-                    var user = new ApplicationUser { UserName = userName, Email = model.Email };
+                    var UserName = model.Email.Split('@')[0];
+                    var user = new ApplicationUser { UserName = UserName, Email = model.Email };
 
                     var result = await UserManager.CreateAsync(user, model.Password);
 

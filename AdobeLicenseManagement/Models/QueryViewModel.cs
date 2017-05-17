@@ -31,9 +31,9 @@ namespace AdobeLicenseManagement.Models
         // End User
         [Display(Name = "End User ID")]
         public int EndUserID { get; set; }
-        [Required(ErrorMessage = "The username is required")]
+        [Required(ErrorMessage = "The UserName is required")]
         [StringLength(50, MinimumLength = 3)]
-        public string Username { get; set; }
+        public string UserName { get; set; }
         [Display(Name = "Email address")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }

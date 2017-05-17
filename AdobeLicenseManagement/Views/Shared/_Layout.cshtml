@@ -11,47 +11,59 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Adobe License Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tables <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("End Users", "Index", "EndUsers")</li>
-                            <li>@Html.ActionLink("License Types", "Index", "LicenseTypes")</li>
-                            <li>@Html.ActionLink("Point of Contacts", "Index", "PointOfContacts")</li>
-                            <li>@Html.ActionLink("Products", "Index", "Products")</li>
-                            <li>@Html.ActionLink("Purchase Orders", "Index", "PurchaseOrders")</li>
-                            <li>@Html.ActionLink("Requests", "Index", "Requests")</li>
-                            <li>@Html.ActionLink("Service Desk Requests", "Index", "ServiceDeskRequests")</li>
-                            <li>@Html.ActionLink("VIPs", "Index", "VIPs")</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Forms <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Help Desk Form", "HelpDeskForm", "Forms")</li>
-                            <li>@Html.ActionLink("PO Form", "POForm", "Forms")</li>
-                            <li>@Html.ActionLink("Adobe ID Form", "AdobeIDForm", "Forms")</li>
-                        </ul>
-                    </li>
-                    <li>@Html.ActionLink("Queries", "Index", "Query")</li>
-                    <li>@Html.ActionLink("Change Log", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+    @if (Request.IsAuthenticated)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Adobe License Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if (User.IsInRole("Owner") || User.IsInRole("Administrator") || User.IsInRole("Super User"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tables <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("End Users", "Index", "EndUsers")</li>
+                                    <li>@Html.ActionLink("License Types", "Index", "LicenseTypes")</li>
+                                    <li>@Html.ActionLink("Point of Contacts", "Index", "PointOfContacts")</li>
+                                    <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                                    <li>@Html.ActionLink("Purchase Orders", "Index", "PurchaseOrders")</li>
+                                    <li>@Html.ActionLink("Requests", "Index", "Requests")</li>
+                                    <li>@Html.ActionLink("Service Desk Requests", "Index", "ServiceDeskRequests")</li>
+                                    <li>@Html.ActionLink("VIPs", "Index", "VIPs")</li>
+                                </ul>
+                            </li>
+                        }
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Forms <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Help Desk Form", "HelpDeskForm", "Forms")</li>
+                                <li>@Html.ActionLink("PO Form", "POForm", "Forms")</li>
+                                <li>@Html.ActionLink("Adobe ID Form", "AdobeIDForm", "Forms")</li>
+                            </ul>
+                        </li>
+                        @if (User.IsInRole("Owner") || User.IsInRole("Administrator") || User.IsInRole("Super User"))
+                        {
+                            <li>@Html.ActionLink("Queries", "Index", "Query")</li>
+                            if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+                            {
+                                <li>@Html.ActionLink("Change Log", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</li>
+                            }
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
         </div>
-    </div>
+    }
     <div class="container body-content">
         <!-- Custom over head messages -->
         <!-- Example from controller: "TempData["SuccessOHMsg"] = "License Type created";" -->

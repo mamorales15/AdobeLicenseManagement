@@ -10,17 +10,20 @@ using AdobeLicenseManagement.Models;
 
 namespace AdobeLicenseManagement.Controllers
 {
+    [Authorize]
     public class LicenseTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: LicenseTypes
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Index()
         {
             return View(db.LicenseTypes.ToList());
         }
 
         // GET: LicenseTypes/Details/5
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +39,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: LicenseTypes/Create
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +50,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create([Bind(Include = "LicenseTypeID,LicenseTypeDesc")] LicenseType licenseType)
         {
             if (ModelState.IsValid)
@@ -60,6 +65,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: LicenseTypes/Edit/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,6 +85,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit([Bind(Include = "LicenseTypeID,LicenseTypeDesc")] LicenseType licenseType)
         {
             if (ModelState.IsValid)
@@ -92,6 +99,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: LicenseTypes/Delete/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,6 +117,7 @@ namespace AdobeLicenseManagement.Controllers
         // POST: LicenseTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
             LicenseType licenseType = db.LicenseTypes.Find(id);

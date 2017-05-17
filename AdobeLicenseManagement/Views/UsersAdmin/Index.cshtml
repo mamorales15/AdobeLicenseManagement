@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNet.Identity.EntityFramework;
+﻿@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+@using System.Web;
 @model IEnumerable<AdobeLicenseManagement.Models.ApplicationUser>
 
 @{
@@ -50,11 +52,18 @@
                     }
                 }
             </td>
-            @if (!ViewData["Current User"].Equals(item.UserName))
+            
+            @{  var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var rolesForUser = userManager.GetRoles(item.Id);
+            }
+
+            @if (!ViewData["Current User"].Equals(item.UserName) && (!rolesForUser.Contains("Owner") || User.IsInRole("Owner")))
             {
+                <!-- Show the edit/delete buttons if the user selected is not the user logged in (can't change their own roles)
+                    and if the selected user is not an owner or the current logged in user is an own -->
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, UserName = item.UserName }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, UserName = item.UserName }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             }

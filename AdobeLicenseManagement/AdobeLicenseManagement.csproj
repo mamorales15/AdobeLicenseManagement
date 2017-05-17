@@ -280,6 +280,10 @@
     <Compile Include="Migrations\201705152123510_Creation date to SavedQuery.Designer.cs">
       <DependentUpon>201705152123510_Creation date to SavedQuery.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705152211443_Changed UserName to Username.cs" />
+    <Compile Include="Migrations\201705152211443_Changed UserName to Username.Designer.cs">
+      <DependentUpon>201705152211443_Changed UserName to Username.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -526,6 +530,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705152123510_Creation date to SavedQuery.resx">
       <DependentUpon>201705152123510_Creation date to SavedQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705152211443_Changed UserName to Username.resx">
+      <DependentUpon>201705152211443_Changed UserName to Username.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {
+    [Authorize]
     public class UsersAdminController : Controller
     {
         public RoleStore<IdentityRole> roleStore;
@@ -31,6 +32,7 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Users/
+        [Authorize(Roles = "Owner, Administrator")]
         public async Task<ActionResult> Index()
         {
             ViewData["Current User"] = User.Identity.GetUserName();
@@ -39,6 +41,7 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Users/Details/5
+        [Authorize(Roles = "Owner, Administrator")]
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -54,6 +57,7 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Users/Edit/1
+        [Authorize(Roles = "Owner, Administrator")]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -85,6 +89,7 @@ namespace IdentitySample.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public async Task<ActionResult> Edit([Bind(Include = "Email,UserName,Id")] EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
@@ -125,6 +130,7 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Users/Delete/5
+        [Authorize(Roles = "Owner, Administrator")]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -143,6 +149,7 @@ namespace IdentitySample.Controllers
         // POST: /Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
             if (ModelState.IsValid)

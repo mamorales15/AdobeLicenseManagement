@@ -10,17 +10,20 @@ using AdobeLicenseManagement.Models;
 
 namespace AdobeLicenseManagement.Controllers
 {
+    [Authorize]
     public class VIPsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: VIPs
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Index()
         {
             return View(db.VIPs.ToList());
         }
 
         // GET: VIPs/Details/5
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +39,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: VIPs/Create
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +50,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create([Bind(Include = "VIPID,VIPName,VIPNumber,VIPRenewalDate")] VIP vIP)
         {
             if (ModelState.IsValid)
@@ -60,6 +65,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: VIPs/Edit/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,6 +85,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit([Bind(Include = "VIPID,VIPName,VIPNumber,VIPRenewalDate")] VIP vIP)
         {
             if (ModelState.IsValid)
@@ -92,6 +99,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: VIPs/Delete/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,6 +117,7 @@ namespace AdobeLicenseManagement.Controllers
         // POST: VIPs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
             VIP vIP = db.VIPs.Find(id);

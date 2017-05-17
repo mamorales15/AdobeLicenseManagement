@@ -19,11 +19,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Username)
+            @Html.DisplayNameFor(model => model.UserName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Username)
+            @Html.DisplayFor(model => model.UserName)
         </dd>
 
         <dt>
@@ -141,7 +141,7 @@
                         <td>
                             @foreach (var endU in Model.Request.EndUsers)
                             {
-                                @endU.Username<br />
+                                @endU.UserName<br />
                             }
                         </td>
                     </tr>

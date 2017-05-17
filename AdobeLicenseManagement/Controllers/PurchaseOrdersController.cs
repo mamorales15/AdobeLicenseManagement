@@ -10,11 +10,13 @@ using AdobeLicenseManagement.Models;
 
 namespace AdobeLicenseManagement.Controllers
 {
+    [Authorize]
     public class PurchaseOrdersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: PurchaseOrders
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Index()
         {
             var purchaseOrders = db.PurchaseOrders.Include(p => p.Request);
@@ -22,6 +24,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: PurchaseOrders/Details/5
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +40,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: PurchaseOrders/Create
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create()
         {
             ViewBag.PurchaseOrderID = new SelectList(db.Requests, "RequestID", "RequestID");
@@ -48,6 +52,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create([Bind(Include = "PurchaseOrderID,Qty,PONo,PODate")] PurchaseOrder purchaseOrder)
         {
             if (ModelState.IsValid)
@@ -63,6 +68,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: PurchaseOrders/Edit/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,6 +89,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit([Bind(Include = "PurchaseOrderID,Qty,PONo,PODate")] PurchaseOrder purchaseOrder)
         {
             if (ModelState.IsValid)
@@ -97,6 +104,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: PurchaseOrders/Delete/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -114,6 +122,7 @@ namespace AdobeLicenseManagement.Controllers
         // POST: PurchaseOrders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
             PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(id);

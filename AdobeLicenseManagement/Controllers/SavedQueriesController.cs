@@ -10,11 +10,13 @@ using AdobeLicenseManagement.Models;
 
 namespace AdobeLicenseManagement.Controllers
 {
+    [Authorize]
     public class SavedQueriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: SavedQueries/Details/5
+        [Authorize(Roles = "Owner, Administrator, Super User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -30,6 +32,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: SavedQueries/Edit/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -49,6 +52,7 @@ namespace AdobeLicenseManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Edit([Bind(Include = "SavedQueryID,Description,Query")] SavedQuery savedQuery)
         {
             if (ModelState.IsValid)
@@ -61,6 +65,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: SavedQueries/Delete/5
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -78,6 +83,7 @@ namespace AdobeLicenseManagement.Controllers
         // POST: SavedQueries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
             SavedQuery savedQuery = db.SavedQueries.Find(id);
