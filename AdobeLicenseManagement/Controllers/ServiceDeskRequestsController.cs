@@ -58,12 +58,12 @@ namespace AdobeLicenseManagement.Controllers
                 try
                 {
                     db.SaveChanges();
-                    TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " created";
+                    TempData["SuccessOHMsg"] = "ServiceDesk Request " + ServiceDeskRequest.ServiceDeskRequestID + " created";
                     return RedirectToAction("Index");
                 }
                 catch
                 {
-                    TempData["DangerOHMsg"] = "Problem creating the Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID;
+                    TempData["DangerOHMsg"] = "Problem creating the ServiceDesk Request " + ServiceDeskRequest.ServiceDeskRequestID;
                     return RedirectToAction("Index");
                 }
             }
@@ -109,23 +109,23 @@ namespace AdobeLicenseManagement.Controllers
                 sdr.ServiceDeskRequestID = sdrEdit.ServiceDeskRequestID;
                 if(sdr.Request != null)
                 {
-                    // Remove Service Desk Request from it's old Request's list
+                    // Remove ServiceDesk Request from it's old Request's list
                     sdr.Request.ServiceDeskRequests.Remove(sdr);
                 }
                 // Get the new request
                 sdr.Request = db.Requests.Find(sdrEdit.RequestID);
-                // Add Service Desk Request to new Request's list
+                // Add ServiceDesk Request to new Request's list
                 sdr.Request.ServiceDeskRequests.Add(sdr);
                 db.Entry(sdr).State = EntityState.Modified;
                 try
                 {
                     db.SaveChanges();
-                    TempData["SuccessOHMsg"] = "Service Desk Request " + sdrEdit.ServiceDeskRequestID + " edited";
+                    TempData["SuccessOHMsg"] = "ServiceDesk Request " + sdrEdit.ServiceDeskRequestID + " edited";
                     return RedirectToAction("Index");
                 }
                 catch
                 {
-                    TempData["DangerOHMsg"] = "Problem editing the Service Desk Request " + sdrEdit.ServiceDeskRequestID;
+                    TempData["DangerOHMsg"] = "Problem editing the ServiceDesk Request " + sdrEdit.ServiceDeskRequestID;
                     return RedirectToAction("Index");
                 }
             }
@@ -160,12 +160,12 @@ namespace AdobeLicenseManagement.Controllers
             try
             {
                 db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID + " deleted";
+                TempData["SuccessOHMsg"] = "ServiceDesk Request " + ServiceDeskRequest.ServiceDeskRequestID + " deleted";
                 return RedirectToAction("Index");
             }
             catch
             {
-                TempData["DangerOHMsg"] = "Problem deleting the Service Desk Request " + ServiceDeskRequest.ServiceDeskRequestID;
+                TempData["DangerOHMsg"] = "Problem deleting the ServiceDesk Request " + ServiceDeskRequest.ServiceDeskRequestID;
                 return RedirectToAction("Index");
             }
         }

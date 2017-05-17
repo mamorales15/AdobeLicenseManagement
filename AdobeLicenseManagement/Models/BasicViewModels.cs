@@ -69,7 +69,7 @@ namespace AdobeLicenseManagement.Models
 
     public class ServiceDeskRequestEditViewModel
     {
-        [Display(Name = "Service Desk Request ID")]
+        [Display(Name = "ServiceDesk Request ID")]
         [Key]
         public int ServiceDeskRequestID { get; set; }
 

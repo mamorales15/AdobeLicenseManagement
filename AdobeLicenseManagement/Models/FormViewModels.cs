@@ -10,7 +10,7 @@ namespace AdobeLicenseManagement.Models
     public class HelpDeskFormViewModel
     {
         [Required]
-        [Display(Name = "Service Desk Request ID")]
+        [Display(Name = "ServiceDesk Request ID")]
         public int SDReqID { get; set; }
 
         [Required]
@@ -38,7 +38,7 @@ namespace AdobeLicenseManagement.Models
     {
         // Same as ServiceDeskRequest model but I included it to
         // so you can just add needed fields later.
-        [Display(Name = "Service Desk Request ID")]
+        [Display(Name = "ServiceDesk Request ID")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ServiceDeskRequestID { get; set; }

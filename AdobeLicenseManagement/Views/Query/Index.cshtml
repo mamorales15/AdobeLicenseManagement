@@ -1,13 +1,13 @@
 ﻿@model AdobeLicenseManagement.Models.QueryViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Queries";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- TODO: Figure out why the textbox is going to the bottom when it has plenty of room. -->
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -158,10 +158,10 @@
                     <span class="myCaret glyphicon glyphicon-chevron-down"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
-                <button type="button" class="btn btn-default" onclick="addText('ServiceDeskRequests ')">Service Desk Requests</button>
+                <button type="button" class="btn btn-default" onclick="addText('ServiceDeskRequests ')">ServiceDesk Requests</button>
                 <ul class="dropdown-menu">
                     <li onclick="addText('ServiceDeskRequests.ServiceDeskRequestID ')"><a href="#">All</a></li>
-                    <li onclick="addText('ServiceDeskRequests.ServiceDeskRequestID ')"><a href="#">Service Desk Request ID</a></li>
+                    <li onclick="addText('ServiceDeskRequests.ServiceDeskRequestID ')"><a href="#">ServiceDesk Request ID</a></li>
                     <li role="separator" class="divider"></li>
                     <li onclick="addText('ServiceDeskRequests.Request_RequestID ')"><a href="#">Request ID</a></li>
                 </ul>
@@ -401,11 +401,11 @@
                         </th>
                     }
 
-                    <!-- Service Desk Request -->
+                    <!-- ServiceDesk Request -->
                     @if (Model.Queries.Any(row => row.ServiceDeskRequestID != 0))
                 {
                         <th style="padding: 5px">
-                            Service Desk Request ID
+                            ServiceDesk Request ID
                         </th>
                     }
 
@@ -605,7 +605,7 @@
                             </td>
                         }
 
-                        <!-- Service Desk Request -->
+                        <!-- ServiceDesk Request -->
                         @if (Model.Queries.Any(row => row.ServiceDeskRequestID != 0))
                     {
                             <td style="padding: 5px">

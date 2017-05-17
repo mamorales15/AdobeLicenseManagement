@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<AdobeLicenseManagement.Models.Request>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Requests Table";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("New Help Desk Form", "HelpDeskForm", "Forms")
@@ -72,7 +72,7 @@
         </td>
         <td>
             @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = item.RequestID }, null) |
-            @Html.ActionLink("Create Service Desk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null)<br/>
+            @Html.ActionLink("Create ServiceDesk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null)<br/>
             @Html.ActionLink("Edit", "Edit", new { id=item.RequestID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RequestID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.RequestID })

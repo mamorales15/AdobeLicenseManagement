@@ -10,7 +10,7 @@ namespace AdobeLicenseManagement.Models
     public class ServiceDeskRequest
     {
         
-        [Display(Name = "Service Desk Request ID")]
+        [Display(Name = "ServiceDesk Request ID")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ServiceDeskRequestID { get; set; }

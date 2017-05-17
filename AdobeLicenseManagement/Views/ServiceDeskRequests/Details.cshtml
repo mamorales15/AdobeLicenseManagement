@@ -1,13 +1,13 @@
 ﻿@model AdobeLicenseManagement.Models.ServiceDeskRequest
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "ServiceDesk Request Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>PurchaseOrder</h4>
+    <h4>ServiceDesk Request</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -24,7 +24,7 @@
         <dd>
 @if (Model.Request == null)
 {
-    <p>No Requests associated with Service Desk Request.</p>
+    <p>No Requests associated with ServiceDesk Request.</p>
 }
 else
 {
@@ -49,7 +49,7 @@ else
                         Point of Contact Name
                     </th>
                     <th>
-                        Service Desk Request ID
+                        ServiceDesk Request ID
                     </th>
                     <th>
                         End User ID

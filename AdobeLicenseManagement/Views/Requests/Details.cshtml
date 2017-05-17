@@ -1,10 +1,10 @@
 ﻿@model AdobeLicenseManagement.Models.Request
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Request Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
     <h4>Request</h4>
@@ -72,7 +72,7 @@ else
             <table class="table">
                 <tr>
                     <th>
-                        Service Desk Request ID
+                        ServiceDesk Request ID
                     </th>
                 </tr>
                 @foreach (var sdreq in Model.ServiceDeskRequests)
@@ -168,7 +168,7 @@ else
 </div>
 <p>
     @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = Model.RequestID }, null) |
-    @Html.ActionLink("Create Service Desk Requests", "ServiceDeskForm", "Forms", new { id = Model.RequestID }, null) |
+    @Html.ActionLink("Create ServiceDesk Requests", "ServiceDeskForm", "Forms", new { id = Model.RequestID }, null) |
     @Html.ActionLink("Edit", "Edit", new { id = Model.RequestID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

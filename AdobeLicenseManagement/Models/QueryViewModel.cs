@@ -95,8 +95,8 @@ namespace AdobeLicenseManagement.Models
         [Display(Name = "Request ID")]
         public int RequestID { get; set; }
 
-        // Service Desk Request
-        [Display(Name = "Service Desk Request ID")]
+        // ServiceDesk Request
+        [Display(Name = "ServiceDesk Request ID")]
         public int ServiceDeskRequestID { get; set; }
 
         // VIP

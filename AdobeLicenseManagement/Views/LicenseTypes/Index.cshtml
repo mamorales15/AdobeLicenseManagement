@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<AdobeLicenseManagement.Models.LicenseType>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "License Types Table";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
 {

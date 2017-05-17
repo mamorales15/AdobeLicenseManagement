@@ -1,7 +1,7 @@
 ﻿@model AdobeLicenseManagement.Models.Request
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Request";
 }
 
 @if (Model.ServiceDeskRequests.Any() || Model.PurchaseOrder != null || Model.EndUsers.Any())
@@ -11,7 +11,7 @@
     </div>
 }
 
-<h2>Delete</h2>
+<h2>@ViewBag.Title</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -31,7 +31,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PurchaseOrder.PurchaseOrderID)
+            @Html.DisplayFor(model => model.PurchaseOrder.PurchaseOrderID) |
+            @Html.ActionLink("Delete", "Delete", "PurchaseOrders", new { id = Model.PurchaseOrder.PurchaseOrderID }, null)
         </dd>
 
         <dt>
@@ -73,21 +74,25 @@
         <dd>
             @if (!Model.ServiceDeskRequests.Any())
             {
-                <p>No Service Desk Requests associated with this Request.</p>
+                <p>No ServiceDesk Requests associated with this Request.</p>
             }
             else
             {
                 <table class="table">
                     <tr>
                         <th>
-                            Service Desk Request ID
+                            ServiceDesk Request ID
                         </th>
+                        <th></th>
                     </tr>
                     @foreach (var sdreq in Model.ServiceDeskRequests)
                     {
                         <tr>
                             <td>
                                 @sdreq.ServiceDeskRequestID<br />
+                            </td>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", "ServiceDeskRequests", new { id = sdreq.ServiceDeskRequestID }, null)
                             </td>
                         </tr>
                     }
@@ -135,6 +140,7 @@
                         <th>
                             Adobe ID
                         </th>
+                        <th></th>
                     </tr>
                     @foreach (var endU in Model.EndUsers)
                     {
@@ -165,6 +171,9 @@
                             </td>
                             <td>
                                 @endU.AdobeID<br />
+                            </td>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", "EndUsers",  new { id = endU.EndUserID }, null)
                             </td>
                         </tr>
                     }

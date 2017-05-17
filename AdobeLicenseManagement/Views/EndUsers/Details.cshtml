@@ -1,14 +1,12 @@
 ﻿@model AdobeLicenseManagement.Models.EndUser
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "End User Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>EndUser</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.EndUserID)
@@ -113,7 +111,7 @@
                             Point of Contact Name
                         </th>
                         <th>
-                            Service Desk Request ID
+                            ServiceDesk Request ID
                         </th>
                         <th>
                             End User ID

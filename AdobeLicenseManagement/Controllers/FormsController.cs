@@ -38,10 +38,10 @@ namespace AdobeLicenseManagement.Controllers
 
             if (ModelState.IsValid)
             {
-                // Service Desk Request ID should not exist already
+                // ServiceDesk Request ID should not exist already
                 if (db.ServiceDeskRequests.Any(o => o.ServiceDeskRequestID == helpDeskForm.SDReqID))
                 {
-                    ModelState.AddModelError("", "Service Desk Request ID exists already.");
+                    ModelState.AddModelError("", "ServiceDesk Request ID exists already.");
                     return View();
                 }
 
@@ -65,7 +65,7 @@ namespace AdobeLicenseManagement.Controllers
                 LicenseType licenseType = db.LicenseTypes.Find(helpDeskForm.LicenseTypeID);
                 Product product = db.Products.Find(helpDeskForm.ProductID);
 
-                // Create new Service Desk Request
+                // Create new ServiceDesk Request
                 ServiceDeskRequest sdReq = new ServiceDeskRequest();
                 sdReq.ServiceDeskRequestID = helpDeskForm.SDReqID;
 
@@ -96,7 +96,7 @@ namespace AdobeLicenseManagement.Controllers
                 db.SaveChanges();
                 db.ServiceDeskRequests.Add(sdReq);
                 db.SaveChanges();
-                TempData["SuccessOHMsg"] = "Service Desk Request " + sdReq.ServiceDeskRequestID + ", Purchase Order " + po.PurchaseOrderID + ", and Request " + req.RequestID + " created";
+                TempData["SuccessOHMsg"] = "ServiceDesk Request " + sdReq.ServiceDeskRequestID + ", Purchase Order " + po.PurchaseOrderID + ", and Request " + req.RequestID + " created";
                 return RedirectToAction("HelpDeskForm");
             }
 
@@ -251,14 +251,14 @@ namespace AdobeLicenseManagement.Controllers
             {
                 Request req = db.Requests.Find(serviceDeskForm.RequestID);  // Get object from table
 
-                // Create new Service Desk Request
+                // Create new ServiceDesk Request
                 ServiceDeskRequest sdreq = new ServiceDeskRequest();
                 sdreq.ServiceDeskRequestID = serviceDeskForm.ServiceDeskRequestID;
                 sdreq.Request = req;    // Might cause problems. Might already be handled in the line below.
                 req.ServiceDeskRequests.Add(sdreq);
                 db.SaveChanges();
 
-                TempData["SuccessOHMsg"] = "Additional Service Desk Request added to request " + req.RequestID;
+                TempData["SuccessOHMsg"] = "Additional ServiceDesk Request added to request " + req.RequestID;
                 return RedirectToAction("ServiceDeskForm");
             }
 

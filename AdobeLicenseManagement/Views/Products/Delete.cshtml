@@ -1,7 +1,7 @@
 ﻿@model AdobeLicenseManagement.Models.Product
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Product";
 }
 @if (Model.Requests.Any())
 {
@@ -10,7 +10,7 @@
     </div>
 }
 
-<h2>Delete</h2>
+<h2>@ViewBag.Title</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -65,11 +65,12 @@
                             Point of Contact Name
                         </th>
                         <th>
-                            Service Desk Request ID
+                            ServiceDesk Request ID
                         </th>
                         <th>
                             End User ID
                         </th>
+                        <th></th>
                     </tr>
                     @foreach (var item in Model.Requests)
                     {
@@ -103,6 +104,9 @@
                                 {
                                     @endU.UserName<br />
                                 }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", "Requests", new { id = item.RequestID }, null)
                             </td>
                         </tr>
                     }

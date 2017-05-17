@@ -8,7 +8,7 @@
 @model AdobeLicenseManagement.Models.PurchaseOrder
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Purchase Order";
 }
 
 @if (!((SelectList)ViewBag.PurchaseOrderID).Any())
@@ -18,7 +18,7 @@
     </div>
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
 
 
 @using (Html.BeginForm()) 
