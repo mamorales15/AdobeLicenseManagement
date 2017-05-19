@@ -59,7 +59,8 @@ namespace AdobeLicenseManagement.Controllers
 
             EndUserViewModel endUserVM = new EndUserViewModel();
             endUserVM.AdobeID = endUser.AdobeID;
-            endUserVM.Building = endUser.Building;
+            if (endUser.Request != null)
+                endUserVM.BuildingID = endUser.Building.BuildingID;
             endUserVM.ComputerName = endUser.ComputerName;
             endUserVM.ComputerSerial = endUser.ComputerSerial;
             endUserVM.Email = endUser.Email;
@@ -72,7 +73,7 @@ namespace AdobeLicenseManagement.Controllers
 
             // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
             ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
-
+            ViewBag.BuildingList = new SelectList(db.Buildings.OrderBy(x => x.BuildingID), "BuildingID", "BuildingName");
             return View(endUserVM);
         }
 
@@ -82,14 +83,15 @@ namespace AdobeLicenseManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner, Administrator")]
-        public ActionResult Edit([Bind(Include = "EndUserID,UserName,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,AdobeID,RequestID")] EndUserViewModel endUserVM)
+        public ActionResult Edit([Bind(Include = "EndUserID,UserName,Email,BuildingID,RmNo,Tag,ComputerSerial,ComputerName,AdobeID,RequestID")] EndUserViewModel endUserVM)
         {
             if (ModelState.IsValid)
             {
                 EndUser endUser = db.EndUsers.Find(endUserVM.EndUserID);
                 endUser.UserName = endUserVM.UserName;
                 endUser.Email = endUserVM.Email;
-                endUser.Building = endUserVM.Building;
+                Building build = db.Buildings.Find(endUserVM.BuildingID);
+                endUser.Building = build;
                 endUser.RmNo = endUserVM.RmNo;
                 endUser.Tag = endUserVM.Tag;
                 endUser.ComputerSerial = endUserVM.ComputerSerial;
@@ -113,7 +115,7 @@ namespace AdobeLicenseManagement.Controllers
 
             // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
             ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
-
+            ViewBag.BuildingList = new SelectList(db.Buildings.OrderBy(x => x.BuildingID), "BuildingID", "BuildingName");
             return View(endUserVM);
         }
 

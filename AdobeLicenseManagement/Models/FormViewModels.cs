@@ -64,8 +64,8 @@ namespace AdobeLicenseManagement.Models
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
-        [StringLength(50, MinimumLength = 3)]
-        public string Building { get; set; }
+        [Display(Name = "Building ID")]
+        public int BuildingID { get; set; }
 
         [Display(Name = "Room Number")]
         [StringLength(50)]

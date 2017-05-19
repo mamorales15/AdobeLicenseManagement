@@ -74,7 +74,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner, Administrator")]
-        public async Task<ActionResult> Create([Bind(Include = "Email")] CreateUserViewModel createUser, params string[] selectedRole)
+        public ActionResult Create([Bind(Include = "Email")] CreateUserViewModel createUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {

@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Building)
+            @Html.DisplayNameFor(model => model.Building.BuildingName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RmNo)
@@ -47,7 +47,7 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Building)
+            @Html.DisplayFor(modelItem => item.Building.BuildingName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RmNo)

@@ -19,9 +19,6 @@ namespace AdobeLicenseManagement.Models
         [Display(Name = "Email address")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
-        
-        [StringLength(50, MinimumLength = 3)]
-        public string Building { get; set; }
 
         [Display(Name = "Room Number")]
         [StringLength(50)]
@@ -29,7 +26,7 @@ namespace AdobeLicenseManagement.Models
 
         [Display(Name = "Tag Number")]
         [RegularExpression("^[0-9]{6,6}$", ErrorMessage = "Tag number must be length 6")]
-        public int Tag { get; set; }
+        public int? Tag { get; set; }
 
         [Display(Name = "Computer Serial")]
         [StringLength(50, MinimumLength = 3)]
@@ -44,5 +41,7 @@ namespace AdobeLicenseManagement.Models
         public string AdobeID { get; set; }
 
         public virtual Request Request { get; set; }
+
+        public virtual Building Building { get; set; }
     }
 }

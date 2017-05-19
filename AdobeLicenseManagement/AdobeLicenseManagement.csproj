@@ -187,6 +187,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BuildingsController.cs" />
     <Compile Include="Controllers\EndUsersController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -288,10 +289,23 @@
     <Compile Include="Migrations\201705191727015_Tag # for End User should be opt try 2.Designer.cs">
       <DependentUpon>201705191727015_Tag # for End User should be opt try 2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705191846098_Added buildings.cs" />
+    <Compile Include="Migrations\201705191846098_Added buildings.Designer.cs">
+      <DependentUpon>201705191846098_Added buildings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705191849497_Tage # for End User should be opt try 3.cs" />
+    <Compile Include="Migrations\201705191849497_Tage # for End User should be opt try 3.Designer.cs">
+      <DependentUpon>201705191849497_Tage # for End User should be opt try 3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705191928502_Tag # for End User should be opt try 4.cs" />
+    <Compile Include="Migrations\201705191928502_Tag # for End User should be opt try 4.Designer.cs">
+      <DependentUpon>201705191928502_Tag # for End User should be opt try 4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\BasicViewModels.cs" />
+    <Compile Include="Models\Building.cs" />
     <Compile Include="Models\EndUser.cs" />
     <Compile Include="Models\FormViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -473,6 +487,11 @@
     <Content Include="Views\SavedQueries\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Create.cshtml" />
     <Content Include="Views\UsersAdmin\RoleDescriptions.cshtml" />
+    <Content Include="Views\Buildings\Create.cshtml" />
+    <Content Include="Views\Buildings\Delete.cshtml" />
+    <Content Include="Views\Buildings\Details.cshtml" />
+    <Content Include="Views\Buildings\Edit.cshtml" />
+    <Content Include="Views\Buildings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -543,6 +562,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705191727015_Tag # for End User should be opt try 2.resx">
       <DependentUpon>201705191727015_Tag # for End User should be opt try 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705191846098_Added buildings.resx">
+      <DependentUpon>201705191846098_Added buildings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705191849497_Tage # for End User should be opt try 3.resx">
+      <DependentUpon>201705191849497_Tage # for End User should be opt try 3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705191928502_Tag # for End User should be opt try 4.resx">
+      <DependentUpon>201705191928502_Tag # for End User should be opt try 4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

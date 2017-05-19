@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Reflection;
 using System.Net;
+using System.Net.Mime;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -45,7 +46,7 @@ namespace AdobeLicenseManagement.Controllers
         }
 
         // GET: Query
-        public ActionResult Index([Bind(Include = "Queries,SavedQueries,Query,Description")] QueryViewModel qvm)
+        public ActionResult Index([Bind(Include = "Queries,SavedQueries,Query,Description,Csv")] QueryViewModel qvm)
         {
             if(qvm.SavedQueries == null)
             {
@@ -78,7 +79,7 @@ namespace AdobeLicenseManagement.Controllers
         [HttpPost]
         [MultipleButton(Name = "action", Argument = "Run")]
         [ValidateAntiForgeryToken]
-        public ActionResult Run([Bind(Include = "Queries,SavedQueries,Query,Description")] QueryViewModel qvm)
+        public ActionResult Run([Bind(Include = "Queries,SavedQueries,Query,Description,Csv")] QueryViewModel qvm)
         {
             
 
@@ -112,7 +113,7 @@ namespace AdobeLicenseManagement.Controllers
         [HttpPost]
         [MultipleButton(Name = "action", Argument = "Save")]
         [ValidateAntiForgeryToken]
-        public ActionResult Save([Bind(Include = "Queries,SavedQueries,Query,Description")] QueryViewModel qvm)
+        public ActionResult Save([Bind(Include = "Queries,SavedQueries,Query,Description,Csv")] QueryViewModel qvm)
         {
             SavedQuery savQuery = new SavedQuery();
             // Check for valid Query. Must be SELECT Command, and only has a one semicolon at the end of the query
@@ -142,5 +143,21 @@ namespace AdobeLicenseManagement.Controllers
             }
             return Run(qvm);
         }
+        
+        /*
+        [HttpPost]
+        [MultipleButton(Name = "action", Argument = "Export")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Export([Bind(Include = "Queries,SavedQueries,Query,Description,Csv")] QueryViewModel qvm)
+        {
+            var cd = new ContentDisposition
+            {
+                FileName = qvm.Description.Substring(0, 30) + ".csv",
+                Inline = false
+            };
+            Response.AddHeader("Content-Disposition", cd.ToString());
+            return Content(qvm.Csv, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+        */
     }
 }

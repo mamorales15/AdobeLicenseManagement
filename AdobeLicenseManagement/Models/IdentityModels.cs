@@ -47,5 +47,7 @@ namespace AdobeLicenseManagement.Models
         public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.EndUser> EndUsers { get; set; }
         
         public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.SavedQuery> SavedQueries { get; set; }
+
+        public System.Data.Entity.DbSet<AdobeLicenseManagement.Models.Building> Buildings { get; set; }
     }
 }

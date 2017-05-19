@@ -243,7 +243,7 @@
             @Html.Label("Results")
         </div>
         <div class="col-xs-12">
-            <table class="table-striped table-bordered table-hover table-responsive panel-default col-xs-12" style="empty-cells: hide">
+            <table class="table-striped table-bordered table-hover table-responsive panel-default col-xs-12" style="empty-cells: hide" id="queryResults">
                 <tr>
                     <!-- Common -->
                     @if (Model.Queries.Any(row => row.Request_RequestID != 0) || Model.Queries.Any(row => row.RequestID != 0))
@@ -649,6 +649,8 @@
     </div>
 }
 
+<script type="text/javascript" src="http://www.kunalbabre.com/projects/table2CSV.js"></script>
+
 <script language="javascript" type="text/javascript">
     function addText(text) {
         document.getElementById('Query').value += text;
@@ -657,8 +659,12 @@
     function clearText() {
         document.getElementById('Query').value = "";
     }
+    function exportTable() {
+        document.getElementById('Csv').value = document.getElementById('queryResults').table2CSV({ delivery: 'value' });
+    }
 </script>
 <script type="text/javascript">
+
     $(document).ready(function () { // Start of JQuery Code
         // Code to change dropdown icon whenever it is changed.
         $(".dropdown").on("show.bs.dropdown", function (e) {

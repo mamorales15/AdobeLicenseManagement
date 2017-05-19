@@ -51,7 +51,7 @@ namespace AdobeLicenseManagement.Controllers
                 {
                     poc = new PointOfContact();
                     poc.POCName = helpDeskForm.POCName;
-                    poc.Notes = helpDeskForm.POCNotes
+                    poc.Notes = helpDeskForm.POCNotes;
                     db.PointOfContacts.Add(poc);
                     db.SaveChanges();
                     TempData["SuccessOHMsg"] = "Point of Contact " + poc.POCName + " created";
@@ -119,6 +119,7 @@ namespace AdobeLicenseManagement.Controllers
                 return HttpNotFound();
             }
             ViewData["request"] = id;
+            ViewBag.BuildingList = new SelectList(db.Buildings.OrderBy(x => x.BuildingID), "BuildingID", "BuildingName");
             return View();
         }
 
@@ -126,21 +127,23 @@ namespace AdobeLicenseManagement.Controllers
         // POST: /Forms/EndUserForm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EndUserForm([Bind(Include = "RequestID,UserName,Email,Building,RmNo,Tag,ComputerSerial,ComputerName,AdobeID")] EndUserFormViewModel endUserForm)
+        public ActionResult EndUserForm([Bind(Include = "RequestID,UserName,Email,BuildingID,RmNo,Tag,ComputerSerial,ComputerName,AdobeID")] EndUserFormViewModel endUserForm)
         {
             // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
             ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
+            ViewBag.BuildingList = new SelectList(db.Buildings.OrderBy(x => x.BuildingID), "BuildingID", "BuildingName");
 
             if (ModelState.IsValid)
             {
                 // Get objects from tables
                 Request req = db.Requests.Find(endUserForm.RequestID);
+                Building build = db.Buildings.Find(endUserForm.BuildingID);
 
                 // Create new End User
                 EndUser endUser = new EndUser();
                 endUser.UserName = endUserForm.UserName;
                 endUser.Email = endUserForm.Email;
-                endUser.Building = endUserForm.Building;
+                endUser.Building = build;
                 endUser.RmNo = endUserForm.RmNo;
                 endUser.Tag = endUserForm.Tag;
                 endUser.ComputerSerial = endUserForm.ComputerSerial;
