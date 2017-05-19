@@ -72,9 +72,8 @@ namespace AdobeLicenseManagement.Models
         public string RmNo { get; set; }
 
         [Display(Name = "Tag Number")]
-        [Required(ErrorMessage = "Tag number is required")]
         [RegularExpression("^[0-9]{6,6}$", ErrorMessage = "Tag number must be length 6")]
-        public int Tag { get; set; }
+        public int? Tag { get; set; }
 
         [Display(Name = "Computer Serial")]
         [StringLength(50, MinimumLength = 3)]
