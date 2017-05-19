@@ -25,11 +25,22 @@
         <td>
             @Html.DisplayFor(modelItem => item.LicenseTypeDesc)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LicenseTypeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LicenseTypeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LicenseTypeID })
-        </td>
+        @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+        {
+            <!-- Show the edit/delete buttons for owners and administrators -->
+            <td>
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.LicenseTypeID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.LicenseTypeID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.LicenseTypeID })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.LicenseTypeID })
+            </td>
+        }
     </tr>
 }
 

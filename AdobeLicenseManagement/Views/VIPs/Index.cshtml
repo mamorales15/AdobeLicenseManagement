@@ -37,11 +37,21 @@
         <td>
             @Html.DisplayFor(modelItem => item.VIPRenewalDate)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.VIPID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.VIPID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.VIPID })
-        </td>
+        @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+        {
+            <!-- Show the edit/delete buttons for owners and administrators -->
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.VIPID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.VIPID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.VIPID })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.VIPID })
+            </td>
+        }
     </tr>
 }
 

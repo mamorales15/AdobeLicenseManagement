@@ -54,7 +54,7 @@
                             <li>@Html.ActionLink("Queries", "Index", "Query")</li>
                             if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
                             {
-                                <li>@Html.ActionLink("Change Log", "Index", "Home")</li>
+                                <!--<li>Html.ActionLink("Change Log", "Index", "Home")</li>-->
                                 <li>@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</li>
                             }
                         }

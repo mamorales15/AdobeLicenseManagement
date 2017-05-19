@@ -67,11 +67,21 @@
         <td>
             @Html.DisplayFor(modelItem => item.Request.RequestID)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EndUserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EndUserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EndUserID })
-        </td>
+        @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+        {
+            <!-- Show the edit/delete buttons for owners and administrators -->
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.EndUserID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EndUserID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EndUserID })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.EndUserID })
+            </td>
+        }
     </tr>
 }
 

@@ -25,11 +25,21 @@
         <td>
             @Html.DisplayFor(modelItem => item.POCName)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.POCName }) |
-            @Html.ActionLink("Details", "Details", new { id=item.POCName }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.POCName })
-        </td>
+        @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+        {
+            <!-- Show the edit/delete buttons for owners and administrators -->
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.POCName }) |
+                @Html.ActionLink("Details", "Details", new { id = item.POCName }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.POCName })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.POCName })
+            </td>
+        }
     </tr>
 }
 

@@ -59,11 +59,21 @@
         {
             <td></td>
         }
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PurchaseOrderID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PurchaseOrderID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PurchaseOrderID })
-        </td>
+        @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+        {
+            <!-- Show the edit/delete buttons for owners and administrators -->
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PurchaseOrderID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PurchaseOrderID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PurchaseOrderID })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.PurchaseOrderID })
+            </td>
+        }
     </tr>
 }
 

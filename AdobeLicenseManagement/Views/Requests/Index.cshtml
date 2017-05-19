@@ -70,13 +70,25 @@
                 @endU.UserName<br/>
             }
         </td>
-        <td>
-            @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = item.RequestID }, null) |
-            @Html.ActionLink("Create ServiceDesk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null)<br/>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RequestID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RequestID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RequestID })
-        </td>
+        @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+        {
+            <!-- Show the edit/delete buttons for owners and administrators -->
+            <td>
+                @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = item.RequestID }, null) |
+                @Html.ActionLink("Create ServiceDesk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null)<br />
+                @Html.ActionLink("Edit", "Edit", new { id = item.RequestID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RequestID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RequestID })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = item.RequestID }, null) |
+                @Html.ActionLink("Create ServiceDesk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null)<br />
+                @Html.ActionLink("Details", "Details", new { id = item.RequestID })
+            </td>
+        }
     </tr>
 }
 
