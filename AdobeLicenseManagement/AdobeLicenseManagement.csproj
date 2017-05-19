@@ -280,9 +280,13 @@
     <Compile Include="Migrations\201705152123510_Creation date to SavedQuery.Designer.cs">
       <DependentUpon>201705152123510_Creation date to SavedQuery.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705152211443_Changed UserName to Username.cs" />
-    <Compile Include="Migrations\201705152211443_Changed UserName to Username.Designer.cs">
-      <DependentUpon>201705152211443_Changed UserName to Username.cs</DependentUpon>
+    <Compile Include="Migrations\201705191722387_Tag # for End User should be opt.cs" />
+    <Compile Include="Migrations\201705191722387_Tag # for End User should be opt.Designer.cs">
+      <DependentUpon>201705191722387_Tag # for End User should be opt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705191727015_Tag # for End User should be opt try 2.cs" />
+    <Compile Include="Migrations\201705191727015_Tag # for End User should be opt try 2.Designer.cs">
+      <DependentUpon>201705191727015_Tag # for End User should be opt try 2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -534,8 +538,11 @@
     <EmbeddedResource Include="Migrations\201705152123510_Creation date to SavedQuery.resx">
       <DependentUpon>201705152123510_Creation date to SavedQuery.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705152211443_Changed UserName to Username.resx">
-      <DependentUpon>201705152211443_Changed UserName to Username.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705191722387_Tag # for End User should be opt.resx">
+      <DependentUpon>201705191722387_Tag # for End User should be opt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705191727015_Tag # for End User should be opt try 2.resx">
+      <DependentUpon>201705191727015_Tag # for End User should be opt try 2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

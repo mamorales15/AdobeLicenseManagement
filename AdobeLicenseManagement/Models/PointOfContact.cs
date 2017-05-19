@@ -19,6 +19,9 @@ namespace AdobeLicenseManagement.Models
         [Key]
         public string POCName { get; set; }
 
+        [Display(Name = "Notes")]
+        public string Notes { get; set; }
+
         public virtual ICollection<Request> Requests { get; set; }
     }
 }

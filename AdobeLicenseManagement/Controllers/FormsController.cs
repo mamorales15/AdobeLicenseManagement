@@ -30,7 +30,7 @@ namespace AdobeLicenseManagement.Controllers
         // POST: /Forms/HelpDeskForm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult HelpDeskForm([Bind(Include = "SDReqID,VIPID,LicenseTypeID,ProductID,POC,Qty")] HelpDeskFormViewModel helpDeskForm)
+        public ActionResult HelpDeskForm([Bind(Include = "SDReqID,VIPID,LicenseTypeID,ProductID,POCName,POCNotes,Qty")] HelpDeskFormViewModel helpDeskForm)
         {
             ViewBag.VIPList = new SelectList(db.VIPs.OrderBy(x => x.VIPID), "VIPID", "VIPName");
             ViewBag.LicenseTypeList = new SelectList(db.LicenseTypes.OrderBy(x => x.LicenseTypeID), "LicenseTypeID", "LicenseTypeDesc");
@@ -47,17 +47,18 @@ namespace AdobeLicenseManagement.Controllers
 
                 // If Point of Contact doesn't already exist, create it.
                 PointOfContact poc;
-                if (!db.PointOfContacts.Any(o => o.POCName == helpDeskForm.POC))
+                if (!db.PointOfContacts.Any(o => o.POCName == helpDeskForm.POCName))
                 {
                     poc = new PointOfContact();
-                    poc.POCName = helpDeskForm.POC;
+                    poc.POCName = helpDeskForm.POCName;
+                    poc.Notes = helpDeskForm.POCNotes
                     db.PointOfContacts.Add(poc);
                     db.SaveChanges();
                     TempData["SuccessOHMsg"] = "Point of Contact " + poc.POCName + " created";
                 }
                 else
                 {
-                    poc = db.PointOfContacts.Find(helpDeskForm.POC);
+                    poc = db.PointOfContacts.Find(helpDeskForm.POCName);
                 }
 
                 // Get objects from tables

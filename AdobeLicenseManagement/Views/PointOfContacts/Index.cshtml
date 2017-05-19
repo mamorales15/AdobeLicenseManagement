@@ -17,6 +17,9 @@
         <th>
             @Html.DisplayNameFor(model => model.POCName)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
         <th></th>
     </tr>
 
@@ -24,6 +27,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.POCName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
         </td>
         @if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
         {

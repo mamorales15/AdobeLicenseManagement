@@ -7,13 +7,13 @@ namespace AdobeLicenseManagement.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ChangedUserNametoUserName : IMigrationMetadata
+    public sealed partial class TagforEndUsershouldbeopttry2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedUserNametoUserName));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(TagforEndUsershouldbeopttry2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705152211443_Changed UserName to UserName"; }
+            get { return "201705191727015_Tag # for End User should be opt try 2"; }
         }
         
         string IMigrationMetadata.Source

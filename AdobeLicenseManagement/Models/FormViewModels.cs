@@ -26,8 +26,12 @@ namespace AdobeLicenseManagement.Models
         public int ProductID { get; set; }
 
         [Required]
-        [Display(Name = "Point of Contact")]
-        public string POC { get; set; }
+        [Display(Name = "Point of Contact Name")]
+        public string POCName { get; set; }
+
+        [Required]
+        [Display(Name = "Point of Contact Notes")]
+        public string POCNotes { get; set; }
 
         [Required]
         [Display(Name = "Quantity")]

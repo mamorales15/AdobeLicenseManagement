@@ -51,7 +51,7 @@ namespace AdobeLicenseManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner, Administrator")]
-        public ActionResult Create([Bind(Include = "POCName")] PointOfContact pointOfContact)
+        public ActionResult Create([Bind(Include = "POCName,Notes")] PointOfContact pointOfContact)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace AdobeLicenseManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner, Administrator")]
-        public ActionResult Edit([Bind(Include = "POCName")] PointOfContact pointOfContact)
+        public ActionResult Edit([Bind(Include = "POCName,Notes")] PointOfContact pointOfContact)
         {
             if (ModelState.IsValid)
             {
