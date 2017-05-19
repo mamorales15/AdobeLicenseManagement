@@ -31,8 +31,11 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PurchaseOrder.PurchaseOrderID) |
-            @Html.ActionLink("Delete", "Delete", "PurchaseOrders", new { id = Model.PurchaseOrder.PurchaseOrderID }, null)
+            @Html.DisplayFor(model => model.PurchaseOrder.PurchaseOrderID) 
+            @if (Model.PurchaseOrder != null)
+            {
+                @Html.ActionLink("Delete", "Delete", "PurchaseOrders", new { id = Model.PurchaseOrder.PurchaseOrderID }, null)
+            }
         </dd>
 
         <dt>
