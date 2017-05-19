@@ -163,7 +163,9 @@ namespace AdobeLicenseManagement.Controllers
                     if (result.Succeeded)
                     {
                         // New users automatically get the "Users" role until an administrator/owner change their role
-                        UserManager.AddToRole(user.Id, "User");
+                        // Disabled for now, because we don't want people registering and immediately having access privileges
+                        // Currently, Administrator needs to manually edit a user's permissions
+                        //UserManager.AddToRole(user.Id, "User");
 
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
