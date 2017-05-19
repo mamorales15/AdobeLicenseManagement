@@ -64,7 +64,8 @@ namespace AdobeLicenseManagement.Controllers
             endUserVM.ComputerSerial = endUser.ComputerSerial;
             endUserVM.Email = endUser.Email;
             endUserVM.EndUserID = endUser.EndUserID;
-            endUserVM.RequestID = endUser.Request.RequestID;
+            if(endUser.Request != null)
+                endUserVM.RequestID = endUser.Request.RequestID;
             endUserVM.RmNo = endUser.RmNo;
             endUserVM.Tag = endUser.Tag;
             endUserVM.UserName = endUser.UserName;

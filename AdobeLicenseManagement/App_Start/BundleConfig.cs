@@ -24,7 +24,7 @@ namespace AdobeLicenseManagement
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-custom.css",                     // custom css generated from http://bootstrap-live-customizer.com/
                       "~/Content/Site.css"));
         }
     }

@@ -98,10 +98,9 @@ namespace AdobeLicenseManagement.Controllers
                     TempData["SuccessOHMsg"] = "The Query was successfully ran";
                     return View("Index", qvm);
                 }
-                catch (Exception e)
+                catch
                 {
-                    TempData["DangerOHMsg"] = e.ToString();
-                    //TempData["DangerOHMsg"] = "There was a problem running the query";
+                    TempData["DangerOHMsg"] = "There was a problem running the query";
                     return RedirectToAction("Index", qvm);
                 }
             }

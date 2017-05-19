@@ -14,17 +14,21 @@
     <div id="QueryArea" class="col-xs-12" style="padding: 0px 0px 10px 0px">
         <form action="" method="post">
             <div id="QueryHeader" class="col-xs-12" style="padding: 3px 0px 3px 0px">
-                <button type="submit" value="Run" name="action:Run" class="btn btn-primary btn-md" id="RunQuery">
-                    <span class="glyphicon glyphicon-play-circle"></span>
-                </button>
-                <button type="button" value="Erase" name="Erase" class="btn btn-primary btn-md" onclick="clearText()">
-                    <span class="glyphicon glyphicon-erase"></span>
-                </button>
-                <button type="submit" value="Save" name="action:Save" class="btn btn-primary btn-md" id="SaveQuery">
-                    <span class="glyphicon glyphicon-floppy-disk"></span>
-                </button>
-                @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @style = "max-width: 40%", @placeholder = "This query is used for..." })
-                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                <div class="col-xs-6" style="float:left">
+                    <button type="submit" value="Run" name="action:Run" class="btn btn-primary btn-md" id="RunQuery">
+                        <span class="glyphicon glyphicon-play-circle"></span>
+                    </button>
+                    <button type="button" value="Erase" name="Erase" class="btn btn-primary btn-md" onclick="clearText()">
+                        <span class="glyphicon glyphicon-erase"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6" style="float:right">
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @style = "max-width: 40%", @placeholder = "This query is used for..." })
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                    <button type="submit" value="Save" name="action:Save" class="btn btn-primary btn-md" id="SaveQuery">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                    </button>
+                </div>
             </div>
             <div id="QueryBox" class="col-xs-12" style="padding: 3px 0px 3px 0px">
                 @Html.TextAreaFor(m => m.Query, new { @class = "form-control", @style = "max-width: 100%; width: 100%; height: 100px", @placeholder = "SELECT *\nFROM Requests\nWHERE PointOfContact_POCName = 'mamorales15';" })

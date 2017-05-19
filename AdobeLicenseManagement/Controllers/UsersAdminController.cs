@@ -1,15 +1,12 @@
 ﻿using AdobeLicenseManagement.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using System.Net.Mail;
 
 namespace IdentitySample.Controllers
 {
@@ -39,6 +36,8 @@ namespace IdentitySample.Controllers
             return View(await userManager.Users.ToListAsync());
         }
 
+
+
         //
         // GET: /Users/Details/5
         [Authorize(Roles = "Owner, Administrator")]
@@ -53,6 +52,93 @@ namespace IdentitySample.Controllers
             ViewBag.RoleNames = await userManager.GetRolesAsync(user.Id);
 
             return View(user);
+        }
+
+        //
+        // GET: /Users/Create/1
+        [Authorize(Roles = "Owner, Administrator")]
+        public ActionResult Create()
+        {
+            return View(new CreateUserViewModel()
+            {
+                RolesList = roleManager.Roles.ToList().Select(x => new SelectListItem()
+                {
+                    Text = x.Name,
+                    Value = x.Name
+                })
+            });
+        }
+
+        //
+        // POST: /Users/Create/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner, Administrator")]
+        public async Task<ActionResult> Create([Bind(Include = "Email")] CreateUserViewModel createUser, params string[] selectedRole)
+        {
+            if (ModelState.IsValid)
+            {
+                // Create new user
+                var user = new ApplicationUser();
+                user.Email = createUser.Email;
+                user.UserName = createUser.Email.Split('@')[0];
+                string defaultPwd = "utep123#";    // Default password, users must change it
+
+                /*
+                // Send email to the new user
+                string senderName = "Adobe License Management Administrator"
+                string senderEmail = "adobeLicenseManagement@gmail.com";
+                string senderEmailPassword = "YU9CEGobYi3w";
+
+                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                string messageString =
+                    "Your account for Adobe License Management has been created.\n" +
+                    "Please log in with the password " + defaultPwd + " for your " +
+                    "first time use.\n Please reset your password once you log in.";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(user.Email));
+                message.From = new MailAddress(senderEmail);
+                message.Subject = "Your Adobe License Management account has been created";
+                message.Body = string.Format(body, senderName, senderEmail, messageString);
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = senderEmail,  // replace with valid value
+                        Password = senderEmailPassword  // replace with valid value
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp-mail.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(message);
+                }
+                */
+
+                try
+                {
+                    var newUser = userManager.Create(user, defaultPwd);
+
+                    // Add user to a role
+                    if (newUser.Succeeded)
+                    {
+                        selectedRole = selectedRole ?? new string[] { };    // if selectedRole is not null use that, otherwise create new empty string
+                        var result1 = userManager.AddToRole(user.Id, selectedRole[0]);
+                    }
+
+                    TempData["SuccessOHMsg"] = "User " + user.UserName + " created. An email has been sent to them with their first login password.";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the User " + user.UserName;
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         //
@@ -105,7 +191,7 @@ namespace IdentitySample.Controllers
 
                 var userRoles = await userManager.GetRolesAsync(user.Id);
 
-                selectedRole = selectedRole ?? new string[] { };
+                selectedRole = selectedRole ?? new string[] { };        // if selectedRole is not null use that, otherwise create new empty string
 
                 var result = await userManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
 
