@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using AdobeLicenseManagement.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace AdobeLicenseManagement
 {
@@ -19,7 +17,23 @@ namespace AdobeLicenseManagement
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            //return Task.FromResult(0);
+            return configSendGridasync(message);
+        }
+
+        private async Task configSendGridasync(IdentityMessage message)
+        {
+            /* Enable this if you want to confirm emails or allow forgotten passwords to be reset
+            var apiKey = "INSERT_SEND_GRID_API_KEY";
+            var client = new SendGridClient(apiKey);
+            var myMessage = new SendGridMessage();
+            myMessage.SetFrom(new EmailAddress("SENDER_EMAIL", "SENDER_NAME"));
+            myMessage.AddTo(message.Destination);
+            myMessage.SetSubject(message.Subject);
+            myMessage.AddContent(MimeType.Text, message.Body);
+            myMessage.AddContent(MimeType.Html, message.Body);
+            var response = await client.SendEmailAsync(myMessage);
+            */
         }
     }
 

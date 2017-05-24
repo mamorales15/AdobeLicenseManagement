@@ -7,6 +7,11 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Net.Mail;
+using AdobeLicenseManagement;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace IdentitySample.Controllers
 {
@@ -36,9 +41,6 @@ namespace IdentitySample.Controllers
             return View(await userManager.Users.ToListAsync());
         }
 
-
-
-        //
         // GET: /Users/Details/5
         [Authorize(Roles = "Owner, Administrator")]
         public async Task<ActionResult> Details(string id)
@@ -68,13 +70,12 @@ namespace IdentitySample.Controllers
                 })
             });
         }
-
-        //
+        
         // POST: /Users/Create/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner, Administrator")]
-        public ActionResult Create([Bind(Include = "Email")] CreateUserViewModel createUser, params string[] selectedRole)
+        public async Task<ActionResult> CreateAsync([Bind(Include = "Email")] CreateUserViewModel createUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -82,40 +83,14 @@ namespace IdentitySample.Controllers
                 var user = new ApplicationUser();
                 user.Email = createUser.Email;
                 user.UserName = createUser.Email.Split('@')[0];
-                string defaultPwd = "utep123#";    // Default password, users must change it
+                string defaultPwd = GetUniqueKey(8);    // Default password, users must change it
 
-                /*
-                // Send email to the new user
-                string senderName = "Adobe License Management Administrator"
-                string senderEmail = "adobeLicenseManagement@gmail.com";
-                string senderEmailPassword = "YU9CEGobYi3w";
-
-                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
-                string messageString =
-                    "Your account for Adobe License Management has been created.\n" +
-                    "Please log in with the password " + defaultPwd + " for your " +
-                    "first time use.\n Please reset your password once you log in.";
-                var message = new MailMessage();
-                message.To.Add(new MailAddress(user.Email));
-                message.From = new MailAddress(senderEmail);
-                message.Subject = "Your Adobe License Management account has been created";
-                message.Body = string.Format(body, senderName, senderEmail, messageString);
-                message.IsBodyHtml = true;
-
-                using (var smtp = new SmtpClient())
-                {
-                    var credential = new NetworkCredential
-                    {
-                        UserName = senderEmail,  // replace with valid value
-                        Password = senderEmailPassword  // replace with valid value
-                    };
-                    smtp.Credentials = credential;
-                    smtp.Host = "smtp-mail.gmail.com";
-                    smtp.Port = 587;
-                    smtp.EnableSsl = true;
-                    await smtp.SendMailAsync(message);
-                }
-                */
+                var callbackUrl = Url.Action("Login", "Account", null, protocol: Request.Url.Scheme);
+                string message = "An account for Adobe License Management has been created for you by " + User.Identity.GetUserName()
+                    + ".<br />Your username is <strong>" + user.UserName + "</strong> and your default password is <strong>" + defaultPwd
+                    + "</strong>.<br />Please change the password once you log in by clicking on your username in the top-right and then clicking reset password"
+                    + ".<br />Here is a link to the <a href=\"" + callbackUrl + "\">Adobe License Management</a> website. ";
+                await SendEmail(user.Email, "Adobe License Management account created", message);
 
                 try
                 {
@@ -128,7 +103,8 @@ namespace IdentitySample.Controllers
                         var result1 = userManager.AddToRole(user.Id, selectedRole[0]);
                     }
 
-                    TempData["SuccessOHMsg"] = "User " + user.UserName + " created. An email has been sent to them with their first login password.";
+                    TempData["SuccessOHMsg"] = "User " + user.UserName + " created. An email has been sent to them with their first login password." +
+                        "Please remind them to check their spam/junk folder.";
                     return RedirectToAction("Index");
                 }
                 catch
@@ -139,6 +115,41 @@ namespace IdentitySample.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        // Generates a random alphanumeric string of size maxSize
+        // Reference: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
+        private string GetUniqueKey(int size)
+        {
+            char[] chars = new char[62];
+            chars =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            byte[] data = new byte[1];
+            using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
+            {
+                crypto.GetNonZeroBytes(data);
+                data = new byte[size];
+                crypto.GetNonZeroBytes(data);
+            }
+            StringBuilder result = new StringBuilder(size);
+            foreach (byte b in data)
+            {
+                result.Append(chars[b % (chars.Length)]);
+            }
+            return result.ToString();
+        }
+
+        private async Task SendEmail(string destination, string subject, string message)
+        {
+            var apiKey = "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";       // Remove later
+            var client = new SendGridClient(apiKey);
+            var myMessage = new SendGridMessage();
+            myMessage.SetFrom(new EmailAddress("mamorales15@miners.utep.edu", "Adobe License Management"));
+            myMessage.AddTo(destination);
+            myMessage.SetSubject(subject);
+            myMessage.AddContent(MimeType.Text, message);
+            myMessage.AddContent(MimeType.Html, message);
+            var response = await client.SendEmailAsync(myMessage);
         }
 
         //

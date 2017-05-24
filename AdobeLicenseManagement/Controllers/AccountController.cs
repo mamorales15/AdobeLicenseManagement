@@ -136,6 +136,7 @@ namespace AdobeLicenseManagement.Controllers
             }
         }
 
+        /* Registration is disabled. Admins or Owners must create new users
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -144,6 +145,7 @@ namespace AdobeLicenseManagement.Controllers
             return View();
         }
 
+        
         //
         // POST: /Account/Register
         [HttpPost]
@@ -157,7 +159,6 @@ namespace AdobeLicenseManagement.Controllers
                 {
                     var UserName = model.Email.Split('@')[0];
                     var user = new ApplicationUser { UserName = UserName, Email = model.Email };
-
                     var result = await UserManager.CreateAsync(user, model.Password);
 
                     if (result.Succeeded)
@@ -184,6 +185,7 @@ namespace AdobeLicenseManagement.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        */
 
         //
         // GET: /Account/ConfirmEmail
