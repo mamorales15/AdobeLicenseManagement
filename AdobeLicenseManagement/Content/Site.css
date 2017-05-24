@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.btn:hover {
+    border-color: #434857;
+    background-color: #252830;
+    color: #1bc98e;
+}
+
+.navbar:hover {
+    border-color: #434857;
+}
