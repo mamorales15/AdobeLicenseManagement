@@ -645,23 +645,54 @@
                     </tr>
                 }
             </table>
+            <button type="button" class="btn btn-primary btn-md" onclick="exportToExcel();" title="Exports the table to an Excel file">Export</button>
         </div>
     </div>
 }
 
-<script type="text/javascript" src="http://www.kunalbabre.com/projects/table2CSV.js"></script>
-
 <script language="javascript" type="text/javascript">
+
+    // Concats text to the Query textarea.
+    // Used for Shortcut buttons
     function addText(text) {
         document.getElementById('Query').value += text;
         document.getElementById('Query').focus();
     }
+
+    // Clears text from the Query textarea
     function clearText() {
         document.getElementById('Query').value = "";
     }
-    function exportTable() {
-        document.getElementById('Csv').value = document.getElementById('queryResults').table2CSV({ delivery: 'value' });
+
+    //Resource: https://stackoverflow.com/questions/22317951/export-html-table-data-to-excel-using-javascript-jquery-is-not-working-properl
+    function exportToExcel() {
+        var htmls = "";
+        var uri = 'data:application/vnd.ms-excel;base64,';
+        var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+        var base64 = function (s) {
+            return window.btoa(unescape(encodeURIComponent(s)))
+        };
+
+        var format = function (s, c) {
+            return s.replace(/{(\w+)}/g, function (m, p) {
+                return c[p];
+            })
+        };
+
+        htmls = document.getElementById("queryResults").innerHTML;  // grab html table
+
+        var ctx = {
+            worksheet: 'Worksheet',
+            table: htmls
+        }
+
+
+        var link = document.createElement("a");
+        link.download = "Query Export.xls";         // output file name
+        link.href = uri + base64(format(template, ctx));
+        link.click();
     }
+
 </script>
 <script type="text/javascript">
 
@@ -670,9 +701,9 @@
         $(".dropdown").on("show.bs.dropdown", function (e) {
             $(this).find(".glyphicon-chevron-down").addClass("glyphicon-chevron-right").removeClass("glyphicon-chevron-down");
         });
+
         $(".dropdown").on("hide.bs.dropdown", function (e) {
             $(this).find(".glyphicon-chevron-right").addClass("glyphicon-chevron-down").removeClass("glyphicon-chevron-right");
         });
-
     }); // End of JQuery Code
 </script>
