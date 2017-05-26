@@ -83,14 +83,17 @@ namespace IdentitySample.Controllers
                 var user = new ApplicationUser();
                 user.Email = createUser.Email;
                 user.UserName = createUser.Email.Split('@')[0];
-                string defaultPwd = GetUniqueKey(8);    // Default password, users must change it
+                //string defaultPwd = GetUniqueKey(8);    // Default password, users must change it
+                string defaultPwd = "utep#123";     // Default password, users must change it
 
+                /* Used when sending email to new user created. I removed this for simplicity
                 var callbackUrl = Url.Action("Login", "Account", null, protocol: Request.Url.Scheme);
                 string message = "An account for Adobe License Management has been created for you by " + User.Identity.GetUserName()
                     + ".<br />Your username is <strong>" + user.UserName + "</strong> and your default password is <strong>" + defaultPwd
                     + "</strong>.<br />Please change the password once you log in by clicking on your username in the top-right and then clicking reset password"
                     + ".<br />Here is a link to the <a href=\"" + callbackUrl + "\">Adobe License Management</a> website. ";
                 await SendEmail(user.Email, "Adobe License Management account created", message);
+                */
 
                 try
                 {
@@ -99,24 +102,33 @@ namespace IdentitySample.Controllers
                     // Add user to a role
                     if (newUser.Succeeded)
                     {
-                        selectedRole = selectedRole ?? new string[] { };    // if selectedRole is not null use that, otherwise create new empty string
-                        var result1 = userManager.AddToRole(user.Id, selectedRole[0]);
-                    }
+                        if(selectedRole != null)
+                        {
+                            selectedRole = selectedRole ?? new string[] { };    // if selectedRole is not null use that, otherwise create new empty string
+                            var result1 = userManager.AddToRole(user.Id, selectedRole[0]);
+                        }
 
-                    TempData["SuccessOHMsg"] = "User " + user.UserName + " created. An email has been sent to them with their first login password." +
-                        "Please remind them to check their spam/junk folder.";
-                    return RedirectToAction("Index");
+                        // Used when sending email to new user created. I removed this for simplicity
+                        //TempData["SuccessOHMsg"] = "User " + user.UserName + " created. An email has been sent to them with their first login password." + "Please remind them to check their spam/junk folder.";
+                        TempData["SuccessOHMsg"] = "User " + user.UserName + " created. Please let them know that their temporary password is <b>" + defaultPwd + "</b> and they must change it after they log in";
+                    }
+                    else
+                    {
+                        TempData["DangerOHMsg"] = "Problem creating the User " + user.UserName;
+                    }
                 }
                 catch
                 {
                     TempData["DangerOHMsg"] = "Problem creating the User " + user.UserName;
-                    return RedirectToAction("Index");
                 }
             }
 
             return RedirectToAction("Index");
         }
 
+        /* Used this to send an email to the user created with a random temporary password and a link to the website
+         * I removed it because I needed to include an API key and it complicated things too much.
+         * If you would like to implement this, please refer to https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/account-confirmation-and-password-recovery-with-aspnet-identity
         // Generates a random alphanumeric string of size maxSize
         // Reference: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
         private string GetUniqueKey(int size)
@@ -139,9 +151,19 @@ namespace IdentitySample.Controllers
             return result.ToString();
         }
 
+        
         private async Task SendEmail(string destination, string subject, string message)
         {
-            var apiKey = "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";       // Remove later
+            // The apiKey needs to be saved in an external file that is not uploaded to cloud server (i.e., Github)
+            // For more info, please see https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure
+            var apiKey = "";       // Remove later
+            System.Configuration.Configuration rootWebConfig1 =
+                System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(null);
+            if (rootWebConfig1.AppSettings.Settings.Count > 0)
+            {
+                apiKey = rootWebConfig1.AppSettings.Settings["SendGridAPIKey"].Value;
+            }
+
             var client = new SendGridClient(apiKey);
             var myMessage = new SendGridMessage();
             myMessage.SetFrom(new EmailAddress("mamorales15@miners.utep.edu", "Adobe License Management"));
@@ -151,6 +173,7 @@ namespace IdentitySample.Controllers
             myMessage.AddContent(MimeType.Html, message);
             var response = await client.SendEmailAsync(myMessage);
         }
+        */
 
         //
         // GET: /Users/Edit/1
