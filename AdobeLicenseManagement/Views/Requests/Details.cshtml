@@ -19,14 +19,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PurchaseOrder.PurchaseOrderID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PurchaseOrder.PurchaseOrderID)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.VIP.VIPName)
         </dt>
 
@@ -59,13 +51,57 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.PurchaseOrder)
+        </dt>
+
+        <dd>
+            @if (Model.PurchaseOrder == null)
+            {
+                <p>No Purchase Order associated with this Request.</p>
+            }
+            else
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PurchaseOrder.PurchaseOrderID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PurchaseOrder.PONo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PurchaseOrder.PODate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PurchaseOrder.Qty)
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.PurchaseOrder.PurchaseOrderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.PurchaseOrder.PONo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.PurchaseOrder.PODate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.PurchaseOrder.Qty)
+                        </td>
+                    </tr>
+                </table>
+            }
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.ServiceDeskRequests)
         </dt>
 
         <dd>
 @if (!Model.ServiceDeskRequests.Any())
 {
-    <p>No Requests associated with this end user.</p>
+    <p>No Service Desk Requests associated with this Request.</p>
 }
 else
 {
@@ -94,7 +130,7 @@ else
         <dd>
 @if (!Model.EndUsers.Any())
 {
-    <p>No Requests associated with this end user.</p>
+    <p>No End Users associated with this Request.</p>
 }
 else
 {

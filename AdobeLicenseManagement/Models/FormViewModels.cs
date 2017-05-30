@@ -93,6 +93,10 @@ namespace AdobeLicenseManagement.Models
         [Display(Name = "Request ID")]
         public int RequestID { get; set; }
 
+        [Display(Name = "Quantity")]
+        [Required(ErrorMessage = "Quantity is required")]
+        public int Qty { get; set; }
+
         [Display(Name = "Purchase Order Number")]
         public string PONo { get; set; }
 

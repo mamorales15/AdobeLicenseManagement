@@ -21,15 +21,16 @@ namespace AdobeLicenseManagement.Controllers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
             ViewBag.CurrentSort = sortOrder;
-
-            ViewBag.RequestIDSortParam = String.IsNullOrEmpty(sortOrder) ? "requestID_desc" : sortOrder == "default" ? "requestID_desc" : "default";
-            ViewBag.PONoSortParam = sortOrder == "poNo_asc" ? "poNo_desc" : "poNo_asc";
+            
+            if (String.IsNullOrEmpty(sortOrder))
+                sortOrder = "default";
             ViewBag.VIPNameSortParam = sortOrder == "vipName_asc" ? "vipName_desc" : "vipName_asc";
             ViewBag.LicenseTypeDescSortParam = sortOrder == "licenseTypeDesc_asc" ? "licenseTypeDesc_desc" : "licenseTypeDesc_asc";
             ViewBag.ProductDescSortParam = sortOrder == "productDesc_asc" ? "productDesc_desc" : "productDesc_asc";
             ViewBag.POCNameSortParam = sortOrder == "pocName_asc" ? "pocName_desc" : "pocName_asc";
             ViewBag.ServiceDeskRequestsSortParam = sortOrder;
             ViewBag.EndUsersSortParam = sortOrder;
+            ViewBag.PONoSortParam = sortOrder;
 
             if (searchString != null)
             {
@@ -57,15 +58,6 @@ namespace AdobeLicenseManagement.Controllers
 
             switch (sortOrder)
             {
-                case "requestID_desc":
-                    requests = requests.OrderByDescending(s => s.RequestID);
-                    break;
-                case "poNo_desc":
-                    requests = requests.OrderByDescending(s => s.PurchaseOrder.PONo);
-                    break;
-                case "poNo_asc":
-                    requests = requests.OrderBy(s => s.PurchaseOrder.PONo);
-                    break;
                 case "vipName_desc":
                     requests = requests.OrderByDescending(s => s.VIP.VIPName);
                     break;

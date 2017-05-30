@@ -103,6 +103,7 @@ namespace AdobeLicenseManagement.Controllers
             return View(purchaseOrder);
         }
 
+        /* Create disabled so that users can only create a purchase order through the Requests/Index page
         // GET: PurchaseOrders/Create
         [Authorize(Roles = "Owner, Administrator")]
         public ActionResult Create()
@@ -144,6 +145,7 @@ namespace AdobeLicenseManagement.Controllers
             ViewBag.PurchaseOrderID = new SelectList(query, "RequestID", "RequestID", purchaseOrder.PurchaseOrderID);
             return View(purchaseOrder);
         }
+        */
 
         // GET: PurchaseOrders/Edit/5
         [Authorize(Roles = "Owner, Administrator")]

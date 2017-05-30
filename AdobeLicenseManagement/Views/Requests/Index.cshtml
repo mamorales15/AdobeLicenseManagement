@@ -34,12 +34,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Request ID", "Index", new { sortOrder = ViewBag.RequestIDSortParam, currentFilter = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Purchase Order ID", "Index", new { sortOrder = ViewBag.PONoSortParam, currentFilter = ViewBag.CurrentFilter })
-        </th>
-        <th>
             @Html.ActionLink("VIP Name", "Index", new { sortOrder = ViewBag.VIPNameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
@@ -50,6 +44,10 @@
         </th>
         <th>
             @Html.ActionLink("Point of Contact Name", "Index", new { sortOrder = ViewBag.POCNameSortParam, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <!-- Link does not actually sort -->
+        <th>
+            @Html.ActionLink("Purchase Order", "Index", new { sortOrder = ViewBag.PONoSortParam, currentFilter = ViewBag.CurrentFilter }, new { @style = "pointer-events: none; cursor: default" })
         </th>
         <th>
             <!-- Link does not actually sort -->
@@ -65,12 +63,6 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.RequestID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PurchaseOrder.PurchaseOrderID)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.VIP.VIPName)
         </td>
         <td>
@@ -81,6 +73,26 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PointOfContact.POCName)
+        </td>
+        <td>
+            @if (item.PurchaseOrder != null)
+            {
+                <!-- Hide PONo if it hasn't been entered yet -->
+                if (item.PurchaseOrder.PONo != "")
+                {
+                    @Html.DisplayFor(modelItem => item.PurchaseOrder.PONo)<br />
+                }
+                <!-- Hide PODate if it hasn't been entered yet -->
+                if (item.PurchaseOrder.PODate != new DateTime(1753, 1, 1))
+                {
+                    @Html.DisplayFor(modelItem => item.PurchaseOrder.PODate)<br />
+                }
+                <!-- Hide Qty if it hasn't been entered yet -->
+                if (item.PurchaseOrder.Qty != 0)
+                {
+                    @Html.DisplayFor(modelItem => item.PurchaseOrder.Qty)
+                }
+            }
         </td>
         <td>
             @foreach (var sdreq in item.ServiceDeskRequests)
@@ -109,6 +121,7 @@
         else
         {
             <td>
+                @Html.ActionLink("Create PO", "POForm", "Forms", new { id = item.RequestID }, null) |
                 @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = item.RequestID }, null) |
                 @Html.ActionLink("Create ServiceDesk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null)<br />
                 @Html.ActionLink("Details", "Details", new { id = item.RequestID })

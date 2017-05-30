@@ -182,15 +182,47 @@ namespace AdobeLicenseManagement.Controllers
         // POST: /Forms/POForm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult POForm([Bind(Include = "RequestID,PONo,PODate")] POFormViewModel POForm)
+        public ActionResult POForm([Bind(Include = "RequestID,Qty,PONo,PODate")] POFormViewModel purchaseOrder)
         {
             if (ModelState.IsValid)
             {
+                // PO ID and Request ID should be the same
+                Request req = db.Requests.Find(purchaseOrder.RequestID);
+                // Check if a PO exists already, if not create it
+                PurchaseOrder po = db.PurchaseOrders.Find(purchaseOrder.RequestID);
+                if (po == null)
+                {
+                    po = new PurchaseOrder();
+                    po.PurchaseOrderID = purchaseOrder.RequestID;
+                }
+                po.Qty = purchaseOrder.Qty;
+                po.PONo = purchaseOrder.PONo;
+                po.PODate = purchaseOrder.PODate;
+
+                db.PurchaseOrders.Add(po);
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Purchase Order " + po.PurchaseOrderID + " created";
+                    return RedirectToAction("Index", "Requests");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the Purchase Order " + po.PurchaseOrderID;
+                    return RedirectToAction("POForm");
+                }
+            }
+            return RedirectToAction("POForm");
+            /*
+            if (ModelState.IsValid)
+            {
                 // Get objects from tables
-                Request req = db.Requests.Find(POForm.RequestID);
+                Request req = db.Requests.Find(purchaseOrder.RequestID);
                 PurchaseOrder po = req.PurchaseOrder;
-                po.PONo = POForm.PONo;
-                po.PODate = POForm.PODate;
+                if (po == null)
+                    po = new PurchaseOrder();
+                po.PONo = purchaseOrder.PONo;
+                po.PODate = purchaseOrder.PODate;
                 db.SaveChanges();
 
                 TempData["SuccessOHMsg"] = "Purchase Order details added to the request " + req.RequestID;
@@ -199,6 +231,7 @@ namespace AdobeLicenseManagement.Controllers
 
             ModelState.AddModelError("", "Problem Submitting the form. Model state is not valid.");
             return View();
+            */
         }
 
         //

@@ -7,12 +7,15 @@
 
 <h2>@ViewBag.Title</h2>
 
-@if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
+<!-- Create disabled so that users can only create a purchase order through the Requests/Index page
+
+if (User.IsInRole("Owner") || User.IsInRole("Administrator"))
 {
     <p>
-        @Html.ActionLink("Create New", "Create")
+        Html.ActionLink("Create New", "Create")
     </p>
 }
+-->
 
 <div class="col-md-8">
     @using (Html.BeginForm("Index", "PurchaseOrders", FormMethod.Get))
