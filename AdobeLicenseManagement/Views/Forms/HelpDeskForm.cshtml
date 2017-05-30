@@ -54,7 +54,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.POCNotes, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.POCNotes, new { @class = "form-control" @placeholder = "This Point of Contact is..." })
+                @Html.TextAreaFor(model => model.POCNotes, new { @class = "form-control", @placeholder = "This Point of Contact is..." })
                 @Html.ValidationMessageFor(model => model.POCNotes, "", new { @class = "text-danger" })
             </div>
         </div>

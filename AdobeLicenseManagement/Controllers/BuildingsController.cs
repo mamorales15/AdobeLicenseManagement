@@ -90,8 +90,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.Buildings.Add(building);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Building " + building.BuildingName + " created";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem creating the building " + building.BuildingName;
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(building);
@@ -122,8 +131,17 @@ namespace AdobeLicenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(building).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    TempData["SuccessOHMsg"] = "Building " + building.BuildingName + " edited";
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    TempData["DangerOHMsg"] = "Problem editing the building " + building.BuildingName;
+                    return RedirectToAction("Index");
+                }
             }
             return View(building);
         }
@@ -150,8 +168,17 @@ namespace AdobeLicenseManagement.Controllers
         {
             Building building = db.Buildings.Find(id);
             db.Buildings.Remove(building);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                TempData["SuccessOHMsg"] = "Building " + building.BuildingName + " deleted";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["DangerOHMsg"] = "Problem deleting the building " + building.BuildingName;
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -21,9 +21,8 @@ namespace AdobeLicenseManagement.Controllers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
             ViewBag.CurrentSort = sortOrder;
-            
-            if (String.IsNullOrEmpty(sortOrder))
-                sortOrder = "default";
+
+            ViewBag.RequestIDSortParam = String.IsNullOrEmpty(sortOrder) ? "requestID_desc" : sortOrder == "default" ? "requestID_desc" : "default";
             ViewBag.VIPNameSortParam = sortOrder == "vipName_asc" ? "vipName_desc" : "vipName_asc";
             ViewBag.LicenseTypeDescSortParam = sortOrder == "licenseTypeDesc_asc" ? "licenseTypeDesc_desc" : "licenseTypeDesc_asc";
             ViewBag.ProductDescSortParam = sortOrder == "productDesc_asc" ? "productDesc_desc" : "productDesc_asc";
@@ -58,6 +57,9 @@ namespace AdobeLicenseManagement.Controllers
 
             switch (sortOrder)
             {
+                case "requestID_desc":
+                    requests = requests.OrderByDescending(s => s.RequestID);
+                    break;
                 case "vipName_desc":
                     requests = requests.OrderByDescending(s => s.VIP.VIPName);
                     break;

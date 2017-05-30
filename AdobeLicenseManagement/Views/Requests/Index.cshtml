@@ -34,6 +34,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.ActionLink("Request ID", "Index", new { sortOrder = ViewBag.RequestIDSortParam, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
             @Html.ActionLink("VIP Name", "Index", new { sortOrder = ViewBag.VIPNameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
@@ -62,6 +65,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestID)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.VIP.VIPName)
         </td>

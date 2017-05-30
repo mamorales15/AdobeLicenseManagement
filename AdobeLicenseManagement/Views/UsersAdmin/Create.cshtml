@@ -7,7 +7,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("CreateAsync", "UsersAdmin"))
+@using (Html.BeginForm("Create", "UsersAdmin")) //Change Create to CreateAsync if you want to use the email feature
 {
     @Html.AntiForgeryToken()
 

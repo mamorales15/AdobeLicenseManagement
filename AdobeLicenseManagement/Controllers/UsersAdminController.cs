@@ -119,10 +119,13 @@ namespace IdentitySample.Controllers
         }
         
         // POST: /Users/Create/5
+        // May also be used to send a welcoming email to new accounts. I removed this feature for simplicity (SendGrid requires that you
+        // use an external password file). If you wanted to reenable this, change this method to Async. Uncomment relevant code, and
+        // change UsersAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner, Administrator")]
-        public async Task<ActionResult> CreateAsync([Bind(Include = "Email")] CreateUserViewModel createUser, params string[] selectedRole)
+        public ActionResult Create([Bind(Include = "Email")] CreateUserViewModel createUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -133,7 +136,7 @@ namespace IdentitySample.Controllers
                 //string defaultPwd = GetUniqueKey(8);    // Default password, users must change it
                 string defaultPwd = "utep#123";     // Default password, users must change it
 
-                /* Used when sending email to new user created. I removed this for simplicity
+                /* 
                 var callbackUrl = Url.Action("Login", "Account", null, protocol: Request.Url.Scheme);
                 string message = "An account for Adobe License Management has been created for you by " + User.Identity.GetUserName()
                     + ".<br />Your username is <strong>" + user.UserName + "</strong> and your default password is <strong>" + defaultPwd
@@ -155,7 +158,6 @@ namespace IdentitySample.Controllers
                             var result1 = userManager.AddToRole(user.Id, selectedRole[0]);
                         }
 
-                        // Used when sending email to new user created. I removed this for simplicity
                         //TempData["SuccessOHMsg"] = "User " + user.UserName + " created. An email has been sent to them with their first login password." + "Please remind them to check their spam/junk folder.";
                         TempData["SuccessOHMsg"] = "User " + user.UserName + " created. Please let them know that their temporary password is <b>" + defaultPwd + "</b> and they must change it after they log in";
                     }
