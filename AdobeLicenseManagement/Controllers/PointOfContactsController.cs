@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdobeLicenseManagement.Models;
+using PagedList;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -17,9 +18,59 @@ namespace AdobeLicenseManagement.Controllers
 
         // GET: PointOfContacts
         [Authorize(Roles = "Owner, Administrator, Super User")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
-            return View(db.PointOfContacts.ToList());
+            ViewBag.CurrentSort = sortOrder;
+
+            ViewBag.POCNameSortParam = String.IsNullOrEmpty(sortOrder) ? "pocName_desc" : sortOrder == "default" ? "pocName_desc" : "default";
+            ViewBag.NotesSortParam = sortOrder == "notes_asc" ? "notes_desc" : "notes_asc";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var pocs = from s in db.PointOfContacts
+                                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                pocs = pocs.Where(s => s.POCName.Contains(searchString)
+                                        || s.Notes.ToString().Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "pocName_desc":
+                    pocs = pocs.OrderByDescending(s => s.POCName);
+                    break;
+                case "notes_desc":
+                    pocs = pocs.OrderByDescending(s => s.Notes);
+                    break;
+                case "notes_asc":
+                    pocs = pocs.OrderBy(s => s.Notes);
+                    break;
+                default:
+                    pocs = pocs.OrderBy(s => s.POCName);
+                    break;
+            }
+
+            int? tentativePageSize = 10;
+            if (pageSize != null && pageSize > 0)
+            {
+                tentativePageSize = pageSize;
+                ViewBag.PageSize = pageSize;
+            }
+            int myPageSize = (int)tentativePageSize;
+            int pageNumber = (page ?? 1);
+
+            return View(pocs.ToPagedList(pageNumber, myPageSize));
         }
 
         // GET: PointOfContacts/Details/5

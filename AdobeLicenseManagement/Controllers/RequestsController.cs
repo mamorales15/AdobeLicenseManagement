@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdobeLicenseManagement.Models;
+using PagedList;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -17,10 +18,93 @@ namespace AdobeLicenseManagement.Controllers
 
         // GET: Requests
         [Authorize(Roles = "Owner, Administrator, Super User")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
-            var requests = db.Requests.Include(r => r.PurchaseOrder);
-            return View(requests.ToList());
+            ViewBag.CurrentSort = sortOrder;
+
+            ViewBag.RequestIDSortParam = String.IsNullOrEmpty(sortOrder) ? "requestID_desc" : sortOrder == "default" ? "requestID_desc" : "default";
+            ViewBag.PONoSortParam = sortOrder == "poNo_asc" ? "poNo_desc" : "poNo_asc";
+            ViewBag.VIPNameSortParam = sortOrder == "vipName_asc" ? "vipName_desc" : "vipName_asc";
+            ViewBag.LicenseTypeDescSortParam = sortOrder == "licenseTypeDesc_asc" ? "licenseTypeDesc_desc" : "licenseTypeDesc_asc";
+            ViewBag.ProductDescSortParam = sortOrder == "productDesc_asc" ? "productDesc_desc" : "productDesc_asc";
+            ViewBag.POCNameSortParam = sortOrder == "pocName_asc" ? "pocName_desc" : "pocName_asc";
+            ViewBag.ServiceDeskRequestsSortParam = sortOrder;
+            ViewBag.EndUsersSortParam = sortOrder;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var requests = from s in db.Requests.Include(r => r.PurchaseOrder)
+                                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                requests = requests.Where(s => s.RequestID.ToString().Contains(searchString)
+                                                                || s.PurchaseOrder.PONo.ToString().Contains(searchString)
+                                                                || s.VIP.VIPName.ToString().Contains(searchString)
+                                                                || s.LicenseType.LicenseTypeDesc.ToString().Contains(searchString)
+                                                                || s.Product.ProductDesc.ToString().Contains(searchString)
+                                                                || s.PointOfContact.POCName.ToString().Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "requestID_desc":
+                    requests = requests.OrderByDescending(s => s.RequestID);
+                    break;
+                case "poNo_desc":
+                    requests = requests.OrderByDescending(s => s.PurchaseOrder.PONo);
+                    break;
+                case "poNo_asc":
+                    requests = requests.OrderBy(s => s.PurchaseOrder.PONo);
+                    break;
+                case "vipName_desc":
+                    requests = requests.OrderByDescending(s => s.VIP.VIPName);
+                    break;
+                case "vipName_asc":
+                    requests = requests.OrderBy(s => s.VIP.VIPName);
+                    break;
+                case "licenseTypeDesc_desc":
+                    requests = requests.OrderByDescending(s => s.LicenseType.LicenseTypeDesc);
+                    break;
+                case "licenseTypeDesc_asc":
+                    requests = requests.OrderBy(s => s.LicenseType.LicenseTypeDesc);
+                    break;
+                case "productDesc_desc":
+                    requests = requests.OrderByDescending(s => s.Product.ProductDesc);
+                    break;
+                case "productDesc_asc":
+                    requests = requests.OrderBy(s => s.Product.ProductDesc);
+                    break;
+                case "pocName_desc":
+                    requests = requests.OrderByDescending(s => s.PointOfContact.POCName);
+                    break;
+                case "pocName_asc":
+                    requests = requests.OrderBy(s => s.PointOfContact.POCName);
+                    break;
+                default:
+                    requests = requests.OrderBy(s => s.RequestID);
+                    break;
+            }
+
+            int? tentativePageSize = 10;
+            if (pageSize != null && pageSize > 0)
+            {
+                tentativePageSize = pageSize;
+                ViewBag.PageSize = pageSize;
+            }
+            int myPageSize = (int)tentativePageSize;
+            int pageNumber = (page ?? 1);
+
+            return View(requests.ToPagedList(pageNumber, myPageSize));
         }
 
         // GET: Requests/Details/5

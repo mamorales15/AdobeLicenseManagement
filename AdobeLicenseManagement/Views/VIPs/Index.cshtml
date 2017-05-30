@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AdobeLicenseManagement.Models.VIP>
+﻿@model PagedList.IPagedList<AdobeLicenseManagement.Models.VIP>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "VIPs Table";
@@ -12,16 +13,37 @@
         @Html.ActionLink("Create New", "Create")
     </p>
 }
+
+<div class="col-md-8">
+    @using (Html.BeginForm("Index", "VIPs", FormMethod.Get))
+    {
+        <p title="Search by VIP Name, VIP Number, or VIP Renewal Date">
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <button type="submit" value="Search" class="btn btn-default">Search</button>
+        </p>
+    }
+</div>
+
+<div class="col-md-4">
+    @using (Html.BeginForm("Index", "VIPs", FormMethod.Get))
+    {
+        <p title="Change number of items on each page">
+            Page Size: @Html.TextBox("pageSize", ViewBag.PageSize as string, new { @class = "form-control" })
+            <button type="submit" value="Submit" class="btn btn-default">Submit</button>
+        </p>
+    }
+</div>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.VIPName)
+            @Html.ActionLink("VIP Name", "Index", new { sortOrder = ViewBag.VIPNameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VIPNumber)
+            @Html.ActionLink("VIP Number", "Index", new { sortOrder = ViewBag.VIPNumberSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VIPRenewalDate)
+            @Html.ActionLink("VIP Renewal Date", "Index", new { sortOrder = ViewBag.VIPRenewalDateSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
@@ -56,3 +78,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page, pageSize = ViewBag.PageSize }))

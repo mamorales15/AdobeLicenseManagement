@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using AdobeLicenseManagement.Models;
+using PagedList;
+using System;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -14,10 +16,60 @@ namespace AdobeLicenseManagement.Controllers
 
         // GET: ServiceDeskRequests
         [Authorize(Roles = "Owner, Administrator, Super User")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize
+)
         {
-            var ServiceDeskRequests = db.ServiceDeskRequests.Include(i => i.Request);
-            return View(ServiceDeskRequests.ToList());
+            ViewBag.CurrentSort = sortOrder;
+
+            ViewBag.ServiceDeskRequestIDSortParam = String.IsNullOrEmpty(sortOrder) ? "serviceDeskRequestID_desc" : sortOrder == "default" ? "serviceDeskRequestID_desc" : "default";
+            ViewBag.RequestIDSortParam = sortOrder == "requestID_asc" ? "requestID_desc" : "requestID_asc";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var serviceDeskRequests = from s in db.ServiceDeskRequests.Include(i => i.Request)
+                                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                serviceDeskRequests = serviceDeskRequests.Where(s => s.ServiceDeskRequestID.ToString().Contains(searchString)
+                                                                || s.Request.RequestID.ToString().Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "serviceDeskRequestID_desc":
+                    serviceDeskRequests = serviceDeskRequests.OrderByDescending(s => s.ServiceDeskRequestID);
+                    break;
+                case "requestID_desc":
+                    serviceDeskRequests = serviceDeskRequests.OrderByDescending(s => s.Request.RequestID);
+                    break;
+                case "requestID_asc":
+                    serviceDeskRequests = serviceDeskRequests.OrderBy(s => s.Request.RequestID);
+                    break;
+                default:
+                    serviceDeskRequests = serviceDeskRequests.OrderBy(s => s.ServiceDeskRequestID);
+                    break;
+            }
+
+            int? tentativePageSize = 10;
+            if (pageSize != null && pageSize > 0)
+            {
+                tentativePageSize = pageSize;
+                ViewBag.PageSize = pageSize;
+            }
+            int myPageSize = (int)tentativePageSize;
+            int pageNumber = (page ?? 1);
+
+            return View(serviceDeskRequests.ToPagedList(pageNumber, myPageSize));
         }
 
         // GET: ServiceDeskRequests/Details/5

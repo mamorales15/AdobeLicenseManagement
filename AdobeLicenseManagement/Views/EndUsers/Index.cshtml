@@ -1,4 +1,6 @@
-﻿@model IEnumerable<AdobeLicenseManagement.Models.EndUser>
+﻿@model PagedList.IPagedList<AdobeLicenseManagement.Models.EndUser>
+@using PagedList.Mvc;
+
 
 @{
     ViewBag.Title = "End Users Table";
@@ -6,34 +8,54 @@
 
 <h2>@ViewBag.Title</h2>
 
+<div class="col-md-8">
+    @using (Html.BeginForm("Index", "EndUsers", FormMethod.Get))
+    {
+        <p title="Search by UserName, Email, Room Number, Tag, Computer Serial, Computer Name, Adobe ID, or Request ID">
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <button type="submit" value="Search" class="btn btn-default">Search</button>
+        </p>
+    }
+</div>
+
+<div class="col-md-4">
+    @using (Html.BeginForm("Index", "EndUsers", FormMethod.Get))
+    {
+        <p title="Change number of items on each page">
+            Page Size: @Html.TextBox("pageSize", ViewBag.PageSize as string, new { @class = "form-control" })
+            <button type="submit" value="Submit" class="btn btn-default">Submit</button>
+        </p>
+    }
+</div>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UserNameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.EmailSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Building.BuildingName)
+            @Html.ActionLink("Building Name", "Index", new { sortOrder = ViewBag.BuildingNameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RmNo)
+            @Html.ActionLink("Room Number", "Index", new { sortOrder = ViewBag.RmNoSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tag)
+            @Html.ActionLink("Tag", "Index", new { sortOrder = ViewBag.TagSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ComputerSerial)
+            @Html.ActionLink("Computer Serial", "Index", new { sortOrder = ViewBag.ComputerSerialSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ComputerName)
+            @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AdobeID)
+            @Html.ActionLink("Adobe ID", "Index", new { sortOrder = ViewBag.AdobeIDSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Request.RequestID)
+            @Html.ActionLink("Request ID", "Index", new { sortOrder = ViewBag.RequestIDSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
@@ -86,3 +108,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page, pageSize = ViewBag.PageSize}))

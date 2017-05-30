@@ -163,11 +163,18 @@ namespace AdobeLicenseManagement.Controllers
 
         //
         // GET: /Forms/POForm
-        public ActionResult POForm()
+        public ActionResult POForm(int? id)
         {
-            // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
-            ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
-
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Request request = db.Requests.Find(id);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            ViewData["request"] = id;
             return View();
         }
 
@@ -177,9 +184,6 @@ namespace AdobeLicenseManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult POForm([Bind(Include = "RequestID,PONo,PODate")] POFormViewModel POForm)
         {
-            // TODO: Might want to change the dataTextField to another attribute of Request that is unique but also identifiable
-            ViewBag.RequestList = new SelectList(db.Requests.OrderBy(x => x.RequestID), "RequestID", "RequestID");
-
             if (ModelState.IsValid)
             {
                 // Get objects from tables

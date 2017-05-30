@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AdobeLicenseManagement.Models.Request>
+﻿@model PagedList.IPagedList<AdobeLicenseManagement.Models.Request>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Requests Table";
@@ -9,31 +10,54 @@
 <p>
     @Html.ActionLink("New Help Desk Form", "HelpDeskForm", "Forms")
 </p>
+
+<div class="col-md-8">
+    @using (Html.BeginForm("Index", "Requests", FormMethod.Get))
+    {
+        <p title="Search by Request ID, PO Number, VIP, License Type, Product, or Point of Contact">
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <button type="submit" value="Search" class="btn btn-default">Search</button>
+        </p>
+    }
+</div>
+
+<div class="col-md-4">
+    @using (Html.BeginForm("Index", "Requests", FormMethod.Get))
+    {
+        <p title="Change number of items on each page">
+            Page Size: @Html.TextBox("pageSize", ViewBag.PageSize as string, new { @class = "form-control" })
+            <button type="submit" value="Submit" class="btn btn-default">Submit</button>
+        </p>
+    }
+</div>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RequestID)
+            @Html.ActionLink("Request ID", "Index", new { sortOrder = ViewBag.RequestIDSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PurchaseOrder.PONo)
+            @Html.ActionLink("Purchase Order ID", "Index", new { sortOrder = ViewBag.PONoSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VIP.VIPName)
+            @Html.ActionLink("VIP Name", "Index", new { sortOrder = ViewBag.VIPNameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LicenseType.LicenseTypeDesc)
+            @Html.ActionLink("License Type Description", "Index", new { sortOrder = ViewBag.LicenseTypeDescSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Product.ProductDesc)
+            @Html.ActionLink("Product Description", "Index", new { sortOrder = ViewBag.ProductDescSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PointOfContact.POCName)
+            @Html.ActionLink("Point of Contact Name", "Index", new { sortOrder = ViewBag.POCNameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ServiceDeskRequests)
+            <!-- Link does not actually sort -->
+            @Html.ActionLink("Service Desk Requests", "Index", new { sortOrder = ViewBag.ServiceDeskRequestsSortParam, currentFilter = ViewBag.CurrentFilter }, new { @style = "pointer-events: none; cursor: default" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndUsers)
+            <!-- Link does not actually sort -->
+            @Html.ActionLink("End Users", "Index", new { sortOrder = ViewBag.EndUsersSortParam, currentFilter = ViewBag.CurrentFilter }, new { @style="pointer-events: none; cursor: default" })
         </th>
         <th></th>
     </tr>
@@ -74,6 +98,7 @@
         {
             <!-- Show the edit/delete buttons for owners and administrators -->
             <td>
+                @Html.ActionLink("Create PO", "POForm", "Forms", new { id = item.RequestID }, null) |
                 @Html.ActionLink("Create End User", "EndUserForm", "Forms", new { id = item.RequestID }, null) |
                 @Html.ActionLink("Create ServiceDesk Requests", "ServiceDeskForm", "Forms", new { id = item.RequestID }, null)<br />
                 @Html.ActionLink("Edit", "Edit", new { id = item.RequestID }) |
@@ -93,3 +118,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page, pageSize = ViewBag.PageSize }))

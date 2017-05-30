@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdobeLicenseManagement.Models;
+using PagedList;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -17,9 +18,116 @@ namespace AdobeLicenseManagement.Controllers
 
         // GET: EndUsers
         [Authorize(Roles = "Owner, Administrator, Super User")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
-            return View(db.EndUsers.ToList());
+            ViewBag.CurrentSort = sortOrder;
+
+            ViewBag.UserNameSortParam = String.IsNullOrEmpty(sortOrder) ? "userName_desc" : sortOrder == "default" ? "userName_desc" : "default";
+            ViewBag.EmailSortParam = sortOrder == "email_asc" ? "email_desc" : "email_asc";
+            ViewBag.RmNoSortParam = sortOrder == "rmNo_asc" ? "rmNo_desc" : "rmNo_asc";
+            ViewBag.TagSortParam = sortOrder == "tag_asc" ? "tag_desc" : "tag_asc";
+            ViewBag.ComputerSerialSortParam = sortOrder == "computerSerial_asc" ? "computerSerial_desc" : "computerSerial_asc";
+            ViewBag.ComputerNameSortParam = sortOrder == "computerName_asc" ? "computerName_desc" : "computerName_asc";
+            ViewBag.AdobeIDSortParam = sortOrder == "adobeID_asc" ? "adobeID_desc" : "adobeID_asc";
+            ViewBag.RequestIDSortParam = sortOrder == "requestID_asc" ? "requestID_desc" : "requestID_asc";
+            ViewBag.BuildingNameSortParam = sortOrder == "buildingName_asc" ? "buildingName_desc" : "buildingName_asc";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var endUsers = from s in db.EndUsers
+                                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                endUsers = endUsers.Where(s => s.EndUserID.ToString().Contains(searchString)
+                                                                || s.UserName.ToString().Contains(searchString)
+                                                                || s.Email.ToString().Contains(searchString)
+                                                                || s.RmNo.ToString().Contains(searchString)
+                                                                || s.Tag.ToString().Contains(searchString)
+                                                                || s.ComputerSerial.ToString().Contains(searchString)
+                                                                || s.ComputerName.ToString().Contains(searchString)
+                                                                || s.AdobeID.ToString().Contains(searchString)
+                                                                || s.Request.RequestID.ToString().Contains(searchString)
+                                                                || s.Building.BuildingName.ToString().Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "userName_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.UserName);
+                    break;
+                case "email_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.Email);
+                    break;
+                case "email_asc":
+                    endUsers = endUsers.OrderBy(s => s.Email);
+                    break;
+                case "rmNo_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.RmNo);
+                    break;
+                case "rmNo_asc":
+                    endUsers = endUsers.OrderBy(s => s.RmNo);
+                    break;
+                case "tag_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.Tag);
+                    break;
+                case "tag_asc":
+                    endUsers = endUsers.OrderBy(s => s.Tag);
+                    break;
+                case "computerSerial_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.ComputerSerial);
+                    break;
+                case "computerSerial_asc":
+                    endUsers = endUsers.OrderBy(s => s.ComputerSerial);
+                    break;
+                case "computerName_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.ComputerName);
+                    break;
+                case "computerName_asc":
+                    endUsers = endUsers.OrderBy(s => s.ComputerName);
+                    break;
+                case "adobeID_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.AdobeID);
+                    break;
+                case "adobeID_asc":
+                    endUsers = endUsers.OrderBy(s => s.AdobeID);
+                    break;
+                case "requestID_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.Request.RequestID);
+                    break;
+                case "requestID_asc":
+                    endUsers = endUsers.OrderBy(s => s.Request.RequestID);
+                    break;
+                case "buildingName_desc":
+                    endUsers = endUsers.OrderByDescending(s => s.Request.RequestID);
+                    break;
+                case "buildingName_asc":
+                    endUsers = endUsers.OrderBy(s => s.Request.RequestID);
+                    break;
+                default:
+                    endUsers = endUsers.OrderBy(s => s.UserName);
+                    break;
+            }
+
+            int? tentativePageSize = 10;
+            if (pageSize != null && pageSize > 0)
+            {
+                tentativePageSize = pageSize;
+                ViewBag.PageSize = pageSize;
+            }
+            int myPageSize = (int)tentativePageSize;
+            int pageNumber = (page ?? 1);
+
+            return View(endUsers.ToPagedList(pageNumber, myPageSize));
         }
 
         // GET: EndUsers/Details/5

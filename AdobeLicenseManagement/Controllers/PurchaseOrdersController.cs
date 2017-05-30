@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using AdobeLicenseManagement.Models;
+using System;
+using PagedList;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -14,10 +16,75 @@ namespace AdobeLicenseManagement.Controllers
 
         // GET: PurchaseOrders
         [Authorize(Roles = "Owner, Administrator, Super User")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
-            var purchaseOrders = db.PurchaseOrders.Include(p => p.Request);
-            return View(purchaseOrders.ToList());
+            ViewBag.CurrentSort = sortOrder;
+
+            ViewBag.RequestIDSortParam = String.IsNullOrEmpty(sortOrder) ? "requestID_desc" : sortOrder == "default" ? "requestID_desc" : "default";
+            ViewBag.QtySortParam = sortOrder == "qty_asc" ? "qty_desc" : "qty_asc";
+            ViewBag.PONoSortParam = sortOrder == "poNo_asc" ? "poNo_desc" : "poNo_asc";
+            ViewBag.PODateSortParam = sortOrder == "poDate_asc" ? "poDate_desc" : "poDate_asc";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var purchaseOrders = from s in db.PurchaseOrders.Include(p => p.Request)
+                                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                purchaseOrders = purchaseOrders.Where(s => s.Request.RequestID.ToString().Contains(searchString)
+                                                                || s.Qty.ToString().Contains(searchString)
+                                                                || s.PONo.ToString().Contains(searchString)
+                                                                || s.PODate.ToString().Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "requestID_desc":
+                    purchaseOrders = purchaseOrders.OrderByDescending(s => s.Request.RequestID);
+                    break;
+                case "qty_desc":
+                    purchaseOrders = purchaseOrders.OrderByDescending(s => s.Qty);
+                    break;
+                case "qty_asc":
+                    purchaseOrders = purchaseOrders.OrderBy(s => s.Qty);
+                    break;
+                case "poNo_desc":
+                    purchaseOrders = purchaseOrders.OrderByDescending(s => s.PONo);
+                    break;
+                case "poNo_asc":
+                    purchaseOrders = purchaseOrders.OrderBy(s => s.PONo);
+                    break;
+                case "poDate_desc":
+                    purchaseOrders = purchaseOrders.OrderByDescending(s => s.PODate);
+                    break;
+                case "poDate_asc":
+                    purchaseOrders = purchaseOrders.OrderBy(s => s.PODate);
+                    break;
+                default:
+                    purchaseOrders = purchaseOrders.OrderBy(s => s.Request.RequestID);
+                    break;
+            }
+
+            int? tentativePageSize = 10;
+            if (pageSize != null && pageSize > 0)
+            {
+                tentativePageSize = pageSize;
+                ViewBag.PageSize = pageSize;
+            }
+            int myPageSize = (int)tentativePageSize;
+            int pageNumber = (page ?? 1);
+            
+            return View(purchaseOrders.ToPagedList(pageNumber, myPageSize));
         }
 
         // GET: PurchaseOrders/Details/5

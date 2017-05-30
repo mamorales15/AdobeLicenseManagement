@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using AdobeLicenseManagement.Models;
+using PagedList;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -17,9 +16,51 @@ namespace AdobeLicenseManagement.Controllers
 
         // GET: Products
         [Authorize(Roles = "Owner, Administrator, Super User")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
-            return View(db.Products.ToList());
+            ViewBag.CurrentSort = sortOrder;
+
+            ViewBag.ProductDescSortParam = String.IsNullOrEmpty(sortOrder) ? "productDesc_desc" : sortOrder == "default" ? "productDesc_desc" : "default";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var products = from s in db.Products
+                                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.ProductDesc.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "productDesc_desc":
+                    products = products.OrderByDescending(s => s.ProductDesc);
+                    break;
+                default:
+                    products = products.OrderBy(s => s.ProductDesc);
+                    break;
+            }
+
+            int? tentativePageSize = 10;
+            if (pageSize != null && pageSize > 0)
+            {
+                tentativePageSize = pageSize;
+                ViewBag.PageSize = pageSize;
+            }
+            int myPageSize = (int)tentativePageSize;
+            int pageNumber = (page ?? 1);
+
+            return View(products.ToPagedList(pageNumber, myPageSize));
         }
 
         // GET: Products/Details/5

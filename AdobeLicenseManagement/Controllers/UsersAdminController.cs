@@ -12,6 +12,9 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System;
+using PagedList;
+using System.Collections.Generic;
 
 namespace IdentitySample.Controllers
 {
@@ -35,10 +38,54 @@ namespace IdentitySample.Controllers
         //
         // GET: /Users/
         [Authorize(Roles = "Owner, Administrator")]
-        public async Task<ActionResult> Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
+            ViewBag.CurrentSort = sortOrder;
+
+            ViewBag.UserNameSortParam = String.IsNullOrEmpty(sortOrder) ? "userName_desc" : sortOrder == "default" ? "userName_desc" : "default";
+            ViewBag.RolesSortParam = sortOrder;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            
+            var users = from s in db.Users
+                        select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(s => s.UserName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "userName_desc":
+                    users = users.OrderByDescending(s => s.UserName);
+                    break;
+                default:
+                    users = users.OrderBy(s => s.UserName);
+                    break;
+            }
+
+            int? tentativePageSize = 10;
+            if (pageSize != null && pageSize > 0)
+            {
+                tentativePageSize = pageSize;
+                ViewBag.PageSize = pageSize;
+            }
+            int myPageSize = (int)tentativePageSize;
+            int pageNumber = (page ?? 1);
+
             ViewData["Current User"] = User.Identity.GetUserName();
-            return View(await userManager.Users.ToListAsync());
+            return View(users.ToPagedList(pageNumber, myPageSize));
+            //return View(await userManager.Users.ToListAsync());
         }
 
         // GET: /Users/Details/5

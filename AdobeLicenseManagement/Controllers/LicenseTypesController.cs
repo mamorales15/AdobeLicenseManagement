@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdobeLicenseManagement.Models;
+using PagedList;
 
 namespace AdobeLicenseManagement.Controllers
 {
@@ -17,9 +18,51 @@ namespace AdobeLicenseManagement.Controllers
 
         // GET: LicenseTypes
         [Authorize(Roles = "Owner, Administrator, Super User")]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? pageSize)
         {
-            return View(db.LicenseTypes.ToList());
+            ViewBag.CurrentSort = sortOrder;
+
+            ViewBag.LicenseTypeDescSortParam = String.IsNullOrEmpty(sortOrder) ? "licenseTypeDesc_desc" : sortOrder == "default" ? "licenseTypeDesc_desc" : "default";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var licenseTypes = from s in db.LicenseTypes
+                                       select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                licenseTypes = licenseTypes.Where(s => s.LicenseTypeDesc.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "licenseTypeDesc_desc":
+                    licenseTypes = licenseTypes.OrderByDescending(s => s.LicenseTypeDesc);
+                    break;
+                default:
+                    licenseTypes = licenseTypes.OrderBy(s => s.LicenseTypeDesc);
+                    break;
+            }
+
+            int? tentativePageSize = 10;
+            if (pageSize != null && pageSize > 0)
+            {
+                tentativePageSize = pageSize;
+                ViewBag.PageSize = pageSize;
+            }
+            int myPageSize = (int)tentativePageSize;
+            int pageNumber = (page ?? 1);
+
+            return View(licenseTypes.ToPagedList(pageNumber, myPageSize));
         }
 
         // GET: LicenseTypes/Details/5
